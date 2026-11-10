@@ -39,7 +39,7 @@ Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custo
 
 1. **Intro:** "Make your own HAROOOO!" Every faithful orc deserves a battle cry of their own: start from a preset, twist the dials, name it, share it with the guild. The official cry is the Saint.
 2. **Stage:** a big HAROOOO! button with a pitch-contour and waveform scope, plus "Howl when I let go of a slider".
-3. **Presets:** Saint (official), Elder, Whelp, Werewolf (a pack answers), Full Moon (real NPS wolves plus synth pack), Lone Wolf (a wolf howls first), Choir, Battlecry, Surprise me.
+3. **Presets:** Saint (official: the cry plus a six-wolf synth pack), Elder, Whelp, Werewolf (a pack answers), Full Moon (real NPS wolves plus synth pack), Lone Wolf (a wolf howls first), Choir, Battlecry, Surprise me.
 4. **Controls:** 28 sliders in nine groups: Voice, Word timing, Howl, Texture, Pack, Space, Synth wolves, Real wolves (NPS), Wolf placement. A credit line under the controls names the National Park Service recording.
 5. **Share your HAROOOO:** a name field, plus **Share my HAROOOO** (shares or copies a link) and **Reset to the Saint**. A collapsible "Settings as text" section holds the copy and paste tools.
 6. **Opening a shared link:** shows "You've received {Name}'s HAROOOO!" with **Play it** and **Make my own**.

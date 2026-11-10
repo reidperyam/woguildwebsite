@@ -82,8 +82,8 @@ export const DEFAULT_HOWL: HowlParams = {
   pitch: 150, formant: 1, hLength: 0.12, aLength: 0.2, rLength: 0.13, oLength: 2.2,
   rise: 7, riseTime: 0.45, fall: 6, vibratoRate: 5.6, vibratoDepth: 40,
   breath: 0.3, gravel: 0.2, roll: 0.45, voices: 1, spread: 12, reverb: 0.45, reverbSize: 3.2, volume: 0.8,
-  // Wolves are off in the official cry.
-  wolfMix: 0, wolfPack: 3, wolfPitch: 480, wolfLength: 3, realMix: 0, realPitch: 1, realLength: 6, wolfEntry: 1.2, wolfDistance: 0.5,
+  // The official cry howls together with a full synthesized pack (approved 2026-11-10).
+  wolfMix: 1, wolfPack: 6, wolfPitch: 455, wolfLength: 2.6, realMix: 0, realPitch: 1, realLength: 6, wolfEntry: 0, wolfDistance: 0.5,
 };
 
 /** Credit for the recorded wolves (public domain, U.S. federal work). */
@@ -93,15 +93,17 @@ export const WOLF_RECORDING = {
   source: 'https://www.nps.gov/subjects/sound/sounds-wolf.htm',
 };
 
+// Presets override the official cry. Ones without their own wolves set wolfMix: 0 so they stay wolf-free.
+const NO_WOLVES: Partial<HowlParams> = { wolfMix: 0, realMix: 0 };
 export const HOWL_PRESETS: Record<string, Partial<HowlParams>> = {
   Saint: {},
-  Elder: { pitch: 85, formant: 0.8, gravel: 0.5, rise: 5, oLength: 2.8, vibratoDepth: 28, reverb: 0.6, reverbSize: 4.5 },
-  Whelp: { pitch: 300, formant: 1.35, rise: 10, oLength: 1.4, riseTime: 0.3, gravel: 0.05, breath: 0.4, vibratoRate: 7 },
+  Elder: { ...NO_WOLVES, pitch: 85, formant: 0.8, gravel: 0.5, rise: 5, oLength: 2.8, vibratoDepth: 28, reverb: 0.6, reverbSize: 4.5 },
+  Whelp: { ...NO_WOLVES, pitch: 300, formant: 1.35, rise: 10, oLength: 1.4, riseTime: 0.3, gravel: 0.05, breath: 0.4, vibratoRate: 7 },
   Werewolf: { pitch: 120, rise: 12, riseTime: 0.9, oLength: 3.6, fall: 10, vibratoDepth: 70, gravel: 0.35, roll: 0.2, reverb: 0.55, wolfMix: 0.55, wolfPack: 3, wolfEntry: 2.4, wolfDistance: 0.55 },
   'Full Moon': { oLength: 2.6, reverb: 0.55, realMix: 0.75, realLength: 7, wolfMix: 0.35, wolfPack: 4, wolfEntry: 1.4, wolfDistance: 0.65 },
   'Lone Wolf': { wolfMix: 0.8, wolfPack: 1, wolfPitch: 520, wolfLength: 3.4, wolfEntry: -2.6, wolfDistance: 0.35 },
-  Choir: { voices: 6, spread: 20, gravel: 0.05, breath: 0.2, reverb: 0.75, reverbSize: 5, vibratoDepth: 30, oLength: 2.8 },
-  Battlecry: { pitch: 175, hLength: 0.06, aLength: 0.14, rLength: 0.08, oLength: 1.6, rise: 4, gravel: 0.7, roll: 0.8, breath: 0.15, reverb: 0.3, voices: 3, spread: 15 },
+  Choir: { ...NO_WOLVES, voices: 6, spread: 20, gravel: 0.05, breath: 0.2, reverb: 0.75, reverbSize: 5, vibratoDepth: 30, oLength: 2.8 },
+  Battlecry: { ...NO_WOLVES, pitch: 175, hLength: 0.06, aLength: 0.14, rLength: 0.08, oLength: 1.6, rise: 4, gravel: 0.7, roll: 0.8, breath: 0.15, reverb: 0.3, voices: 3, spread: 15 },
 };
 
 // Formant targets (Hz) for an adult voice: [F1, F2, F3].
