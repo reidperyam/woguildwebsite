@@ -18,7 +18,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 
 ## Pages
 
-Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
+Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Home
 
@@ -34,6 +34,15 @@ Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 3. **What we expect:** Play to win, not to farm kills. Supportive teamwork. Play to have fun.
 4. **What you get:** Objective-driven teammates. Friends in queue. Fun++.
 5. **How to apply:** three numbered steps. 1. Join the Discord. 2. [APPLY STEP]. 3. [TRIAL STEP]. Then the APPLY button (or "[DISCORD INVITE] coming soon" until the invite exists).
+
+### Howl Lab (Fun menu)
+
+1. **Intro:** "Make your own HAROOOO!" Every faithful orc deserves a battle cry of their own: start from a preset, twist the dials, name it, share it with the guild. The official cry is the Saint.
+2. **Stage:** a big HAROOOO! button with a pitch-contour and waveform scope, plus "Howl when I let go of a slider".
+3. **Presets:** Saint (official), Elder, Whelp, Werewolf, Choir, Battlecry, Surprise me.
+4. **Controls:** 19 sliders in six groups: Voice, Word timing, Howl, Texture, Pack, Space.
+5. **Share your HAROOOO:** a name field, plus **Share my HAROOOO** (shares or copies a link) and **Reset to the Saint**. A collapsible "Settings as text" section holds the copy and paste tools.
+6. **Opening a shared link:** shows "You've received {Name}'s HAROOOO!" with **Play it** and **Make my own**.
 
 ### Lore: The Life of Saint Hornatius Orgasmahowl
 

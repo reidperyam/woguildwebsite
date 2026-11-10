@@ -155,6 +155,6 @@ The Lore page (`/lore`) deliberately breaks the brutalist rules above. Inside th
   - **Sound:** only ever plays after a click or keypress.
 - **The HAROOOO voice:** the battle cry is a synthesized formant "howl-voice" (`src/scripts/howl.ts`): breath "H", "aa", rolled "r", then a rising, vibrato "oooo" with cathedral reverb.
   - **Where it plays:** clicking the giant HAROOOO! in the prayer, the **Howl it** button, the candle miracle, the battle-cry easter egg and the shared summon link (`/lore#haroooo`).
-  - **Tuning:** it's tuned in the hidden **Howl Lab** (`/howl-lab`, not in the nav). The official settings are `DEFAULT_HOWL`. Treat it as the guild's signature sound and only change it on purpose.
+  - **The Howl Lab** (`/howl-lab`, in the nav's **Fun** menu) lets anyone make, name and share their own custom HAROOOO as a link (`?h=…&n=…`). The official cry is the **Saint** preset (`DEFAULT_HOWL`). Treat it as the guild's signature sound and only change it on purpose.
 - **Reduced motion:** under `prefers-reduced-motion`, doves, petals, dust and all ambient animation are hidden or stopped. The sounds and counters still work.
 - **Contrast:** dark text sits on light (crimson or brown on parchment and cream, with glow shadows in the sky); light text sits on dark (gold or parchment on night).

@@ -7,7 +7,7 @@ Website for the Werewolf Orgasmahowl guild (World of Warcraft Forever · North A
 - `/recruitment`: open to all classes and specs, plus how to apply
 - `/lore`: The Life of Saint Hornatius Orgasmahowl
 - a custom 404 page (HAROOOO!)
-- `/howl-lab`: hidden tuning page for the synthesized HAROOOO (not in the nav, `noindex`)
+- `/howl-lab`: the Howl Lab, where visitors make, name and share their own HAROOOO (nav: Fun menu)
 
 ## Editing content
 - Guild facts, recruitment and apply steps: `src/data/guild.ts`

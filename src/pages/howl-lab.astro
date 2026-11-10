@@ -1,17 +1,26 @@
 ---
-// The Howl Lab: a hidden page (not in the nav) for tuning the synthesized HAROOOO.
+// The Howl Lab: make, name and share your own custom HAROOOO. Linked from the nav's Fun menu.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL } from '../scripts/howl';
 
 const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
 ---
 
-<BaseLayout title="Howl Lab" description="Tune the synthesized HAROOOO." noindex>
+<BaseLayout title="Howl Lab" description="Make your own custom HAROOOO! Twist the dials, name your battle cry and share it with the guild.">
   <div class="wrap page lab">
+    <section class="received" data-received hidden aria-live="polite">
+      <p class="label">Incoming battle cry</p>
+      <p class="received-title">You’ve received <span class="accent" data-from>a custom</span> HAROOOO!</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" data-play-received>Play it</button>
+        <button type="button" class="btn btn-secondary" data-dismiss>Make my own</button>
+      </div>
+    </section>
+
     <section class="intro" aria-labelledby="lab-title">
-      <p class="label">Hidden page · Not in the nav</p>
-      <h1 id="lab-title">The Howl <span class="accent">Lab</span></h1>
-      <p class="lead">Shape the synthesized HAROOOO until it sounds right. Every slider takes effect on the next howl. When you love it, copy the settings and send them to Claude to make it the site’s official cry.</p>
+      <p class="label">Fun · Howl Lab</p>
+      <h1 id="lab-title">Make your own <span class="accent">HAROOOO!</span></h1>
+      <p class="lead">Every faithful orc deserves a battle cry of their own. Start from a preset, twist the dials until it sounds like you, give it a name, and share it with the guild. The official cry is the <strong>Saint</strong>.</p>
     </section>
 
     <section class="stage" aria-label="Play">
@@ -54,18 +63,30 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
       </div>
     </section>
 
-    <section aria-labelledby="settings-title">
+    <section aria-labelledby="share-title">
       <div class="section-head">
-        <h2 id="settings-title">Your settings</h2>
-        <span class="label">Send these to Claude</span>
+        <h2 id="share-title">Share your HAROOOO</h2>
+        <span class="label">Send it to the guild</span>
       </div>
-      <textarea id="settings" rows="6" spellcheck="false" aria-label="Current settings as JSON"></textarea>
-      <div class="btn-row settings-row">
-        <button type="button" class="btn btn-primary" data-copy>Copy settings</button>
-        <button type="button" class="btn btn-secondary" data-load>Load pasted settings</button>
-        <button type="button" class="btn btn-secondary" data-reset>Reset to official</button>
-        <span class="label status" id="status" aria-live="polite"></span>
+      <div class="share">
+        <div class="name-field">
+          <label for="howl-name" class="label">Name your HAROOOO</label>
+          <input type="text" id="howl-name" maxlength="40" placeholder="e.g. Grunthak" autocomplete="off" />
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" data-share>Share my HAROOOO</button>
+          <button type="button" class="btn btn-secondary" data-reset>Reset to the Saint</button>
+        </div>
+        <p class="label status" id="status" aria-live="polite"></p>
       </div>
+      <details class="raw">
+        <summary class="label">Settings as text</summary>
+        <textarea id="settings" rows="6" spellcheck="false" aria-label="Current settings as JSON"></textarea>
+        <div class="btn-row settings-row">
+          <button type="button" class="btn btn-secondary" data-copy>Copy settings</button>
+          <button type="button" class="btn btn-secondary" data-load>Load pasted settings</button>
+        </div>
+      </details>
     </section>
   </div>
 </BaseLayout>
@@ -107,7 +128,26 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
   }
   textarea:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
   .settings-row { margin-top: var(--space-2); align-items: center; }
-  .status { color: var(--signal); }
+  .status { min-height: 1.4em; color: var(--signal); overflow-wrap: anywhere; }
+
+  .received { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); background: var(--accent); color: var(--on-accent); }
+  .received[hidden] { display: none; }
+  .received-title { font-size: var(--fs-h2); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.1; }
+  .received .accent { color: var(--on-accent); text-decoration: underline; text-decoration-thickness: var(--rule); text-underline-offset: 6px; }
+  .received .btn-primary { background: var(--on-accent); border-color: var(--on-accent); color: var(--accent); }
+  .received .btn-secondary { background: var(--accent); border-color: var(--on-accent); color: var(--on-accent); }
+
+  .share { display: flex; flex-direction: column; gap: var(--space-3); }
+  .name-field { display: flex; flex-direction: column; gap: var(--space-1); max-width: 520px; }
+  .name-field input {
+    min-height: 56px; padding: 0 var(--space-2); font: var(--fw-heavy) 20px var(--font-mono); text-transform: uppercase;
+    color: var(--ink); background: var(--ground); border: var(--rule) solid var(--ink); border-radius: 0;
+  }
+  .name-field input::placeholder { color: rgba(255, 255, 255, 0.55); text-transform: none; font-weight: var(--fw-regular); }
+  .name-field input:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
+  .raw { margin-top: var(--space-4); }
+  .raw summary { cursor: pointer; min-height: var(--target-min); display: flex; align-items: center; }
+  .raw textarea { margin-top: var(--space-2); }
 
   @media (max-width: 960px) { .groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 760px) {
@@ -275,8 +315,68 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
   document.querySelector('[data-reset]')?.addEventListener('click', () => {
     params = { ...DEFAULT_HOWL };
     render();
-    status.textContent = 'Back to the official HAROOOO.';
+    status.textContent = 'Back to the Saint, the official HAROOOO.';
   });
+
+  // ---------- Share links: /howl-lab?h=<values in control order>&n=<name> ----------
+  const nameInput = document.querySelector<HTMLInputElement>('#howl-name')!;
+  const NAME_KEY = 'wo-howl-name';
+  const cleanName = (s: string) => s.replace(/[\u0000-\u001f]/g, '').trim().slice(0, 40);
+  try { nameInput.value = localStorage.getItem(NAME_KEY) ?? ''; } catch { /* storage unavailable */ }
+  nameInput.addEventListener('input', () => {
+    try { localStorage.setItem(NAME_KEY, cleanName(nameInput.value)); } catch { /* storage unavailable */ }
+  });
+
+  function encode(p: HowlParams): string {
+    return HOWL_CONTROLS.map((c) => fmt(p[c.key])).join('_');
+  }
+  function decode(s: string): HowlParams | null {
+    const parts = s.split('_').map(Number);
+    if (parts.length !== HOWL_CONTROLS.length || parts.some((n) => !Number.isFinite(n))) return null;
+    const next = { ...DEFAULT_HOWL };
+    HOWL_CONTROLS.forEach((c, i) => { next[c.key] = Math.min(c.max, Math.max(c.min, parts[i])); });
+    return next;
+  }
+
+  document.querySelector('[data-share]')?.addEventListener('click', async () => {
+    const name = cleanName(nameInput.value);
+    const url = new URL('/howl-lab', window.location.origin);
+    url.searchParams.set('h', encode(params));
+    if (name) url.searchParams.set('n', name);
+    const link = url.toString();
+    const title = name ? `${name}’s HAROOOO!` : 'My HAROOOO!';
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text: 'Hear my battle cry, then make your own.', url: link });
+        status.textContent = 'Shared. The pack grows.';
+        return;
+      }
+    } catch { /* cancelled or unavailable: fall back to copying */ }
+    try {
+      await navigator.clipboard.writeText(link);
+      status.textContent = `Link copied: ${link}`;
+    } catch {
+      status.textContent = `Copy this link: ${link}`;
+    }
+  });
+
+  // Opening a shared link loads that HAROOOO and offers to play it.
+  const query = new URLSearchParams(window.location.search);
+  const shared = query.get('h') ? decode(query.get('h')!) : null;
+  if (shared) {
+    params = shared;
+    const from = cleanName(query.get('n') ?? '');
+    const banner = document.querySelector<HTMLElement>('[data-received]')!;
+    const fromEl = banner.querySelector<HTMLElement>('[data-from]')!;
+    fromEl.textContent = from ? `${from}’s` : 'a custom';
+    banner.hidden = false;
+    banner.querySelector('[data-play-received]')?.addEventListener('click', play);
+    banner.querySelector('[data-dismiss]')?.addEventListener('click', () => {
+      banner.hidden = true;
+      history.replaceState(null, '', window.location.pathname);
+      document.querySelector<HTMLElement>('[data-preset="Saint"]')?.focus();
+    });
+  }
 
   render();
 </script>
