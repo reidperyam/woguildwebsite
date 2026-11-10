@@ -126,10 +126,10 @@ function bigCry(text: string) {
 // ---------- The Heavenly Choir ----------
 
 let singing = false;
-function summonChoir() {
+function summonChoir(amenOnly = false) {
   if (singing) return;
   singing = true;
-  const ms = choir() || 4700;
+  const ms = choir(amenOnly) || 4700;
   document.documentElement.classList.add('choir-on');
   releaseFlock(10);
   petalShower(40);
@@ -138,7 +138,7 @@ function summonChoir() {
     singing = false;
   }, ms);
 }
-document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', summonChoir));
+document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', () => summonChoir()));
 
 // ---------- The HAROOOO ----------
 
@@ -191,7 +191,7 @@ if (summon && window.location.hash === '#haroooo') {
     goldFlash();
     bigCry('HAROOOO!');
     petalShower(40);
-    window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
+    window.setTimeout(() => summonChoir(true), Math.max(1200, ms - 1500));
   });
   document.querySelector('[data-summon-skip]')?.addEventListener('click', close);
 }
@@ -250,7 +250,7 @@ function renderCandles() {
 
 function miracle() {
   const ms = haroooo();
-  window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
+  window.setTimeout(() => summonChoir(true), Math.max(1200, ms - 1500));
   goldFlash();
   bigCry('HAROOOO!');
   const msg = document.querySelector<HTMLElement>('[data-miracle]');
@@ -304,7 +304,7 @@ document.addEventListener('keydown', (e) => {
     document.documentElement.classList.add('rapture');
     window.setTimeout(() => document.documentElement.classList.remove('rapture'), 5000);
     const ms = haroooo();
-    window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
+    window.setTimeout(() => summonChoir(true), Math.max(1200, ms - 1500));
     goldFlash();
     bigCry('HAROOOO!');
     releaseFlock(26);

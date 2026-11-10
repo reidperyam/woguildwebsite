@@ -146,7 +146,7 @@ The Lore page (`/lore`) deliberately breaks the brutalist rules above. Inside th
   - frames that tilt on hover,
   - the halo pulse and the litany marquee.
 - **Whimsy** (`src/scripts/cathedral.ts`, with sounds from `src/scripts/holy-audio.ts`, all synthesized with Web Audio):
-  - **The Heavenly Choir:** an "A-men" chord that blazes the sunbeams and releases doves and a shower of petals.
+  - **The Heavenly Choir:** a short organ hymn (`choir()` in `src/scripts/holy-audio.ts`, about 12 seconds). Pipe organ with pedal bass, a broken-chord figure and a hook melody over C, G/B, Am, F, played twice. The tune keeps leaping back to the same high G, and the second time it climbs to high C. Then come the choir and organ "A-men" (F, then C). It blazes the sunbeams and releases doves and a shower of petals. After a HAROOOO (the miracle, the summon card and the typed easter egg), only the short "A-men" plays.
   - **Click the sky:** releases a dove with a bell chime.
   - **Click a relic to venerate it:** a harp flourish, a sparkle-and-heart burst and a per-relic count.
   - **Votive candles:** twelve candles that each ring a bell. Lighting all twelve triggers a miracle: the choir, a golden flash and a giant HAROOOO!
