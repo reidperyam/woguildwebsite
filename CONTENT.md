@@ -12,7 +12,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 | Faction | Horde |
 | Focus | Low-level PvP in Battlegrounds, and nothing else (no raiding, no raid schedule) |
 | Recruiting | Open, for Level 39 battlegrounds, all classes and specs |
-| Discord invite | [DISCORD INVITE] |
+| Discord invite | https://discord.gg/vxjf9vGCA |
 | Tagline | For enjoyers of lower-level PvP in World of Warcraft |
 | Battle cry | HAROOOO! |
 
@@ -33,7 +33,7 @@ Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custo
 2. **RecruitCard:** rows BRACKET · LEVEL 39, CLASSES · ALL, SPECS · ALL, with the footer "Focus · Low-level Battlegrounds".
 3. **What we expect:** Play to win, not to farm kills. Supportive teamwork. Play to have fun.
 4. **What you get:** Objective-driven teammates. Friends in queue. Fun++.
-5. **How to apply:** three numbered steps. 1. Join the Discord. 2. [APPLY STEP]. 3. [TRIAL STEP]. Then the APPLY button (or "[DISCORD INVITE] coming soon" until the invite exists).
+5. **How to apply:** three numbered steps. 1. Join the Discord. 2. [APPLY STEP]. 3. [TRIAL STEP]. Then the **APPLY ON DISCORD** button.
 
 ### Howl Lab (Fun menu)
 
@@ -72,6 +72,5 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 ## Open questions for the guild
 
 - About text, application and trial steps
-- Discord invite link
 - Which battlegrounds we focus on in the Level 39 bracket, if the site should say so
 - Higher-resolution originals of the relic images, if they still exist
