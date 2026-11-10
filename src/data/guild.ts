@@ -7,7 +7,7 @@ export const guild = {
   region: 'North America',
   faction: 'Horde',
   focus: 'Low-level Battlegrounds',
-  tagline: 'For enjoyers of lower-level PvP in World of Warcraft',
+  tagline: 'For enjoyers of lower-level PvP in World of Warcraft Forever',
   battleCry: 'HAROOOO!',
 
   // Paste the invite link here; until then Discord buttons point to the apply steps.
