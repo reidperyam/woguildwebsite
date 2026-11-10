@@ -53,7 +53,7 @@ import { teaserRelic } from '../data/lore';
 
   <section class="band" aria-labelledby="cta-title">
     <div class="wrap band-inner">
-      <h2 id="cta-title" class="cta-cry">{guild.battleCry}</h2>
+      <h2 id="cta-title" class="cta-cry"><button type="button" class="cry-btn" data-cry aria-label="Hear the HAROOOO">{guild.battleCry}</button></h2>
       <a class="btn" href={discordHref}>Join the Discord</a>
     </div>
   </section>
@@ -74,9 +74,37 @@ import { teaserRelic } from '../data/lore';
   .saint-text { display: flex; flex-direction: column; gap: var(--space-3); max-width: 60ch; }
 
   .cta-cry { font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -0.04em; }
+  .cry-btn { all: unset; cursor: pointer; display: inline-block; transform-origin: 50% 60%; }
+  .cry-btn:hover { text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.08em; }
+  .cry-btn:focus-visible { outline: var(--rule) solid var(--ground); outline-offset: 8px; }
+  .cry-btn.howling { animation: cry-shake 0.16s linear infinite; }
+  @keyframes cry-shake {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(-3px, 1px) rotate(-1deg); }
+    75% { transform: translate(3px, -1px) rotate(1deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .cry-btn.howling { animation: none; } }
 
   @media (max-width: 800px) {
     .about, .saint { grid-template-columns: minmax(0, 1fr); }
     .saint-frame { max-width: 260px; }
   }
 </style>
+
+<script>
+  import { howl } from '../scripts/howl';
+
+  const cry = document.querySelector<HTMLButtonElement>('[data-cry]');
+  let howling = false;
+  cry?.addEventListener('click', () => {
+    if (howling) return;
+    const ms = howl();
+    if (!ms) return;
+    howling = true;
+    cry.classList.add('howling');
+    window.setTimeout(() => {
+      cry.classList.remove('howling');
+      howling = false;
+    }, ms);
+  });
+</script>

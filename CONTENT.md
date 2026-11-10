@@ -25,7 +25,7 @@ Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custo
 1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline "For enjoyers of lower-level PvP in World of Warcraft", and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
 2. **About:** two or three short paragraphs [ABOUT], next to a facts box (game, region, faction, focus, recruiting status).
 3. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
-4. **Closing call to action:** a full-width accent band reading **HAROOOO!** with the JOIN THE DISCORD button.
+4. **Closing call to action:** a full-width accent band reading **HAROOOO!** (click it to hear the Saint's cry; it shakes while it plays) with the JOIN THE DISCORD button.
 
 ### Recruitment
 
