@@ -1,0 +1,282 @@
+---
+// The Howl Lab: a hidden page (not in the nav) for tuning the synthesized HAROOOO.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL } from '../scripts/howl';
+
+const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
+---
+
+<BaseLayout title="Howl Lab" description="Tune the synthesized HAROOOO." noindex>
+  <div class="wrap page lab">
+    <section class="intro" aria-labelledby="lab-title">
+      <p class="label">Hidden page · Not in the nav</p>
+      <h1 id="lab-title">The Howl <span class="accent">Lab</span></h1>
+      <p class="lead">Shape the synthesized HAROOOO until it sounds right. Every slider takes effect on the next howl. When you love it, copy the settings and send them to Claude to make it the site’s official cry.</p>
+    </section>
+
+    <section class="stage" aria-label="Play">
+      <button type="button" class="howl-btn" data-play>HAROOOO!</button>
+      <div class="stage-side">
+        <label class="auto"><input type="checkbox" id="auto-play" checked /> Howl when I let go of a slider</label>
+        <canvas id="scope" width="900" height="220" aria-label="Pitch contour and live waveform"></canvas>
+        <p class="label legend"><span class="sw sw-pitch"></span> Pitch contour <span class="sw sw-wave"></span> Live waveform</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="presets-title">
+      <div class="section-head">
+        <h2 id="presets-title">Presets</h2>
+        <span class="label">Starting points</span>
+      </div>
+      <div class="btn-row">
+        {Object.keys(HOWL_PRESETS).map((name) => <button type="button" class="btn btn-secondary" data-preset={name}>{name}</button>)}
+        <button type="button" class="btn btn-secondary" data-random>Surprise me</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="controls-title">
+      <div class="section-head">
+        <h2 id="controls-title">Controls</h2>
+        <span class="label">Saved in this browser</span>
+      </div>
+      <div class="cells groups">
+        {groups.map((g) => (
+          <fieldset class="group">
+            <legend class="label">{g}</legend>
+            {HOWL_CONTROLS.filter((c) => c.group === g).map((c) => (
+              <div class="control">
+                <label for={`c-${c.key}`}>{c.label} <output id={`o-${c.key}`} for={`c-${c.key}`}>{DEFAULT_HOWL[c.key]}{c.unit ? ` ${c.unit}` : ''}</output></label>
+                <input type="range" id={`c-${c.key}`} data-key={c.key} data-unit={c.unit ?? ''} min={c.min} max={c.max} step={c.step} value={DEFAULT_HOWL[c.key]} />
+              </div>
+            ))}
+          </fieldset>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="settings-title">
+      <div class="section-head">
+        <h2 id="settings-title">Your settings</h2>
+        <span class="label">Send these to Claude</span>
+      </div>
+      <textarea id="settings" rows="6" spellcheck="false" aria-label="Current settings as JSON"></textarea>
+      <div class="btn-row settings-row">
+        <button type="button" class="btn btn-primary" data-copy>Copy settings</button>
+        <button type="button" class="btn btn-secondary" data-load>Load pasted settings</button>
+        <button type="button" class="btn btn-secondary" data-reset>Reset to official</button>
+        <span class="label status" id="status" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .lab { gap: var(--space-6); }
+  .intro { display: flex; flex-direction: column; gap: var(--space-3); }
+  .lead { max-width: 60ch; }
+
+  .stage { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-4); align-items: stretch; }
+  .howl-btn {
+    min-height: 220px; border: var(--rule) solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer;
+    font: var(--fw-heavy) clamp(40px, 6vw, 84px)/1 var(--font-mono); letter-spacing: -0.04em;
+  }
+  .howl-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+  .howl-btn:active { transform: translateY(2px); }
+  .howl-btn.playing { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
+  .stage-side { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+  .auto { display: flex; align-items: center; gap: var(--space-1); font-size: var(--fs-body-sm); min-height: var(--target-min); }
+  .auto input { width: 22px; height: 22px; accent-color: var(--accent); }
+  #scope { width: 100%; height: auto; aspect-ratio: 900 / 220; border: var(--rule) solid var(--ink); background: var(--ground); }
+  .legend { display: flex; align-items: center; gap: var(--space-1); flex-wrap: wrap; }
+  .sw { display: inline-block; width: 18px; height: 4px; }
+  .sw-pitch { background: var(--accent); }
+  .sw-wave { background: var(--signal); margin-left: var(--space-2); }
+
+  .groups { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .group { margin: 0; border: 0; padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); }
+  .group legend { padding: 0; margin-bottom: var(--space-1); font-weight: var(--fw-heavy); color: var(--accent); float: left; width: 100%; }
+  .control { display: flex; flex-direction: column; gap: 6px; }
+  .control label { display: flex; justify-content: space-between; gap: var(--space-1); font-size: var(--fs-body-sm); }
+  .control output { font-variant-numeric: tabular-nums; color: var(--signal); }
+  input[type='range'] { width: 100%; height: 32px; accent-color: var(--accent); cursor: pointer; }
+
+  textarea {
+    width: 100%; min-height: 150px; padding: var(--space-2); resize: vertical;
+    font: var(--fs-body-sm)/1.5 var(--font-mono); color: var(--ink); background: var(--ground);
+    border: var(--rule) solid var(--ink); border-radius: 0;
+  }
+  textarea:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
+  .settings-row { margin-top: var(--space-2); align-items: center; }
+  .status { color: var(--signal); }
+
+  @media (max-width: 960px) { .groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 760px) {
+    .stage, .groups { grid-template-columns: minmax(0, 1fr); }
+    .howl-btn { min-height: 140px; }
+  }
+</style>
+
+<script>
+  import { howl, howlDuration, pitchAt, DEFAULT_HOWL, HOWL_PRESETS, HOWL_CONTROLS, type HowlParams } from '../scripts/howl';
+  import { audio } from '../scripts/holy-audio';
+
+  const KEY = 'wo-howl-lab';
+  const inputs = [...document.querySelectorAll<HTMLInputElement>('input[type="range"][data-key]')];
+  const settings = document.querySelector<HTMLTextAreaElement>('#settings')!;
+  const status = document.querySelector<HTMLElement>('#status')!;
+  const playBtn = document.querySelector<HTMLButtonElement>('[data-play]')!;
+  const auto = document.querySelector<HTMLInputElement>('#auto-play')!;
+  const canvas = document.querySelector<HTMLCanvasElement>('#scope')!;
+  const g = canvas.getContext('2d')!;
+
+  let params: HowlParams = { ...DEFAULT_HOWL };
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) ?? 'null');
+    if (saved && typeof saved === 'object') params = { ...DEFAULT_HOWL, ...saved };
+  } catch { /* storage unavailable */ }
+
+  const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
+
+  function render() {
+    for (const input of inputs) {
+      const k = input.dataset.key as keyof HowlParams;
+      input.value = String(params[k]);
+      const out = document.querySelector<HTMLOutputElement>(`#o-${k}`);
+      if (out) out.textContent = fmt(params[k]) + (input.dataset.unit ? ` ${input.dataset.unit}` : '');
+    }
+    settings.value = JSON.stringify(params, null, 2);
+    try { localStorage.setItem(KEY, JSON.stringify(params)); } catch { /* storage unavailable */ }
+    drawContour();
+  }
+
+  const css = getComputedStyle(document.documentElement);
+  const ACCENT = css.getPropertyValue('--accent').trim() || '#ff2e89';
+  const SIGNAL = css.getPropertyValue('--signal').trim() || '#fdeb91';
+
+  function drawContour() {
+    const W = canvas.width, H = canvas.height;
+    g.clearRect(0, 0, W, H);
+    g.strokeStyle = 'rgba(255,255,255,0.15)';
+    g.lineWidth = 1;
+    for (let i = 1; i < 4; i++) { g.beginPath(); g.moveTo(0, (H * i) / 4); g.lineTo(W, (H * i) / 4); g.stroke(); }
+    const dur = howlDuration(params);
+    const maxMul = Math.max(2 ** (params.rise / 12), 1) * 1.08;
+    g.strokeStyle = ACCENT;
+    g.lineWidth = 4;
+    g.beginPath();
+    for (let x = 0; x <= W; x += 3) {
+      const m = pitchAt(params, (x / W) * dur);
+      const y = H - 20 - ((m - 0.9) / (maxMul - 0.9)) * (H - 40);
+      x === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+    }
+    g.stroke();
+    // Phoneme markers.
+    const marks: [string, number][] = [['H', 0], ['A', params.hLength], ['R', params.hLength + params.aLength], ['OOOO', params.hLength + params.aLength + params.rLength]];
+    g.fillStyle = 'rgba(255,255,255,0.7)';
+    g.font = '800 14px "Martian Mono", monospace';
+    for (const [label, t] of marks) {
+      const x = (t / dur) * W;
+      g.fillRect(x, 0, 2, H);
+      g.fillText(label, x + 6, 18);
+    }
+  }
+
+  let analyser: AnalyserNode | null = null;
+  let raf = 0;
+  function play() {
+    const ac = audio();
+    if (!ac) { status.textContent = 'This browser cannot play Web Audio.'; return; }
+    if (!analyser) { analyser = ac.createAnalyser(); analyser.fftSize = 2048; }
+    const ms = howl(params, { analyser });
+    playBtn.classList.add('playing');
+    cancelAnimationFrame(raf);
+    const data = new Uint8Array(analyser.fftSize);
+    const started = performance.now();
+    const tick = () => {
+      drawContour();
+      analyser!.getByteTimeDomainData(data);
+      const W = canvas.width, H = canvas.height;
+      g.strokeStyle = SIGNAL;
+      g.lineWidth = 2;
+      g.beginPath();
+      for (let i = 0; i < data.length; i += 2) {
+        const x = (i / data.length) * W;
+        const y = H / 2 + ((data[i] - 128) / 128) * (H / 2.2);
+        i === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+      }
+      g.stroke();
+      // Playhead.
+      const elapsed = (performance.now() - started) / 1000;
+      const px = (elapsed / howlDuration(params)) * W;
+      if (px <= W) { g.fillStyle = SIGNAL; g.fillRect(px, 0, 3, H); }
+      if (performance.now() - started < ms) raf = requestAnimationFrame(tick);
+      else { playBtn.classList.remove('playing'); drawContour(); }
+    };
+    raf = requestAnimationFrame(tick);
+  }
+
+  playBtn.addEventListener('click', play);
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !(e.target as HTMLElement).closest('textarea, input, button')) { e.preventDefault(); play(); }
+  });
+
+  for (const input of inputs) {
+    input.addEventListener('input', () => {
+      params = { ...params, [input.dataset.key!]: Number(input.value) };
+      render();
+    });
+    input.addEventListener('change', () => { if (auto.checked) play(); });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((b) => b.addEventListener('click', () => {
+    params = { ...DEFAULT_HOWL, ...HOWL_PRESETS[b.dataset.preset!] };
+    render();
+    status.textContent = `Loaded ${b.dataset.preset}.`;
+    play();
+  }));
+
+  document.querySelector('[data-random]')?.addEventListener('click', () => {
+    const next = { ...params };
+    for (const c of HOWL_CONTROLS) {
+      if (c.key === 'volume') continue;
+      const steps = Math.round((c.max - c.min) / c.step);
+      next[c.key] = Number((c.min + Math.round(Math.random() * steps) * c.step).toFixed(3));
+    }
+    next.voices = Math.min(next.voices, 4);
+    next.oLength = Math.min(next.oLength, 3);
+    params = next;
+    render();
+    status.textContent = 'Randomized. Keep what you like.';
+    play();
+  });
+
+  document.querySelector('[data-copy]')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(settings.value);
+      status.textContent = 'Copied. Paste it to Claude.';
+    } catch {
+      settings.select();
+      status.textContent = 'Selected. Press Ctrl+C to copy.';
+    }
+  });
+
+  document.querySelector('[data-load]')?.addEventListener('click', () => {
+    try {
+      const parsed = JSON.parse(settings.value);
+      params = { ...DEFAULT_HOWL, ...parsed };
+      render();
+      status.textContent = 'Loaded.';
+      play();
+    } catch {
+      status.textContent = 'That is not valid settings JSON.';
+    }
+  });
+
+  document.querySelector('[data-reset]')?.addEventListener('click', () => {
+    params = { ...DEFAULT_HOWL };
+    render();
+    status.textContent = 'Back to the official HAROOOO.';
+  });
+
+  render();
+</script>

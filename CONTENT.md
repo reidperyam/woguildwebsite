@@ -57,6 +57,7 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 - **A Prayer Before Queueing:** ends in HAROOOO! Amen.
 - **Closing band:** "Join the faithful. Grab three."
 - **Light a Votive Candle:** "One for every flag delivered from evil. Light all twelve, and the Saint may grant a miracle." When all twelve are lit: "A miracle! The Saint is pleased. HAROOOO!"
+- **The cry:** the giant HAROOOO! in the prayer plays the synthesized cry ("Click the cry to hear it."). The closing band has **Howl it**, **Sing it again** and **Share the cry** buttons. Shared links (`/lore#haroooo`) open a "You have been summoned" card with **Receive the HAROOOO** and **Enter quietly**.
 - **Hints:** "Psst: click anywhere in the heavens to release a dove." on the hero, and a colophon line, "Legend holds that whoever types the Saint's battle cry shall witness a miracle."
 
 ## Open questions for the guild

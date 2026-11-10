@@ -148,7 +148,8 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
           <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
         </header>
         <p class="prayer-lines">{prayer.map((l) => <span>{l}</span>)}</p>
-        <p class="great-cry">{guild.battleCry}</p>
+        <button type="button" class="great-cry" data-howl aria-label="Hear the HAROOOO">{guild.battleCry}</button>
+        <p class="howl-hint">Click the cry to hear it.</p>
         <p class="amen">Amen.</p>
       </section>
 
@@ -191,10 +192,24 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
         <p>Join the faithful. Grab three.</p>
         <div class="btn-row" style="justify-content:center">
           <a class="holy-btn crimson" href={discordHref}>Join the Discord</a>
+          <button type="button" class="holy-btn" data-howl>Howl it</button>
           <button type="button" class="holy-btn" data-choir>Sing it again</button>
+          <button type="button" class="holy-btn" data-share>Share the cry</button>
         </div>
+        <p class="share-status" data-share-status aria-live="polite"></p>
       </div>
     </section>
+
+    <div class="summon" data-summon hidden>
+      <div class="summon-card" role="dialog" aria-modal="true" aria-labelledby="summon-title">
+        {corners.map((c) => <svg class:list={['corner', c]} aria-hidden="true"><use href="#orn-corner" /></svg>)}
+        <p class="cap">A faithful one sends word</p>
+        <h2 id="summon-title" class="summon-title">You have been summoned</h2>
+        <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
+        <button type="button" class="holy-btn" data-summon-go>✦ Receive the HAROOOO ✦</button>
+        <button type="button" class="summon-skip" data-summon-skip>Enter quietly</button>
+      </div>
+    </div>
 
     <div class="fx-layer" aria-hidden="true"></div>
   </div>

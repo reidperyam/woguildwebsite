@@ -129,6 +129,29 @@
 .miracle { margin: 0; font-family: var(--f-roman); font-weight: 900; font-size: clamp(20px, 2.4vw, 30px); color: var(--c-gold-hi); text-shadow: 0 0 20px rgba(255, 214, 120, 0.9); }
 .holy-btn.small { min-height: 44px; font-size: 13px; padding: 0 20px; }
 
+/* ---------- The HAROOOO ---------- */
+button.great-cry { display: block; margin: 8px auto 0; padding: 0 8px; border: 0; cursor: pointer; transition: transform 0.2s ease; }
+button.great-cry:hover { transform: scale(1.03); }
+button.great-cry:focus-visible { outline: 4px solid var(--c-gold); outline-offset: 8px; }
+.howl-hint { margin: -6px 0 0; font-style: italic; font-size: 15px; color: var(--c-gold); opacity: 0.8; }
+.howling .great-cry, .howling .glory-cry, .howling .t-name { animation: glory-shake 0.12s linear infinite; }
+.howling .halo { filter: brightness(1.6); }
+.share-status { min-height: 1.4em; font-size: 16px; overflow-wrap: anywhere; }
+
+.summon { position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(13, 8, 32, 0.82); backdrop-filter: blur(3px); }
+.summon[hidden] { display: none; }
+.summon-card {
+  position: relative; width: min(560px, 100%); padding: 56px 32px 40px; text-align: center; color: var(--c-brown);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(120, 72, 20, 0.25) 100%), var(--c-parchment);
+  border: 3px solid var(--c-gold-lo); outline: 2px solid var(--c-gold); outline-offset: 6px;
+  box-shadow: 0 0 80px rgba(255, 214, 120, 0.5);
+}
+.summon-card .cap { color: var(--c-gold-lo); }
+.summon-title { margin: 0; font-family: var(--f-roman); font-weight: 900; font-size: clamp(28px, 5vw, 44px); line-height: 1.1; color: var(--c-crimson); }
+.summon-card .divider { color: var(--c-gold-lo); }
+.summon-skip { min-height: 44px; padding: 0 16px; border: 0; background: none; cursor: pointer; font-family: var(--f-print); font-style: italic; font-size: 16px; color: var(--c-brown); text-decoration: underline; }
+
 /* The choir and the miracle */
 .choir-on .rays-2 { opacity: 1; animation-duration: 9s; }
 .choir-on .bird { animation-duration: 6s; }

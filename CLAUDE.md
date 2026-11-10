@@ -10,4 +10,5 @@ Website for Werewolf Orgasmahowl, a Horde guild in World of Warcraft Forever (No
 ## Stack
 - Astro 7, static output, deployed to Vercel later. No UI framework; plain `.astro` components and `src/styles/global.css`.
 - `npm run dev` for local work (or `npx astro dev --background`, then `npx astro dev stop`). `npm run build` must pass before committing.
+- The synthesized HAROOOO lives in `src/scripts/howl.ts`. When the user sends settings JSON from the Howl Lab (`/howl-lab`), paste it into `DEFAULT_HOWL` to make it the official cry.
 - Placeholders in `[BRACKETS]` are facts still waiting on the guild. Never replace them with invented values.

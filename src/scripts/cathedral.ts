@@ -1,6 +1,7 @@
 // Interactive whimsy for the Cathedral (Lore page): doves, petals, veneration, votive candles,
 // the Heavenly Choir and a hidden miracle. Sounds come from holy-audio.ts.
 import { bell, choir, harp, PENTATONIC } from './holy-audio';
+import { howl } from './howl';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fx = document.querySelector<HTMLElement>('.fx-layer');
@@ -139,6 +140,62 @@ function summonChoir() {
 }
 document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', summonChoir));
 
+// ---------- The HAROOOO ----------
+
+let howling = false;
+function haroooo() {
+  if (howling) return 0;
+  howling = true;
+  const ms = howl() || 3000;
+  document.documentElement.classList.add('howling');
+  releaseFlock(5);
+  window.setTimeout(() => {
+    document.documentElement.classList.remove('howling');
+    howling = false;
+  }, ms);
+  return ms;
+}
+document.querySelectorAll<HTMLButtonElement>('[data-howl]').forEach((b) => b.addEventListener('click', haroooo));
+
+// Share a link that summons the cry: /lore#haroooo
+const shareStatus = document.querySelector<HTMLElement>('[data-share-status]');
+document.querySelector<HTMLButtonElement>('[data-share]')?.addEventListener('click', async () => {
+  const url = `${window.location.origin}/lore#haroooo`;
+  const say = (msg: string) => { if (shareStatus) shareStatus.textContent = msg; };
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: 'HAROOOO!', text: 'You have been summoned by Saint Hornatius Orgasmahowl.', url });
+      say('Sent. The faithful grow in number.');
+      return;
+    }
+  } catch { /* cancelled or unavailable: fall back to copying */ }
+  try {
+    await navigator.clipboard.writeText(url);
+    say(`Link copied: ${url}`);
+  } catch {
+    say(`Copy this link: ${url}`);
+  }
+});
+
+const summon = document.querySelector<HTMLElement>('[data-summon]');
+if (summon && window.location.hash === '#haroooo') {
+  summon.hidden = false;
+  document.querySelector<HTMLButtonElement>('[data-summon-go]')?.focus();
+  const close = () => {
+    summon.hidden = true;
+    history.replaceState(null, '', window.location.pathname);
+  };
+  document.querySelector('[data-summon-go]')?.addEventListener('click', () => {
+    close();
+    const ms = haroooo();
+    goldFlash();
+    bigCry('HAROOOO!');
+    petalShower(40);
+    window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
+  });
+  document.querySelector('[data-summon-skip]')?.addEventListener('click', close);
+}
+
 // ---------- Click the sky: release a dove ----------
 
 document.querySelectorAll<HTMLElement>('[data-sky]').forEach((sky) => {
@@ -192,7 +249,8 @@ function renderCandles() {
 }
 
 function miracle() {
-  summonChoir();
+  const ms = haroooo();
+  window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
   goldFlash();
   bigCry('HAROOOO!');
   const msg = document.querySelector<HTMLElement>('[data-miracle]');
@@ -245,7 +303,8 @@ document.addEventListener('keydown', (e) => {
     typed = '';
     document.documentElement.classList.add('rapture');
     window.setTimeout(() => document.documentElement.classList.remove('rapture'), 5000);
-    summonChoir();
+    const ms = haroooo();
+    window.setTimeout(summonChoir, Math.max(1200, ms - 1500));
     goldFlash();
     bigCry('HAROOOO!');
     releaseFlock(26);
