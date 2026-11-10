@@ -1,6 +1,6 @@
 # Site content: v1
 
-The source of truth for what the site says. Layout and style rules are in [BRAND.md](BRAND.md). When a fact changes, edit `src/data/guild.ts` (once the site is scaffolded) and keep this file in step.
+The source of truth for what the site says. Layout and style rules are in [BRAND.md](BRAND.md). When a fact changes, edit `src/data/guild.ts` and keep this file in step.
 
 ## Known facts
 
@@ -8,7 +8,7 @@ The source of truth for what the site says. Layout and style rules are in [BRAND
 |---|---|
 | Name | Werewolf Orgasmahowl |
 | Region | North America |
-| Realm | [REALM] |
+| Game | World of Warcraft Forever (no realms) |
 | Faction | Horde |
 | Playstyle | PvE |
 | Recruiting | Open to all classes and specs |
@@ -19,11 +19,11 @@ The source of truth for what the site says. Layout and style rules are in [BRAND
 
 ## Pages
 
-Nav: HOME · RECRUITMENT · LORE · [APPLY]
+Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Home
 
-1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `NORTH AMERICA · [REALM] · HORDE · PVE`, the tagline `[YOUR TAGLINE]`, and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
+1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · PVE`, the tagline `[YOUR TAGLINE]`, and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
 2. **About:** two or three short paragraphs. [ABOUT: casual or progression, vibe, how long the guild has been around]
 3. **Raid schedule:** a ruled table of day, time (with time zone) and content. [DAYS] [TIME + TZ] [CURRENT RAID / DIFFICULTY]
 4. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line ("What a wonderful, holy and virtuous orc."), and a link: READ THE LORE.
@@ -148,6 +148,6 @@ Whatever its meaning, the subject matter is not debated. What a wonderful, holy 
 
 ## Open questions for the guild
 
-- Realm, raid days and times, Discord invite, tagline
+- Raid days and times, Discord invite, tagline
 - About text, expectations, perks, application and trial steps
 - Higher-resolution originals of the relic images, if they still exist

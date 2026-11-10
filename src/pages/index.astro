@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { guild, discordHref, factsLine } from '../data/guild';
+import { teaserRelic } from '../data/lore';
+---
+
+<BaseLayout description={`${guild.name}: a ${guild.faction} ${guild.playstyle} guild in ${guild.game}, ${guild.region}. Recruiting all classes and specs.`}>
+  <div class="wrap page">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="label">{guild.game} · {factsLine}</p>
+      <h1 id="hero-title" class="display">Werewolf<br /><span class="accent">Orgasma&shy;howl</span></h1>
+      <p class="tagline">{guild.tagline}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={discordHref}>Join the Discord</a>
+        <a class="btn btn-secondary" href="/recruitment">See recruitment</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title">About us</h2>
+        <span class="label">Who we are</span>
+      </div>
+      <div class="about">
+        <div class="prose">
+          {guild.about.map((p) => <p>{p}</p>)}
+        </div>
+        <dl class="facts">
+          <div><dt class="label">Game</dt><dd>{guild.game}</dd></div>
+          <div><dt class="label">Region</dt><dd>{guild.region}</dd></div>
+          <div><dt class="label">Faction</dt><dd>{guild.faction}</dd></div>
+          <div><dt class="label">Playstyle</dt><dd>{guild.playstyle}</dd></div>
+          <div><dt class="label">Recruiting</dt><dd><span class="chip">{guild.recruiting.open ? 'Open' : 'Closed'}</span></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section aria-labelledby="schedule-title">
+      <div class="section-head">
+        <h2 id="schedule-title">Raid schedule</h2>
+        <span class="label">Times in [TZ]</span>
+      </div>
+      <div class="table-box">
+        <table class="table">
+          <thead><tr><th scope="col">Day</th><th scope="col">Time</th><th scope="col">Content</th></tr></thead>
+          <tbody>
+            {guild.schedule.map((s) => (
+              <tr><td>{s.day}</td><td>{s.time}</td><td>{s.content}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="saint" aria-labelledby="saint-title">
+      <figure class="saint-frame">
+        <Image src={teaserRelic.image} alt={teaserRelic.alt} width={338} />
+      </figure>
+      <div class="saint-text">
+        <p class="label">From the archives</p>
+        <h2 id="saint-title">The life of Saint Hornatius <span class="accent">Orgasmahowl</span></h2>
+        <p>Champion of the Worgen. Scourge of the Alliance zerg. Keeper of a vast number of non-combat pets. What a wonderful, holy and virtuous orc.</p>
+        <div class="btn-row">
+          <a class="btn btn-secondary" href="/lore">Read the lore</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="band" aria-labelledby="cta-title">
+    <div class="wrap band-inner">
+      <h2 id="cta-title" class="cta-cry">{guild.battleCry}</h2>
+      <a class="btn" href={discordHref}>Join the Discord</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { display: flex; flex-direction: column; gap: var(--space-4); }
+  .tagline { font-size: clamp(18px, 2vw, 22px); max-width: 40ch; }
+
+  .about { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-5); align-items: start; }
+  .facts { margin: 0; border: var(--rule) solid var(--ink); }
+  .facts div { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-bottom: var(--rule) solid var(--ink); }
+  .facts div:last-child { border-bottom: 0; }
+  .facts dd { margin: 0; font-weight: var(--fw-heavy); text-transform: uppercase; text-align: right; }
+
+  .saint { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: center; }
+  .saint-frame { margin: 0; border: var(--rule) solid var(--ink); max-width: 338px; }
+  .saint-text { display: flex; flex-direction: column; gap: var(--space-3); max-width: 60ch; }
+
+  .cta-cry { font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -0.04em; }
+
+  @media (max-width: 800px) {
+    .about, .saint { grid-template-columns: minmax(0, 1fr); }
+    .saint-frame { max-width: 260px; }
+  }
+</style>

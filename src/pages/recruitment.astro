@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RecruitCard from '../components/RecruitCard.astro';
+import { guild, discordHref } from '../data/guild';
+---
+
+<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec. ${guild.faction} ${guild.playstyle} in ${guild.game}, ${guild.region}.`}>
+  <div class="wrap page">
+    <section class="intro" aria-labelledby="rec-title">
+      <span class:list={['chip', { 'chip-off': !guild.recruiting.open }]}>{guild.recruiting.open ? 'Open' : 'Closed'}</span>
+      <h1 id="rec-title">Recruitment is <span class="accent">{guild.recruiting.open ? 'open' : 'closed'}</span></h1>
+      <p class="lead">{guild.recruiting.summary}</p>
+    </section>
+
+    <section class="split" aria-label="Who we want">
+      <RecruitCard />
+      <div class="lists">
+        <div>
+          <h2 class="list-title">What we expect</h2>
+          <ul class="ruled">{guild.expectations.map((e) => <li>{e}</li>)}</ul>
+        </div>
+        <div>
+          <h2 class="list-title">What you get</h2>
+          <ul class="ruled">{guild.perks.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="apply" aria-labelledby="apply-title">
+      <div class="section-head">
+        <h2 id="apply-title">How to apply</h2>
+        <span class="label">Three steps</span>
+      </div>
+      <ol class="cells steps">
+        {guild.applySteps.map((s, i) => (
+          <li>
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p class="prose-sm">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="btn-row apply-row">
+        {guild.discordUrl
+          ? <a class="btn btn-primary" href={guild.discordUrl}>Apply on Discord</a>
+          : <span class="chip chip-off">[DISCORD INVITE] coming soon</span>}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .lead { font-size: clamp(18px, 2vw, 22px); max-width: 48ch; }
+
+  .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-5); align-items: start; }
+  .lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+  .list-title { font-size: var(--fs-h3); margin-bottom: var(--space-2); }
+  .ruled { list-style: none; margin: 0; padding: 0; border-top: var(--rule) solid var(--ink); }
+  .ruled li { padding: var(--space-2) 0; border-bottom: var(--rule) solid var(--ink); font-size: var(--fs-body-sm); line-height: 1.5; }
+
+  .steps { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps li { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4) var(--space-3); }
+  .num { font-size: clamp(48px, 6vw, 72px); font-weight: var(--fw-heavy); line-height: 1; color: var(--accent); letter-spacing: -0.04em; }
+  .apply-row { margin-top: var(--space-4); }
+
+  @media (max-width: 960px) {
+    .split { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .lists, .steps { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

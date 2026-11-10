@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import type { Relic } from '../data/lore';
+
+interface Props { relic: Relic }
+const { relic } = Astro.props;
+---
+
+<article class="relic" id={relic.id} aria-labelledby={`${relic.id}-title`}>
+  <figure class="frame">
+    <Image src={relic.image} alt={relic.alt} />
+  </figure>
+  <div class="text">
+    <p class="label">Relic {relic.no}</p>
+    <h3 id={`${relic.id}-title`}>{relic.title}</h3>
+    <div class="prose">
+      {relic.blocks.map((b) =>
+        'quote' in b ? (
+          <blockquote>
+            {b.quote.map((line) => <p>“{line}”</p>)}
+            {b.cite && <footer class="label">— {b.cite}</footer>}
+          </blockquote>
+        ) : 'html' in b ? (
+          <p set:html={b.html} />
+        ) : (
+          <p>{b.p}</p>
+        )
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .relic { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-5); align-items: start; padding-block: var(--space-5); border-top: var(--rule) solid var(--ink); }
+  .frame { margin: 0; border: var(--rule) solid var(--ink); justify-self: start; max-width: 100%; }
+  .frame :global(img) { width: auto; max-width: 100%; }
+  .text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+  .text h3 { margin-bottom: var(--space-1); }
+  blockquote { margin: var(--space-1) 0; display: flex; flex-direction: column; gap: var(--space-1); color: var(--accent); font-weight: var(--fw-heavy); font-size: clamp(19px, 2vw, 24px); line-height: 1.35; }
+  blockquote footer { color: var(--ink); font-weight: var(--fw-regular); }
+  @media (max-width: 800px) {
+    .relic { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  }
+</style>

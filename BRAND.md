@@ -119,6 +119,6 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - Headlines are short, loud and uppercase. Body copy is plain and friendly.
 - Button labels name the action: JOIN THE DISCORD, SEE RECRUITMENT, APPLY.
 - The guild name is cheeky; keep the rest of the copy straightforward.
-- Never invent facts. Use placeholders until they're provided: `[REALM]`, `[REGION]`, `[FACTION]`, `[DAYS] [TIME + TZ]`, `[CLASS]`, `[ROLE]`, `[DISCORD INVITE]`, `[YOUR TAGLINE]`.
+- Never invent facts. Use placeholders until they're provided: `[DAYS] [TIME + TZ]`, `[CLASS]`, `[ROLE]`, `[DISCORD INVITE]`, `[YOUR TAGLINE]`.
 - Don't use Blizzard or World of Warcraft logos, crests or game art. **Exception:** the Lore page's relic images (the guild's own fan-art edits, with orc heads and Pendulum of Doom axes on classical paintings) are allowed there and only there. Show each in a 4px ink frame, never recolored or filtered.
 - Icons are inline stroke SVG with square caps and `currentColor`. No emoji.

@@ -1,0 +1,26 @@
+---
+import { guild } from '../data/guild';
+const { recruiting, schedule } = guild;
+const raidDays = schedule.map((s) => s.day).join(' · ');
+---
+
+<section class="card" aria-labelledby="recruit-card-title">
+  <div class="head">
+    <h3 id="recruit-card-title">Now recruiting</h3>
+    <span class:list={['chip', { 'chip-off': !recruiting.open }]}>{recruiting.open ? 'Open' : 'Closed'}</span>
+  </div>
+  <div class="rows">
+    {recruiting.rows.map((r) => (
+      <div class="row"><span>{r.label}</span><span>{r.value}</span></div>
+    ))}
+  </div>
+  <p class="label">Raids · {raidDays}</p>
+</section>
+
+<style>
+  .card { display: flex; flex-direction: column; gap: var(--space-2); padding: clamp(24px, 4vw, 56px) clamp(20px, 3vw, 32px); border: var(--rule) solid var(--ink); }
+  .head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+  .rows { display: flex; flex-direction: column; }
+  .row { display: flex; justify-content: space-between; gap: var(--space-2); padding: var(--space-2) 0; border-top: var(--rule) solid var(--ink); font-size: 18px; text-transform: uppercase; font-weight: var(--fw-heavy); }
+  .row:last-child { border-bottom: var(--rule) solid var(--ink); }
+</style>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RelicCard from '../components/RelicCard.astro';
+import { guild, discordHref } from '../data/guild';
+import { chapters, intro, librarian, catalogued } from '../data/lore';
+---
+
+<BaseLayout title="Lore" description="The life of Saint Hornatius Orgasmahowl, patron of the guild: his three temptations, his deeds and his mysteries, as catalogued from the archives.">
+  <div class="wrap page">
+    <section class="intro" aria-labelledby="lore-title">
+      <p class="label">From the archives · Catalogued by {librarian}</p>
+      <h1 id="lore-title"><span class="pre">The life of Saint Hornatius</span><span class="display accent">Orgasma&shy;howl</span></h1>
+      <div class="prose">
+        {intro.map((p) => <p>{p}</p>)}
+      </div>
+      <nav class="cells toc" aria-label="Chapters">
+        {chapters.map((c) => (
+          <a href={`#${c.id}`}>
+            <span class="label">Chapter {c.numeral}</span>
+            <span class="toc-title">{c.title}</span>
+          </a>
+        ))}
+      </nav>
+    </section>
+
+    {chapters.map((c) => (
+      <section id={c.id} aria-labelledby={`${c.id}-title`}>
+        <div class="section-head chapter-head">
+          <h2 id={`${c.id}-title`}><span class="accent">{c.numeral}</span> {c.title}</h2>
+          <span class="label">{c.relics.length === 1 ? '1 relic' : `${c.relics.length} relics`}</span>
+        </div>
+        {c.relics.map((r) => <RelicCard relic={r} />)}
+      </section>
+    ))}
+
+    <p class="label colophon">More relics are surely out there. If you find one, bring it to the Librarian. · Originally catalogued {catalogued}.</p>
+  </div>
+
+  <section class="band" aria-labelledby="lore-cta">
+    <div class="wrap band-inner">
+      <h2 id="lore-cta" class="cta-cry">{guild.battleCry}</h2>
+      <a class="btn" href={discordHref}>Join the Discord</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { display: flex; flex-direction: column; gap: var(--space-4); }
+  h1 { display: flex; flex-direction: column; gap: var(--space-2); }
+  .pre { font-size: var(--fs-h2); line-height: 1.1; letter-spacing: 0; }
+  .toc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .toc a { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); color: var(--ink); text-decoration: none; min-height: var(--target-min); }
+  .toc a:hover { background: var(--accent); color: var(--on-accent); }
+  .toc-title { font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.15; }
+  .chapter-head { margin-bottom: 0; }
+  .colophon { max-width: 60ch; }
+  .cta-cry { font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -0.04em; }
+  @media (max-width: 700px) {
+    .toc { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

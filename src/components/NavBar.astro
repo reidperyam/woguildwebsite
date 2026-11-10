@@ -1,0 +1,45 @@
+---
+import Monogram from './Monogram.astro';
+import { discordHref } from '../data/guild';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/recruitment', label: 'Recruitment' },
+  { href: '/lore', label: 'Lore' },
+];
+---
+
+<header class="nav-wrap">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="/">
+      <Monogram size={52} />
+      <span class="word">Werewolf Orgasmahowl</span>
+    </a>
+    <div class="links">
+      {links.map((l) => (
+        <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+      ))}
+      <a class="btn btn-primary" href={discordHref}>Apply</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .nav-wrap { border-bottom: var(--rule) solid var(--ink); }
+  .nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); padding-block: var(--space-2); }
+  .brand { display: flex; align-items: center; gap: var(--space-2); color: var(--ink); text-decoration: none; }
+  .word { font-size: 18px; font-weight: var(--fw-heavy); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2; }
+  .links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); }
+  .links a:not(.btn) {
+    display: inline-flex; align-items: center; min-height: var(--target-min);
+    color: var(--ink); font-size: var(--fs-button); font-weight: var(--fw-heavy);
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+  }
+  .links a:not(.btn):hover { color: var(--accent); }
+  .links a[aria-current='page'] { text-decoration: underline; text-decoration-thickness: var(--rule); text-decoration-color: var(--accent); text-underline-offset: 6px; }
+  @media (max-width: 480px) {
+    .word { font-size: 15px; }
+    .links { gap: var(--space-1) var(--space-3); }
+  }
+</style>

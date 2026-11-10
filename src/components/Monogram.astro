@@ -1,0 +1,22 @@
+---
+interface Props {
+  size?: number;
+  variant?: 'outlined' | 'on-accent' | 'inverted';
+}
+const { size = 52, variant = 'outlined' } = Astro.props;
+const border = size >= 64 ? 'var(--rule-heavy)' : 'var(--rule)';
+---
+
+<span class:list={['mono', variant]} style={`--size:${size}px; --frame:${border}`} aria-hidden="true">WO</span>
+
+<style>
+  .mono {
+    width: var(--size); height: var(--size); flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: var(--frame) solid var(--ink); color: var(--ink);
+    font-weight: var(--fw-heavy); font-size: calc(var(--size) * 0.42); line-height: 1;
+    letter-spacing: -0.06em;
+  }
+  .on-accent { background: var(--accent); border-color: var(--on-accent); color: var(--on-accent); }
+  .inverted { background: var(--ground); border-color: var(--ground); color: var(--accent); }
+</style>

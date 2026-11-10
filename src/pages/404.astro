@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { guild } from '../data/guild';
+---
+
+<BaseLayout title="Page not found" description="This page went to grab THREE and never came back.">
+  <div class="wrap page lost">
+    <p class="label">404 · Page not found</p>
+    <h1 class="display accent">{guild.battleCry}</h1>
+    <p class="lead">This page went to grab THREE and never came back.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/">Back to home</a>
+      <a class="btn btn-secondary" href="/lore">Read the lore</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .lost { gap: var(--space-4); }
+  .lead { font-size: clamp(18px, 2vw, 22px); max-width: 40ch; }
+</style>
