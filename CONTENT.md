@@ -53,5 +53,5 @@ Presented as a museum catalogue that takes itself completely seriously, catalogu
 
 - About text, perks, application and trial steps
 - Discord invite link
-- Which low-level brackets and battlegrounds we focus on, if the site should say so
+- Which battlegrounds we focus on in the Level 39 bracket, if the site should say so
 - Higher-resolution originals of the relic images, if they still exist
