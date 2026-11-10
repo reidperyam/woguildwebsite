@@ -31,7 +31,7 @@ Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 
 1. **Status header:** an OPEN chip and RECRUITING FOR LEVEL 39 BATTLEGROUNDS. "We are recruiting for Level 39 battlegrounds. Every class. Every spec. If you want to run 39s with us, we want to hear from you."
 2. **RecruitCard:** rows BRACKET · LEVEL 39, CLASSES · ALL, SPECS · ALL, with the footer "Focus · Low-level Battlegrounds".
-3. **What we expect:** [EXPECTATIONS]
+3. **What we expect:** Play to win, not to farm kills. Supportive teamwork. Play to have fun.
 4. **What you get:** [PERKS]
 5. **How to apply:** three numbered steps. 1. Join the Discord. 2. [APPLY STEP]. 3. [TRIAL STEP]. Then the APPLY button (or "[DISCORD INVITE] coming soon" until the invite exists).
 
@@ -51,7 +51,7 @@ Presented as a museum catalogue that takes itself completely seriously, catalogu
 
 ## Open questions for the guild
 
-- About text, expectations, perks, application and trial steps
+- About text, perks, application and trial steps
 - Discord invite link
 - Which low-level brackets and battlegrounds we focus on, if the site should say so
 - Higher-resolution originals of the relic images, if they still exist

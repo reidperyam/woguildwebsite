@@ -29,7 +29,7 @@ export const guild = {
     ],
   },
 
-  expectations: ['[EXPECTATION]', '[EXPECTATION]', '[EXPECTATION]'],
+  expectations: ['Play to win, not to farm kills', 'Supportive teamwork', 'Play to have fun'],
   perks: ['[PERK]', '[PERK]', '[PERK]'],
 
   applySteps: [
