@@ -115,7 +115,7 @@ const VOWELS = {
 } as const;
 
 const impulseCache = new Map<string, AudioBuffer>();
-export function impulse(ac: AudioContext, seconds: number): AudioBuffer {
+function impulse(ac: AudioContext, seconds: number): AudioBuffer {
   const key = `${ac.sampleRate}:${seconds.toFixed(1)}`;
   const cached = impulseCache.get(key);
   if (cached) return cached;
@@ -258,12 +258,12 @@ function wolfVoice(ac: AudioContext, dest: AudioNode, f: number, start: number, 
   air.stop(stop);
 }
 
-/** Plays the HAROOOO and returns its length in ms (including the reverb tail). `at` schedules it for a later AudioContext time (the jingle uses this). */
-export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: AnalyserNode; at?: number } = {}): number {
+/** Plays the HAROOOO. Returns its length in ms (including the reverb tail). */
+export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: AnalyserNode } = {}): number {
   const ac = audio();
   if (!ac) return 0;
   const p: HowlParams = { ...DEFAULT_HOWL, ...params };
-  const base = Math.max(opts.at ?? 0, ac.currentTime) + 0.06;
+  const base = ac.currentTime + 0.06;
   const t0 = base + voiceOffset(p);
   const tH = t0 + p.hLength;
   const tA = tH + p.aLength;

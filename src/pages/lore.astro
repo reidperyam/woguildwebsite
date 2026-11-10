@@ -4,7 +4,6 @@ import RelicCard from '../components/RelicCard.astro';
 import Ornaments from '../components/Ornaments.astro';
 import Laurel from '../components/Laurel.astro';
 import Dove from '../components/Dove.astro';
-import Jingle from '../components/Jingle.astro';
 import '../styles/cathedral.css';
 import '../styles/cathedral-whimsy.css';
 import { guild, discordHref } from '../data/guild';
@@ -191,7 +190,6 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
       <div class="wrap glory-inner">
         <h2 id="glory-title" class="glory-cry">{guild.battleCry}</h2>
         <p>Join the faithful. Grab three.</p>
-        <div class="glory-jingle"><Jingle label="✦ Sing the Hymn of the Howl ✦" buttonClass="holy-btn" /></div>
         <div class="btn-row" style="justify-content:center">
           <a class="holy-btn crimson" href={discordHref}>Join the Discord</a>
           <button type="button" class="holy-btn" data-howl>Howl it</button>

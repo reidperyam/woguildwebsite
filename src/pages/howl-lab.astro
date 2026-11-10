@@ -1,7 +1,6 @@
 ---
 // The Howl Lab: make, name and share your own custom HAROOOO. Linked from the nav's Fun menu.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Jingle from '../components/Jingle.astro';
 import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL, WOLF_RECORDING } from '../scripts/howl';
 
 const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
@@ -31,12 +30,6 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
         <canvas id="scope" width="900" height="220" aria-label="Pitch contour and live waveform"></canvas>
         <p class="label legend"><span class="sw sw-pitch"></span> Pitch contour <span class="sw sw-wave"></span> Live waveform</p>
       </div>
-    </section>
-
-    <section class="lab-jingle" aria-labelledby="jingle-title">
-      <h2 id="jingle-title">Put it in the jingle</h2>
-      <p>The guild jingle ends in a HAROOOO. Play it with yours: the tune changes key to match your pitch.</p>
-      <Jingle label="▶ Play the jingle with my HAROOOO" buttonClass="btn btn-primary" custom />
     </section>
 
     <section aria-labelledby="presets-title">
@@ -112,8 +105,6 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
   .howl-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
   .howl-btn:active { transform: translateY(2px); }
   .howl-btn.playing { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
-  .lab-jingle { display: flex; flex-direction: column; gap: var(--space-2); }
-  .lab-jingle h2, .lab-jingle p { margin: 0; }
   .stage-side { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
   .auto { display: flex; align-items: center; gap: var(--space-1); font-size: var(--fs-body-sm); min-height: var(--target-min); }
   .auto input { width: 22px; height: 22px; accent-color: var(--accent); }
@@ -171,7 +162,6 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
 <script>
   import { howl, howlDuration, pitchAt, voiceOffset, wolfOffset, preloadWolf, DEFAULT_HOWL, HOWL_PRESETS, HOWL_CONTROLS, type HowlParams } from '../scripts/howl';
   import { audio } from '../scripts/holy-audio';
-  import { bindJingle } from '../scripts/jingle';
 
   const KEY = 'wo-howl-lab';
   const inputs = [...document.querySelectorAll<HTMLInputElement>('input[type="range"][data-key]')];
@@ -187,7 +177,6 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
     const saved = JSON.parse(localStorage.getItem(KEY) ?? 'null');
     if (saved && typeof saved === 'object') params = { ...DEFAULT_HOWL, ...saved };
   } catch { /* storage unavailable */ }
-  bindJingle(document.querySelector<HTMLElement>('.lab-jingle [data-jingle]')!, () => params);
 
   const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
 
