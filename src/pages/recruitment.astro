@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RecruitCard from '../components/RecruitCard.astro';
-import { guild, discordHref } from '../data/guild';
+import { guild } from '../data/guild';
 ---
 
-<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec. ${guild.faction} ${guild.playstyle} in ${guild.game}, ${guild.region}.`}>
+<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec for low-level battleground PvP. ${guild.faction}, ${guild.game}, ${guild.region}.`}>
   <div class="wrap page">
     <section class="intro" aria-labelledby="rec-title">
       <span class:list={['chip', { 'chip-off': !guild.recruiting.open }]}>{guild.recruiting.open ? 'Open' : 'Closed'}</span>

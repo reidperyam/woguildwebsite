@@ -5,7 +5,7 @@ import { guild, discordHref, factsLine } from '../data/guild';
 import { teaserRelic } from '../data/lore';
 ---
 
-<BaseLayout description={`${guild.name}: a ${guild.faction} ${guild.playstyle} guild in ${guild.game}, ${guild.region}. Recruiting all classes and specs.`}>
+<BaseLayout description={`${guild.name}: a ${guild.faction} guild in ${guild.game}, ${guild.region}, focused on low-level battleground PvP. Recruiting all classes and specs.`}>
   <div class="wrap page">
     <section class="hero" aria-labelledby="hero-title">
       <p class="label">{guild.game} · {factsLine}</p>
@@ -30,26 +30,9 @@ import { teaserRelic } from '../data/lore';
           <div><dt class="label">Game</dt><dd>{guild.game}</dd></div>
           <div><dt class="label">Region</dt><dd>{guild.region}</dd></div>
           <div><dt class="label">Faction</dt><dd>{guild.faction}</dd></div>
-          <div><dt class="label">Playstyle</dt><dd>{guild.playstyle}</dd></div>
+          <div><dt class="label">Focus</dt><dd>{guild.focus}</dd></div>
           <div><dt class="label">Recruiting</dt><dd><span class="chip">{guild.recruiting.open ? 'Open' : 'Closed'}</span></dd></div>
         </dl>
-      </div>
-    </section>
-
-    <section aria-labelledby="schedule-title">
-      <div class="section-head">
-        <h2 id="schedule-title">Raid schedule</h2>
-        <span class="label">Times in [TZ]</span>
-      </div>
-      <div class="table-box">
-        <table class="table">
-          <thead><tr><th scope="col">Day</th><th scope="col">Time</th><th scope="col">Content</th></tr></thead>
-          <tbody>
-            {guild.schedule.map((s) => (
-              <tr><td>{s.day}</td><td>{s.time}</td><td>{s.content}</td></tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </section>
 

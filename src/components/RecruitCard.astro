@@ -1,7 +1,6 @@
 ---
 import { guild } from '../data/guild';
-const { recruiting, schedule } = guild;
-const raidDays = schedule.map((s) => s.day).join(' · ');
+const { recruiting, focus } = guild;
 ---
 
 <section class="card" aria-labelledby="recruit-card-title">
@@ -14,7 +13,7 @@ const raidDays = schedule.map((s) => s.day).join(' · ');
       <div class="row"><span>{r.label}</span><span>{r.value}</span></div>
     ))}
   </div>
-  <p class="label">Raids · {raidDays}</p>
+  <p class="label">Focus · {focus}</p>
 </section>
 
 <style>

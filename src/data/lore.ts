@@ -1,12 +1,12 @@
 // The Life of Saint Hornatius Orgasmahowl: the guild's 2010 relic catalogue.
 // Copy is the original text, lightly edited for flow and spelling. See CONTENT.md.
 import type { ImageMetadata } from 'astro';
-import dayOne from '../assets/lore/01-temptation-day-one.jpg';
-import dayTwo from '../assets/lore/02-temptation-day-two.jpg';
-import dayThree from '../assets/lore/03-temptation-day-three.jpg';
-import shadowfang from '../assets/lore/04-shadowfang-keep.jpg';
-import lumberMill from '../assets/lore/05-lumber-mill.jpg';
-import warsong from '../assets/lore/06-warsong-gulch.jpg';
+import shadowfang from '../assets/lore/01-shadowfang-keep.jpg';
+import lumberMill from '../assets/lore/02-lumber-mill.jpg';
+import warsong from '../assets/lore/03-warsong-gulch.jpg';
+import dayOne from '../assets/lore/04-temptation-day-one.jpg';
+import dayTwo from '../assets/lore/05-temptation-day-two.jpg';
+import dayThree from '../assets/lore/06-temptation-day-three.jpg';
 import petArmy from '../assets/lore/07-the-pet-army.jpg';
 
 export type Block =
@@ -41,55 +41,11 @@ export const intro = [
 export const chapters: Chapter[] = [
   {
     numeral: 'I',
-    id: 'temptations',
-    title: 'The Three Temptations',
-    relics: [
-      {
-        no: '01',
-        id: 'first-temptation',
-        title: 'The First Temptation',
-        image: dayOne,
-        alt: 'A classical painting of a robed, haloed figure with a green orc head on a mountaintop, turning away from a winged devil.',
-        blocks: [
-          { p: 'Behold the Temptation of Hornatius: proof that even the noblest among us are burdened with the responsibility to be just.' },
-          { p: 'The devil visited Saint Hornatius Orgasmahowl three times.' },
-          { p: 'The first time, he tempted the Saint with an invitation to join his friends in his domain. Other battle champions would be there, every bit as skilled in war as Saint Hornatius. Saint Orgasmahowl would no longer feel alone in a world of mediocrity.' },
-          { p: 'St. Orgasmahowl rebuffed the demon thus:' },
-          { quote: ['No band of callous villains can equal my heart or spirit! Be gone, vile pest!'] },
-        ],
-      },
-      {
-        no: '02',
-        id: 'second-temptation',
-        title: 'The Second Temptation',
-        image: dayTwo,
-        alt: 'A painting of the orc-headed Saint in a red robe on a hilltop at sunset while a winged devil gestures toward the land below.',
-        blocks: [
-          { p: 'The devil appeared to Hornatius on the second day and offered him the city of Stormwind to rule and command as his own.' },
-          { p: 'St. Orgasmahowl once again rejected the demon’s gift:' },
-          { quote: ['A city built upon the evil seeds you have sown will harbor not this champion! I would raze this place before owning the filth within!'] },
-        ],
-      },
-      {
-        no: '03',
-        id: 'third-temptation',
-        title: 'The Third Temptation',
-        image: dayThree,
-        alt: 'A classical cave painting: the orc-headed Saint kneels in prayer while a nude woman stands before him, surrounded by monkeys, foxes and three Pendulum of Doom axes.',
-        blocks: [
-          { p: 'But the demon was persistent, for he knew the worthiness of the recruit he sought. And so on the third day the devil appeared before the Saint with 100 non-combat pets, three Pendulums of Doom (one for his left hand and two for his right, as he was accustomed) and a naked virgin wanting to bed him.' },
-          { p: 'This was by far the hardest of the temptations St. Hornatius faced. He did not respond, but knelt down to pray.' },
-        ],
-      },
-    ],
-  },
-  {
-    numeral: 'II',
     id: 'deeds',
     title: 'The Deeds',
     relics: [
       {
-        no: '04',
+        no: '01',
         id: 'shadowfang-keep',
         title: 'The Defense of Shadowfang Keep',
         image: shadowfang,
@@ -105,7 +61,7 @@ export const chapters: Chapter[] = [
         ],
       },
       {
-        no: '05',
+        no: '02',
         id: 'lumber-mill',
         title: 'The Lumber Mill',
         image: lumberMill,
@@ -120,7 +76,7 @@ export const chapters: Chapter[] = [
         ],
       },
       {
-        no: '06',
+        no: '03',
         id: 'warsong-gulch',
         title: 'The Flag of Warsong Gulch',
         image: warsong,
@@ -132,6 +88,50 @@ export const chapters: Chapter[] = [
             cite: 'Thrall, Warchief',
           },
           { p: 'That was written on the back in crude handwriting. It seems St. Hornatius figured in the beliefs of the Horde’s great leaders too. Wondrous!' },
+        ],
+      },
+    ],
+  },
+  {
+    numeral: 'II',
+    id: 'temptations',
+    title: 'The Three Temptations',
+    relics: [
+      {
+        no: '04',
+        id: 'first-temptation',
+        title: 'The First Temptation',
+        image: dayOne,
+        alt: 'A classical painting of a robed, haloed figure with a green orc head on a mountaintop, turning away from a winged devil.',
+        blocks: [
+          { p: 'Behold the Temptation of Hornatius: proof that even the noblest among us are burdened with the responsibility to be just.' },
+          { p: 'The devil visited Saint Hornatius Orgasmahowl three times.' },
+          { p: 'The first time, he tempted the Saint with an invitation to join his friends in his domain. Other battle champions would be there, every bit as skilled in war as Saint Hornatius. Saint Orgasmahowl would no longer feel alone in a world of mediocrity.' },
+          { p: 'St. Orgasmahowl rebuffed the demon thus:' },
+          { quote: ['No band of callous villains can equal my heart or spirit! Be gone, vile pest!'] },
+        ],
+      },
+      {
+        no: '05',
+        id: 'second-temptation',
+        title: 'The Second Temptation',
+        image: dayTwo,
+        alt: 'A painting of the orc-headed Saint in a red robe on a hilltop at sunset while a winged devil gestures toward the land below.',
+        blocks: [
+          { p: 'The devil appeared to Hornatius on the second day and offered him the city of Stormwind to rule and command as his own.' },
+          { p: 'St. Orgasmahowl once again rejected the demon’s gift:' },
+          { quote: ['A city built upon the evil seeds you have sown will harbor not this champion! I would raze this place before owning the filth within!'] },
+        ],
+      },
+      {
+        no: '06',
+        id: 'third-temptation',
+        title: 'The Third Temptation',
+        image: dayThree,
+        alt: 'A classical cave painting: the orc-headed Saint kneels in prayer while a nude woman stands before him, surrounded by monkeys, foxes and three Pendulum of Doom axes.',
+        blocks: [
+          { p: 'But the demon was persistent, for he knew the worthiness of the recruit he sought. And so on the third day the devil appeared before the Saint with 100 non-combat pets, three Pendulums of Doom (one for his left hand and two for his right, as he was accustomed) and a naked virgin wanting to bed him.' },
+          { p: 'This was by far the hardest of the temptations St. Hornatius faced. He did not respond, but knelt down to pray.' },
         ],
       },
     ],
@@ -157,4 +157,4 @@ export const chapters: Chapter[] = [
   },
 ];
 
-export const teaserRelic = chapters[1].relics[2];
+export const teaserRelic = chapters.flatMap((c) => c.relics).find((r) => r.id === 'warsong-gulch')!;

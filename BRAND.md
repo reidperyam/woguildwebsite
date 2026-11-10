@@ -111,7 +111,7 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - **Button:** primary is an `--accent` fill with black text; secondary is a 4px `--ink` outline. Both are uppercase, 800 weight and +0.08em tracking. Use `<a href>` for navigation and `<button>` for actions.
 - **StatusChip:** a `--signal` fill with black text, 14px, 800 weight. When inactive, a 4px ink outline instead.
 - **NavBar:** a 52px WO monogram, the wordmark WEREWOLF ORGASMAHOWL, then HOME, RECRUITMENT and an APPLY primary button, closed by a 4px bottom rule. The current page gets a 4px accent underline. Links wrap on phones; APPLY is never hidden.
-- **RecruitCard:** the title NOW RECRUITING with a StatusChip, class/role rows separated by 4px rules, and a raid-time label.
+- **RecruitCard:** the title NOW RECRUITING with a StatusChip, class/role rows separated by 4px rules, and a focus label (Low-level Battlegrounds).
 - **Monogram:** "WO" at 800 weight in a square 10px frame, in three versions: outlined, on accent, or inverted (accent letters on a ground square inside an ink field).
 
 ## Voice and content
@@ -119,6 +119,6 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - Headlines are short, loud and uppercase. Body copy is plain and friendly.
 - Button labels name the action: JOIN THE DISCORD, SEE RECRUITMENT, APPLY.
 - The guild name is cheeky; keep the rest of the copy straightforward.
-- Never invent facts. Use placeholders until they're provided: `[DAYS] [TIME + TZ]`, `[CLASS]`, `[ROLE]`, `[DISCORD INVITE]`, `[YOUR TAGLINE]`.
+- Never invent facts. Use placeholders until they're provided: `[CLASS]`, `[ROLE]`, `[DISCORD INVITE]`, `[YOUR TAGLINE]`.
 - Don't use Blizzard or World of Warcraft logos, crests or game art. **Exception:** the Lore page's relic images (the guild's own fan-art edits, with orc heads and Pendulum of Doom axes on classical paintings) are allowed there and only there. Show each in a 4px ink frame, never recolored or filtered.
 - Icons are inline stroke SVG with square caps and `currentColor`. No emoji.

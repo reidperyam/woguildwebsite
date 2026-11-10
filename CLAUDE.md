@@ -1,6 +1,6 @@
 # Werewolf Orgasmahowl guild website
 
-Website for Werewolf Orgasmahowl, a Horde PvE guild in World of Warcraft Forever (North America). The game has no realms; never add a realm field.
+Website for Werewolf Orgasmahowl, a Horde guild in World of Warcraft Forever (North America) focused solely on low-level PvP in Battlegrounds. No raiding: never add a raid schedule. The game has no realms: never add a realm field.
 
 ## Design
 - Design system: https://claude.ai/artifact/2uHaE8ULB6FRAdLYESV1oA. Use it for every Claude Design artifact made from this repo, in place of any account default.

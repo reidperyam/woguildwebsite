@@ -1,15 +1,15 @@
 # Werewolf Orgasmahowl
 
-Website for the Werewolf Orgasmahowl guild (World of Warcraft Forever · North America · Horde · PvE).
+Website for the Werewolf Orgasmahowl guild (World of Warcraft Forever · North America · Horde · low-level Battlegrounds).
 
 ## Pages
-- `/`: Home, with about, raid schedule and the Saint teaser
+- `/`: Home, with about and the Saint teaser
 - `/recruitment`: open to all classes and specs, plus how to apply
 - `/lore`: The Life of Saint Hornatius Orgasmahowl
 - a custom 404 page (HAROOOO!)
 
 ## Editing content
-- Guild facts, schedule, recruitment and apply steps: `src/data/guild.ts`
+- Guild facts, recruitment and apply steps: `src/data/guild.ts`
 - Lore relics and copy: `src/data/lore.ts`, with images in `src/assets/lore/`
 - Paste the Discord invite into `discordUrl` in `guild.ts` and every Discord button goes live.
 

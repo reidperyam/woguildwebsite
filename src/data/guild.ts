@@ -6,7 +6,7 @@ export const guild = {
   game: 'World of Warcraft Forever',
   region: 'North America',
   faction: 'Horde',
-  playstyle: 'PvE',
+  focus: 'Low-level Battlegrounds',
   tagline: '[YOUR TAGLINE]',
   battleCry: 'HAROOOO!',
 
@@ -14,30 +14,25 @@ export const guild = {
   discordUrl: '',
 
   about: [
-    '[ABOUT: who we are, casual or progression, and the vibe in raids.]',
+    '[ABOUT: who we are and why low-level battlegrounds, and the vibe when we queue.]',
     '[ABOUT: how long the guild has been around and what keeps people here.]',
-  ],
-
-  schedule: [
-    { day: '[DAY]', time: '[TIME + TZ]', content: '[RAID / DIFFICULTY]' },
-    { day: '[DAY]', time: '[TIME + TZ]', content: '[RAID / DIFFICULTY]' },
   ],
 
   recruiting: {
     open: true,
-    summary: 'Every class. Every spec. If you want to raid with us, we want to hear from you.',
+    summary: 'Every class. Every spec. If you want to run low-level battlegrounds with us, we want to hear from you.',
     rows: [{ label: 'All classes', value: 'All specs' }],
   },
 
-  expectations: ['[EXPECTATION: attendance]', '[EXPECTATION: preparation]', '[EXPECTATION: voice comms]'],
-  perks: ['[PERK: loot system]', '[PERK: raids start and end on time]', '[PERK: the community]'],
+  expectations: ['[EXPECTATION]', '[EXPECTATION]', '[EXPECTATION]'],
+  perks: ['[PERK]', '[PERK]', '[PERK]'],
 
   applySteps: [
     { title: 'Join the Discord', text: 'Say hello and tell us what you play.' },
     { title: '[APPLY STEP]', text: '[Post in #applications, or fill out the form.]' },
-    { title: '[TRIAL STEP]', text: '[Raid with us for a trial period.]' },
+    { title: '[TRIAL STEP]', text: '[Queue into battlegrounds with us for a trial period.]' },
   ],
 };
 
 export const discordHref = guild.discordUrl || '/recruitment#apply';
-export const factsLine = [guild.region, guild.faction, guild.playstyle].join(' · ');
+export const factsLine = [guild.region, guild.faction, guild.focus].join(' · ');
