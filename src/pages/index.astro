@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { guild, discordHref, factsLine } from '../data/guild';
 import { teaserRelic } from '../data/lore';
+import Jingle from '../components/Jingle.astro';
 ---
 
 <BaseLayout description={`${guild.name}: a ${guild.faction} guild in ${guild.game}, ${guild.region}, focused on low-level battleground PvP. Recruiting all classes and specs.`}>
@@ -54,12 +55,14 @@ import { teaserRelic } from '../data/lore';
   <section class="band" aria-labelledby="cta-title">
     <div class="wrap band-inner">
       <h2 id="cta-title" class="cta-cry">{guild.battleCry}</h2>
+      <Jingle buttonClass="btn" />
       <a class="btn" href={discordHref}>Join the Discord</a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  .band { --jingle-lit-bg: var(--ground); --jingle-lit-fg: var(--accent); }
   .hero { display: flex; flex-direction: column; gap: var(--space-4); }
   .tagline { font-size: clamp(18px, 2vw, 22px); max-width: 40ch; }
 

@@ -140,6 +140,15 @@ function summonChoir() {
 }
 document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', summonChoir));
 
+// The Hymn of the Howl (the jingle) gets the same heavenly fuss as the choir.
+document.addEventListener('jingle', (e) => {
+  const ms = (e as CustomEvent<{ ms: number }>).detail.ms;
+  document.documentElement.classList.add('choir-on');
+  releaseFlock(8);
+  window.setTimeout(() => petalShower(40), 2000);
+  window.setTimeout(() => document.documentElement.classList.remove('choir-on'), ms);
+});
+
 // ---------- The HAROOOO ----------
 
 let howling = false;

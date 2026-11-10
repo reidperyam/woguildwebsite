@@ -200,3 +200,11 @@ button.great-cry:focus-visible { outline: 4px solid var(--c-gold); outline-offse
   .crest.bottom { bottom: -18px; }
   .petal:nth-child(2n) { display: none; }
 }
+
+/* The Hymn of the Howl (the guild jingle) */
+.glory-jingle { display: flex; justify-content: center; margin-block: 8px 28px; --jingle-lit-bg: var(--c-gold); --jingle-lit-fg: var(--c-brown); }
+.glory-jingle .jingle { align-items: center; }
+.glory-jingle .jingle-words { font-family: var(--f-roman); letter-spacing: 0.06em; align-items: center; }
+.glory-jingle .jingle-line { justify-content: center; }
+.glory-jingle .jingle-word { opacity: 0.9; border-color: var(--c-gold-lo); color: var(--c-brown); background: rgba(255, 246, 214, 0.55); }
+.glory-jingle .jingle-word.lit { color: var(--c-brown); border-color: var(--c-gold); box-shadow: 0 0 18px var(--c-gold-hi); }

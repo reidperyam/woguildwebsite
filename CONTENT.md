@@ -25,7 +25,7 @@ Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custo
 1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline "For enjoyers of lower-level PvP in World of Warcraft", and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
 2. **About:** two or three short paragraphs [ABOUT], next to a facts box (game, region, faction, focus, recruiting status).
 3. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
-4. **Closing call to action:** a full-width accent band reading **HAROOOO!** with the JOIN THE DISCORD button.
+4. **Closing call to action:** a full-width accent band reading **HAROOOO!**, the jingle (**▶ Play the jingle** with the lyric line WERE WOLF OR GAS MA HOWL! / WERE WOLF OR GAS MA HAROOOO!) and the JOIN THE DISCORD button.
 
 ### Recruitment
 
@@ -39,10 +39,11 @@ Nav: HOME · RECRUITMENT · LORE · FUN (dropdown: Howl Lab) · [APPLY]. A custo
 
 1. **Intro:** "Make your own HAROOOO!" Every faithful orc deserves a battle cry of their own: start from a preset, twist the dials, name it, share it with the guild. The official cry is the Saint.
 2. **Stage:** a big HAROOOO! button with a pitch-contour and waveform scope, plus "Howl when I let go of a slider".
-3. **Presets:** Saint (official: the cry plus a six-wolf synth pack), Elder, Whelp, Werewolf (a pack answers), Full Moon (real NPS wolves plus synth pack), Lone Wolf (a wolf howls first), Choir, Battlecry, Surprise me.
-4. **Controls:** 28 sliders in nine groups: Voice, Word timing, Howl, Texture, Pack, Space, Synth wolves, Real wolves (NPS), Wolf placement. A credit line under the controls names the National Park Service recording.
-5. **Share your HAROOOO:** a name field, plus **Share my HAROOOO** (shares or copies a link) and **Reset to the Saint**. A collapsible "Settings as text" section holds the copy and paste tools.
-6. **Opening a shared link:** shows "You've received {Name}'s HAROOOO!" with **Play it** and **Make my own**.
+3. **Put it in the jingle:** "The guild jingle ends in a HAROOOO. Play it with yours: the tune changes key to match your pitch." Button: **▶ Play the jingle with my HAROOOO**.
+4. **Presets:** Saint (official: the cry plus a six-wolf synth pack), Elder, Whelp, Werewolf (a pack answers), Full Moon (real NPS wolves plus synth pack), Lone Wolf (a wolf howls first), Choir, Battlecry, Surprise me.
+5. **Controls:** 28 sliders in nine groups: Voice, Word timing, Howl, Texture, Pack, Space, Synth wolves, Real wolves (NPS), Wolf placement. A credit line under the controls names the National Park Service recording.
+6. **Share your HAROOOO:** a name field, plus **Share my HAROOOO** (shares or copies a link) and **Reset to the Saint**. A collapsible "Settings as text" section holds the copy and paste tools.
+7. **Opening a shared link:** shows "You've received {Name}'s HAROOOO!" with **Play it** and **Make my own**.
 
 ### Lore: The Life of Saint Hornatius Orgasmahowl
 
@@ -66,7 +67,7 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 - **A Prayer Before Queueing:** ends in HAROOOO! Amen.
 - **Closing band:** "Join the faithful. Grab three."
 - **Light a Votive Candle:** "One for every flag delivered from evil. Light all twelve, and the Saint may grant a miracle." When all twelve are lit: "A miracle! The Saint is pleased. HAROOOO!"
-- **The cry:** the giant HAROOOO! in the prayer plays the synthesized cry ("Click the cry to hear it."). The closing band has **Howl it**, **Sing it again** and **Share the cry** buttons. Shared links (`/lore#haroooo`) open a "You have been summoned" card with **Receive the HAROOOO** and **Enter quietly**.
+- **The cry:** the giant HAROOOO! in the prayer plays the synthesized cry ("Click the cry to hear it."). The closing band has **✦ Sing the Hymn of the Howl ✦** (the guild jingle, with its lighting lyric line, sunbeams, doves and petals), then **Howl it**, **Sing it again** and **Share the cry** buttons. Shared links (`/lore#haroooo`) open a "You have been summoned" card with **Receive the HAROOOO** and **Enter quietly**.
 - **Hints:** "Psst: click anywhere in the heavens to release a dove." on the hero, and a colophon line, "Legend holds that whoever types the Saint's battle cry shall witness a miracle."
 
 ## Open questions for the guild
