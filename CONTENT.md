@@ -13,7 +13,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 | Focus | Low-level PvP in Battlegrounds, and nothing else (no raiding, no raid schedule) |
 | Recruiting | Open to all classes and specs |
 | Discord invite | [DISCORD INVITE] |
-| Tagline | [YOUR TAGLINE] |
+| Tagline | For enjoyers of lower-level PvP in World of Warcraft |
 | Battle cry | HAROOOO! |
 
 ## Pages
@@ -22,7 +22,7 @@ Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Home
 
-1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline `[YOUR TAGLINE]`, and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
+1. **Hero:** stacked wordmark WEREWOLF / ORGASMAHOWL, then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline "For enjoyers of lower-level PvP in World of Warcraft", and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
 2. **About:** two or three short paragraphs [ABOUT], next to a facts box (game, region, faction, focus, recruiting status).
 3. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
 4. **Closing call to action:** a full-width accent band reading **HAROOOO!** with the JOIN THE DISCORD button.
@@ -51,7 +51,7 @@ Presented as a museum catalogue that takes itself completely seriously, catalogu
 
 ## Open questions for the guild
 
-- Tagline, About text, expectations, perks, application and trial steps
+- About text, expectations, perks, application and trial steps
 - Discord invite link
 - Which low-level brackets and battlegrounds we focus on, if the site should say so
 - Higher-resolution originals of the relic images, if they still exist
