@@ -12,7 +12,7 @@ Website for the Werewolf Orgasmahowl guild (World of Warcraft Forever · North A
 ## Editing content
 - Guild facts, recruitment and apply steps: `src/data/guild.ts`
 - Lore relics and copy: `src/data/lore.ts`, with images in `src/assets/lore/`
-- Paste the Discord invite into `discordUrl` in `guild.ts` and every Discord button goes live.
+- The Discord invite is `discordUrl` in `guild.ts` (every Discord button uses it). `/discord` is a short link that forwards to it; if the invite changes, update `vercel.json` too.
 
 ## Commands
 | Command | What it does |

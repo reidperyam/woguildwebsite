@@ -12,7 +12,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 | Faction | Horde |
 | Focus | Low-level PvP in Battlegrounds, and nothing else (no raiding, no raid schedule) |
 | Recruiting | Open, for Level 39 battlegrounds, all classes and specs |
-| Discord invite | https://discord.gg/vxjf9vGCA |
+| Discord invite | https://discord.gg/ptykt8ppcV (never expires). Short link to share: `/discord` on the site |
 | Tagline | For enjoyers of lower-level PvP in World of Warcraft |
 | Battle cry | HAROOOO! |
 

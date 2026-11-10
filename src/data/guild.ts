@@ -11,7 +11,7 @@ export const guild = {
   battleCry: 'HAROOOO!',
 
   // Paste the invite link here; until then Discord buttons point to the apply steps.
-  discordUrl: 'https://discord.gg/vxjf9vGCA',
+  discordUrl: 'https://discord.gg/ptykt8ppcV', // never expires; also in vercel.json for the /discord short link
 
   about: [
     '[ABOUT: who we are and why low-level battlegrounds, and the vibe when we queue.]',
