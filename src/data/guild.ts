@@ -30,7 +30,7 @@ export const guild = {
   },
 
   expectations: ['Play to win, not to farm kills', 'Supportive teamwork', 'Play to have fun'],
-  perks: ['[PERK]', '[PERK]', '[PERK]'],
+  perks: ['Objective-driven teammates', 'Friends in queue', 'Fun++'],
 
   applySteps: [
     { title: 'Join the Discord', text: 'Say hello and tell us what you play.' },
