@@ -113,6 +113,7 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - **NavBar:** a 52px WO monogram, the wordmark WEREWOLF ORGASMAHOWL, then HOME, RECRUITMENT and an APPLY primary button, closed by a 4px bottom rule. The current page gets a 4px accent underline. Links wrap on phones; APPLY is never hidden.
 - **RecruitCard:** the title NOW RECRUITING with a StatusChip, class/role rows separated by 4px rules, and a focus label (Low-level Battlegrounds).
 - **Monogram:** "WO" at 800 weight in a square 10px frame, in three versions: outlined, on accent, or inverted (accent letters on a ground square inside an ink field).
+- **Discord server icon:** the on-accent WO monogram, framed square inside Discord's circular crop (`brand-assets/discord/`, 512×512 PNG, source HTML alongside). Keep new brand files in `brand-assets/`.
 
 ## Voice and content
 
