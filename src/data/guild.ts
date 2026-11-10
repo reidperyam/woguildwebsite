@@ -20,8 +20,13 @@ export const guild = {
 
   recruiting: {
     open: true,
-    summary: 'Every class. Every spec. If you want to run low-level battlegrounds with us, we want to hear from you.',
-    rows: [{ label: 'All classes', value: 'All specs' }],
+    bracket: 'Level 39',
+    summary: 'We are recruiting for Level 39 battlegrounds. Every class. Every spec. If you want to run 39s with us, we want to hear from you.',
+    rows: [
+      { label: 'Bracket', value: 'Level 39' },
+      { label: 'Classes', value: 'All' },
+      { label: 'Specs', value: 'All' },
+    ],
   },
 
   expectations: ['[EXPECTATION]', '[EXPECTATION]', '[EXPECTATION]'],
@@ -30,7 +35,7 @@ export const guild = {
   applySteps: [
     { title: 'Join the Discord', text: 'Say hello and tell us what you play.' },
     { title: '[APPLY STEP]', text: '[Post in #applications, or fill out the form.]' },
-    { title: '[TRIAL STEP]', text: '[Queue into battlegrounds with us for a trial period.]' },
+    { title: '[TRIAL STEP]', text: '[Queue into Level 39 battlegrounds with us for a trial period.]' },
   ],
 };
 

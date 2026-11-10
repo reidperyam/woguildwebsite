@@ -11,7 +11,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 | Region | North America |
 | Faction | Horde |
 | Focus | Low-level PvP in Battlegrounds, and nothing else (no raiding, no raid schedule) |
-| Recruiting | Open to all classes and specs |
+| Recruiting | Open, for Level 39 battlegrounds, all classes and specs |
 | Discord invite | [DISCORD INVITE] |
 | Tagline | For enjoyers of lower-level PvP in World of Warcraft |
 | Battle cry | HAROOOO! |
@@ -29,8 +29,8 @@ Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Recruitment
 
-1. **Status header:** RECRUITMENT IS OPEN with an OPEN chip. "Every class. Every spec. If you want to run low-level battlegrounds with us, we want to hear from you."
-2. **RecruitCard:** a single row, ALL CLASSES · ALL SPECS, with the footer "Focus · Low-level Battlegrounds".
+1. **Status header:** an OPEN chip and RECRUITING FOR LEVEL 39 BATTLEGROUNDS. "We are recruiting for Level 39 battlegrounds. Every class. Every spec. If you want to run 39s with us, we want to hear from you."
+2. **RecruitCard:** rows BRACKET · LEVEL 39, CLASSES · ALL, SPECS · ALL, with the footer "Focus · Low-level Battlegrounds".
 3. **What we expect:** [EXPECTATIONS]
 4. **What you get:** [PERKS]
 5. **How to apply:** three numbered steps. 1. Join the Discord. 2. [APPLY STEP]. 3. [TRIAL STEP]. Then the APPLY button (or "[DISCORD INVITE] coming soon" until the invite exists).

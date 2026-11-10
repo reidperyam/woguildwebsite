@@ -4,11 +4,13 @@ import RecruitCard from '../components/RecruitCard.astro';
 import { guild } from '../data/guild';
 ---
 
-<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec for low-level battleground PvP. ${guild.faction}, ${guild.game}, ${guild.region}.`}>
+<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec for ${guild.recruiting.bracket} battlegrounds. ${guild.faction}, ${guild.game}, ${guild.region}.`}>
   <div class="wrap page">
     <section class="intro" aria-labelledby="rec-title">
       <span class:list={['chip', { 'chip-off': !guild.recruiting.open }]}>{guild.recruiting.open ? 'Open' : 'Closed'}</span>
-      <h1 id="rec-title">Recruitment is <span class="accent">{guild.recruiting.open ? 'open' : 'closed'}</span></h1>
+      {guild.recruiting.open
+        ? <h1 id="rec-title">Recruiting for <span class="accent">{guild.recruiting.bracket}</span> battlegrounds</h1>
+        : <h1 id="rec-title">Recruitment is <span class="accent">closed</span></h1>}
       <p class="lead">{guild.recruiting.summary}</p>
     </section>
 
