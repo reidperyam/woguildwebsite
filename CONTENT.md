@@ -56,6 +56,8 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 - **Capitulum IV, The Beatitudes of the Battleground:** built from the recruitment expectations.
 - **A Prayer Before Queueing:** ends in HAROOOO! Amen.
 - **Closing band:** "Join the faithful. Grab three."
+- **Light a Votive Candle:** "One for every flag delivered from evil. Light all twelve, and the Saint may grant a miracle." When all twelve are lit: "A miracle! The Saint is pleased. HAROOOO!"
+- **Hints:** "Psst: click anywhere in the heavens to release a dove." on the hero, and a colophon line, "Legend holds that whoever types the Saint's battle cry shall witness a miracle."
 
 ## Open questions for the guild
 

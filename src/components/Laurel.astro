@@ -1,0 +1,41 @@
+---
+// A gilded laurel branch drawn along a curve. Mirror it with the `right` side.
+interface Props { side: 'left' | 'right' }
+const { side } = Astro.props;
+
+const P0 = { x: 92, y: 292 }, P1 = { x: 0, y: 150 }, P2 = { x: 92, y: 10 };
+const at = (t: number) => ({
+  x: (1 - t) ** 2 * P0.x + 2 * (1 - t) * t * P1.x + t * t * P2.x,
+  y: (1 - t) ** 2 * P0.y + 2 * (1 - t) * t * P1.y + t * t * P2.y,
+});
+const tangent = (t: number) => ({
+  x: 2 * (1 - t) * (P1.x - P0.x) + 2 * t * (P2.x - P1.x),
+  y: 2 * (1 - t) * (P1.y - P0.y) + 2 * t * (P2.y - P1.y),
+});
+
+const n = 12;
+const leaves: { cx: number; cy: number; rot: number; ry: number }[] = [];
+const berries: { cx: number; cy: number }[] = [];
+for (let i = 1; i <= n; i++) {
+  const t = i / (n + 1);
+  const p = at(t);
+  const d = tangent(t);
+  const base = (Math.atan2(d.y, d.x) * 180) / Math.PI;
+  const ry = 15 - t * 5;
+  for (const s of [-1, 1]) {
+    const a = base + s * 38;
+    const r = (a * Math.PI) / 180;
+    leaves.push({ cx: p.x + Math.cos(r) * (ry * 0.75), cy: p.y + Math.sin(r) * (ry * 0.75), rot: a - 90, ry });
+  }
+  if (i % 3 === 0) berries.push({ cx: p.x + 3, cy: p.y });
+}
+const stem = `M${P0.x} ${P0.y} Q${P1.x} ${P1.y} ${P2.x} ${P2.y}`;
+---
+
+<svg class:list={['laurel', side]} viewBox="0 0 120 300" aria-hidden="true" focusable="false">
+  <path d={stem} fill="none" stroke="#9a6b12" stroke-width="3" stroke-linecap="round" />
+  {leaves.map((l) => (
+    <ellipse cx={l.cx.toFixed(1)} cy={l.cy.toFixed(1)} rx={(l.ry * 0.36).toFixed(1)} ry={l.ry.toFixed(1)} transform={`rotate(${l.rot.toFixed(1)} ${l.cx.toFixed(1)} ${l.cy.toFixed(1)})`} fill="url(#orn-gold)" stroke="#9a6b12" stroke-width="1" />
+  ))}
+  {berries.map((b) => <circle cx={b.cx.toFixed(1)} cy={b.cy.toFixed(1)} r="4" fill="#7a0f1f" stroke="#e8c15a" stroke-width="1.5" />)}
+</svg>

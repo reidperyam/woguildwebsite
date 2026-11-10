@@ -1,0 +1,68 @@
+---
+// One hidden SVG sprite of baroque ornaments for the Cathedral. Use with <svg><use href="#orn-…" /></svg>.
+const petals = Array.from({ length: 8 }, (_, i) => i * 45);
+---
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="orn-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1b8" />
+      <stop offset="0.45" stop-color="#e8c15a" />
+      <stop offset="1" stop-color="#9a6b12" />
+    </linearGradient>
+
+    <!-- Acanthus corner: drawn for the top-left corner; mirror for the others. -->
+    <symbol id="orn-corner" viewBox="0 0 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
+        <path d="M10 112 C10 52 52 10 112 10" />
+        <path d="M112 10 c-14 -2 -22 10 -14 18 c6 6 16 0 10 -8" />
+        <path d="M10 112 c-2 -14 10 -22 18 -14 c6 6 0 16 -8 10" />
+        <path d="M26 86 C28 56 56 28 86 26" stroke-width="2" />
+        <path d="M44 46 C56 34 70 36 76 44" stroke-width="2" />
+        <path d="M46 44 C34 56 36 70 44 76" stroke-width="2" />
+      </g>
+      <g fill="currentColor">
+        <path d="M32 62 q-3 -18 15 -25 q-2 18 -15 25z" />
+        <path d="M62 32 q-18 -3 -25 15 q18 -2 25 -15z" />
+        <path d="M48 78 q4 -15 22 -15 q-6 15 -22 15z" />
+        <path d="M78 48 q-15 4 -15 22 q15 -6 15 -22z" />
+        <circle cx="22" cy="22" r="7" />
+        <circle cx="40" cy="18" r="3.2" />
+        <circle cx="18" cy="40" r="3.2" />
+        <circle cx="98" cy="24" r="2.6" />
+        <circle cx="24" cy="98" r="2.6" />
+      </g>
+    </symbol>
+
+    <!-- Scrollwork divider with a central rosette. -->
+    <g id="orn-arm">
+      <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <path d="M214 30 C236 30 244 14 264 14 C284 14 290 34 310 34 C328 34 336 22 352 22 C366 22 372 32 364 38 C358 42 350 36 356 31" />
+        <path d="M232 30 c6 8 16 10 22 4" stroke-width="1.8" />
+      </g>
+      <g fill="currentColor">
+        <path d="M246 22 q6 -14 20 -12 q-8 12 -20 12z" />
+        <path d="M290 30 q8 12 22 8 q-10 -10 -22 -8z" />
+        <path d="M330 24 q4 -10 14 -10 q-4 10 -14 10z" />
+        <circle cx="380" cy="30" r="3" />
+        <circle cx="392" cy="30" r="2" />
+      </g>
+    </g>
+    <symbol id="orn-divider" viewBox="0 0 400 60">
+      <use href="#orn-arm" />
+      <use href="#orn-arm" transform="translate(400 0) scale(-1 1)" />
+      <g fill="currentColor">
+        {petals.map((a) => <ellipse cx="200" cy="17" rx="5" ry="11" transform={`rotate(${a} 200 30)`} />)}
+      </g>
+      <circle cx="200" cy="30" r="7" fill="#7a0f1f" stroke="currentColor" stroke-width="2.5" />
+    </symbol>
+
+    <!-- A small rosette for frame corners. -->
+    <symbol id="orn-rosette" viewBox="0 0 40 40">
+      <g fill="currentColor">
+        {petals.map((a) => <ellipse cx="20" cy="9" rx="4" ry="8" transform={`rotate(${a} 20 20)`} />)}
+      </g>
+      <circle cx="20" cy="20" r="6" fill="#7a0f1f" stroke="currentColor" stroke-width="2" />
+    </symbol>
+  </defs>
+</svg>

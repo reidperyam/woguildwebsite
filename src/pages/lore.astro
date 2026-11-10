@@ -1,18 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RelicCard from '../components/RelicCard.astro';
+import Ornaments from '../components/Ornaments.astro';
+import Laurel from '../components/Laurel.astro';
+import Dove from '../components/Dove.astro';
 import '../styles/cathedral.css';
+import '../styles/cathedral-whimsy.css';
 import { guild, discordHref } from '../data/guild';
 import { chapters, intro, librarian, catalogued, feastDay, ordinals, epithets, beatitudes, prayer } from '../data/lore';
 
 const relicCount = chapters.reduce((n, c) => n + c.relics.length, 0);
 let relicIndex = 0;
+const corners = ['tl', 'tr', 'bl', 'br'];
+
+// Ambient layers. Positions are fixed so the page renders the same every time.
 const sparkles = [
   { x: 8, y: 18, s: 22, d: 3.2, delay: 0 }, { x: 18, y: 62, s: 14, d: 2.6, delay: 0.8 },
   { x: 28, y: 30, s: 18, d: 3.8, delay: 1.4 }, { x: 72, y: 24, s: 20, d: 3, delay: 0.4 },
   { x: 84, y: 56, s: 16, d: 2.8, delay: 1.1 }, { x: 92, y: 14, s: 24, d: 4, delay: 0.2 },
   { x: 62, y: 70, s: 12, d: 2.4, delay: 1.8 }, { x: 40, y: 12, s: 14, d: 3.4, delay: 2.2 },
 ];
+// Three depths of doves: far (small, slow, faint), middle, near (large, fast).
+const birds = [
+  { y: 12, w: 26, dur: 46, delay: -4, flap: 0.5, o: 0.55, rtl: false },
+  { y: 22, w: 22, dur: 52, delay: -30, flap: 0.55, o: 0.5, rtl: true },
+  { y: 8, w: 30, dur: 40, delay: -18, flap: 0.5, o: 0.6, rtl: false },
+  { y: 34, w: 42, dur: 30, delay: -9, flap: 0.42, o: 0.85, rtl: true },
+  { y: 18, w: 46, dur: 27, delay: -21, flap: 0.4, o: 0.9, rtl: false },
+  { y: 48, w: 64, dur: 20, delay: -6, flap: 0.34, o: 1, rtl: false },
+  { y: 28, w: 72, dur: 22, delay: -15, flap: 0.32, o: 1, rtl: true },
+];
+const petals = Array.from({ length: 16 }, (_, i) => ({
+  x: (i * 61) % 100, s: 10 + ((i * 7) % 8), dur: 11 + ((i * 5) % 9), delay: -((i * 3.7) % 18), hue: 330 + ((i * 11) % 30), sway: 40 + ((i * 13) % 60),
+}));
+const motes = Array.from({ length: 22 }, (_, i) => ({
+  x: (i * 37 + 11) % 100, s: 2 + (i % 4), dur: 14 + ((i * 7) % 12), delay: -((i * 2.3) % 20),
+}));
+const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) }));
 ---
 
 <BaseLayout title="Lore" description="The most holy and glorious life of Saint Hornatius Orgasmahowl: his deeds, his three temptations and his mysteries, with the Beatitudes of the Battleground.">
@@ -20,14 +44,33 @@ const sparkles = [
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap" />
   </Fragment>
 
+  <Ornaments />
+  <template id="dove-template"><Dove /></template>
+
   <div class="cathedral">
-    <section class="heaven" aria-labelledby="lore-title">
+    <div class="ambient" aria-hidden="true">
+      {petals.map((p) => <span class="petal" style={`left:${p.x}%;--s:${p.s}px;--dur:${p.dur}s;--delay:${p.delay}s;--hue:${p.hue};--sway:${p.sway}px`}></span>)}
+      {motes.map((m) => <span class="mote" style={`left:${m.x}%;--s:${m.s}px;--dur:${m.dur}s;--delay:${m.delay}s`}></span>)}
+    </div>
+
+    <section class="heaven" aria-labelledby="lore-title" data-sky>
       <div class="rays" aria-hidden="true"></div>
+      <div class="rays rays-2" aria-hidden="true"></div>
       <div class="sparkles" aria-hidden="true">
         {sparkles.map((s) => <span style={`left:${s.x}%;top:${s.y}%;--s:${s.s}px;--d:${s.d}s;--delay:${s.delay}s`}>✦</span>)}
       </div>
+      <div class="flock" aria-hidden="true">
+        {birds.map((b) => (
+          <div class:list={['bird', { rtl: b.rtl }]} style={`top:${b.y}%;--w:${b.w}px;--dur:${b.dur}s;--delay:${b.delay}s;--flap:${b.flap}s;opacity:${b.o}`}>
+            <div class="bird-bob"><Dove /></div>
+          </div>
+        ))}
+      </div>
+      <div class="clouds clouds-back" aria-hidden="true"></div>
       <div class="clouds" aria-hidden="true"></div>
       <div class="wrap heaven-inner">
+        <Laurel side="left" />
+        <Laurel side="right" />
         <p class="here">Here beginneth</p>
         <h1 id="lore-title" class="holy-title">
           <span class="t-small">The most holy &amp; glorious life of</span>
@@ -36,6 +79,7 @@ const sparkles = [
           <span class="t-name">Orgasma&shy;howl</span>
         </h1>
         <p class="ribbon">Haroooo in Excelsis</p>
+        <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
         <p class="subtitle">Being a most faithful, reverent &amp; entirely accurate account of the Deeds, Temptations &amp; Mysteries of the most wonderful, holy and virtuous Orc who ever lived.</p>
         <ul class="vitals">
           <li>Feast Day · {feastDay}</li>
@@ -43,6 +87,7 @@ const sparkles = [
           <li>{relicCount} Holy Relics</li>
         </ul>
         <button type="button" class="holy-btn" data-choir>✦ Summon the Heavenly Choir ✦</button>
+        <p class="sky-hint">Psst: click anywhere in the heavens to release a dove.</p>
       </div>
     </section>
 
@@ -54,6 +99,9 @@ const sparkles = [
 
     <div class="wrap nave">
       <section class="proem" aria-label="Introduction">
+        {corners.map((c) => <svg class:list={['corner', c]} aria-hidden="true"><use href="#orn-corner" /></svg>)}
+        <svg class="crest" aria-hidden="true"><use href="#orn-divider" /></svg>
+        <svg class="crest bottom" aria-hidden="true"><use href="#orn-divider" /></svg>
         {intro.map((p, i) => <p class:list={{ illuminated: i === 0 }}>{p}</p>)}
         <p class="signature">Catalogued by {librarian}</p>
       </section>
@@ -72,7 +120,7 @@ const sparkles = [
           <header class="chapter-head">
             <p class="cap">Capitulum {c.numeral}</p>
             <h2 id={`${c.id}-title`} class="chapter-title">{c.title}</h2>
-            <div class="flourish" aria-hidden="true">❦</div>
+            <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
           </header>
           {c.relics.map((r) => {
             const i = relicIndex++;
@@ -82,8 +130,10 @@ const sparkles = [
       ))}
 
       <section class="tablet" aria-labelledby="beatitudes-title">
+        {['bl', 'br'].map((c) => <svg class:list={['corner', c]} aria-hidden="true"><use href="#orn-corner" /></svg>)}
         <p class="cap">Capitulum IV</p>
         <h2 id="beatitudes-title" class="chapter-title">The Beatitudes of the Battleground</h2>
+        <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
         <ul class="beatitudes">
           {beatitudes.map((b) => (
             <li><span class="blessed">{b.blessed}</span><span class="promise">{b.promise}</span></li>
@@ -95,18 +145,47 @@ const sparkles = [
         <header class="chapter-head">
           <p class="cap">To be recited before every queue</p>
           <h2 id="prayer-title" class="chapter-title">A Prayer Before Queueing</h2>
-          <div class="flourish" aria-hidden="true">❦</div>
+          <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
         </header>
         <p class="prayer-lines">{prayer.map((l) => <span>{l}</span>)}</p>
         <p class="great-cry">{guild.battleCry}</p>
         <p class="amen">Amen.</p>
       </section>
 
-      <p class="colophon">More relics are surely out there. If you find one, bring it to the Librarian. Originally catalogued {catalogued}.</p>
+      <section class="votive" aria-labelledby="votive-title">
+        <header class="chapter-head">
+          <p class="cap">For the faithful</p>
+          <h2 id="votive-title" class="chapter-title">Light a Votive Candle</h2>
+          <svg class="divider" aria-hidden="true"><use href="#orn-divider" /></svg>
+        </header>
+        <p class="votive-intro">One for every flag delivered from evil. Light all twelve, and the Saint may grant a miracle.</p>
+        <div class="rack">
+          {candles.map((c, i) => (
+            <button type="button" class="candle" data-candle={i} aria-pressed="false" aria-label={`Candle ${i + 1}`} style={`--h:${c.h}px`}>
+              <span class="flame" aria-hidden="true"></span>
+              <span class="wick" aria-hidden="true"></span>
+              <span class="wax" aria-hidden="true"></span>
+            </button>
+          ))}
+        </div>
+        <svg class="rack-base" aria-hidden="true"><use href="#orn-divider" /></svg>
+        <p class="votive-count" aria-live="polite"><span data-candle-count>0</span> of {candles.length} candles lit</p>
+        <p class="miracle" data-miracle hidden>A miracle! The Saint is pleased. HAROOOO!</p>
+        <button type="button" class="holy-btn crimson small" data-snuff>Snuff the candles</button>
+      </section>
+
+      <p class="colophon">More relics are surely out there. If you find one, bring it to the Librarian. Originally catalogued {catalogued}.<br />Legend holds that whoever types the Saint’s battle cry shall witness a miracle.</p>
     </div>
 
-    <section class="glory" aria-labelledby="glory-title">
+    <section class="glory" aria-labelledby="glory-title" data-sky>
       <div class="rays" aria-hidden="true"></div>
+      <div class="flock" aria-hidden="true">
+        {birds.slice(3).map((b) => (
+          <div class:list={['bird', { rtl: !b.rtl }]} style={`top:${b.y}%;--w:${b.w}px;--dur:${b.dur + 4}s;--delay:${b.delay - 3}s;--flap:${b.flap}s;opacity:${b.o}`}>
+            <div class="bird-bob"><Dove /></div>
+          </div>
+        ))}
+      </div>
       <div class="wrap glory-inner">
         <h2 id="glory-title" class="glory-cry">{guild.battleCry}</h2>
         <p>Join the faithful. Grab three.</p>
@@ -116,64 +195,11 @@ const sparkles = [
         </div>
       </div>
     </section>
+
+    <div class="fx-layer" aria-hidden="true"></div>
   </div>
 </BaseLayout>
 
 <script>
-  // The Heavenly Choir: a synthesized plagal "A-men" cadence (F major, then C major), made with Web Audio.
-  let ctx: AudioContext | null = null;
-  let singing = false;
-
-  function chord(ac: AudioContext, out: AudioNode, freqs: number[], start: number, dur: number) {
-    for (const f of freqs) {
-      for (const detune of [-8, 0, 8]) {
-        const osc = ac.createOscillator();
-        osc.type = 'sawtooth';
-        osc.frequency.value = f;
-        osc.detune.value = detune;
-        const vibrato = ac.createOscillator();
-        vibrato.frequency.value = 5 + Math.random();
-        const depth = ac.createGain();
-        depth.gain.value = 6;
-        vibrato.connect(depth).connect(osc.detune);
-        const g = ac.createGain();
-        g.gain.setValueAtTime(0, start);
-        g.gain.linearRampToValueAtTime(0.05, start + 0.35);
-        g.gain.setValueAtTime(0.05, start + dur - 0.3);
-        g.gain.linearRampToValueAtTime(0, start + dur);
-        osc.connect(g).connect(out);
-        osc.start(start); vibrato.start(start);
-        osc.stop(start + dur + 0.05); vibrato.stop(start + dur + 0.05);
-      }
-    }
-  }
-
-  function sing() {
-    if (singing) return;
-    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!AC) return;
-    ctx ??= new AC();
-    void ctx.resume();
-    singing = true;
-    const now = ctx.currentTime + 0.05;
-    // "Aah" vowel: a lowpass plus a formant bump around 900 Hz.
-    const lowpass = ctx.createBiquadFilter();
-    lowpass.type = 'lowpass'; lowpass.frequency.value = 2200; lowpass.Q.value = 0.5;
-    const formant = ctx.createBiquadFilter();
-    formant.type = 'peaking'; formant.frequency.value = 900; formant.gain.value = 8; formant.Q.value = 1.2;
-    const master = ctx.createGain();
-    master.gain.value = 0.5;
-    lowpass.connect(formant).connect(master).connect(ctx.destination);
-
-    chord(ctx, lowpass, [174.61, 220.0, 261.63, 349.23], now, 1.9);        // A-
-    chord(ctx, lowpass, [130.81, 196.0, 261.63, 329.63, 523.25], now + 1.8, 2.8); // -men
-
-    document.documentElement.classList.add('choir-on');
-    window.setTimeout(() => {
-      document.documentElement.classList.remove('choir-on');
-      singing = false;
-    }, 4700);
-  }
-
-  document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', sing));
+  import '../scripts/cathedral';
 </script>

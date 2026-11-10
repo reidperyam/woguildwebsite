@@ -131,6 +131,27 @@ The Lore page (`/lore`) deliberately breaks the brutalist rules above. Inside th
 - **Type:** Cinzel Decorative (Roman capitals for titles, plaques and buttons), IM Fell English (old-print body and italics), UnifrakturMaguntia (blackletter drop caps, "Here beginneth", "Amen.").
 - **Pieces:** a sunburst-and-clouds hero with a halo over the name, a crimson ribbon reading HAROOOO IN EXCELSIS, a scrolling litany of the Saint's titles, a parchment proem, stained-glass chapter windows, relics in gilded frames with glowing halos and Latin plaques ("Reliquia Prima"), illuminated drop caps, scroll-style pull quotes, an arched Beatitudes tablet, a Prayer Before Queueing, and a golden closing band.
 - **Shape:** rounded corners are allowed here (pill buttons, arched windows and tablet).
-- **The Heavenly Choir:** a button synthesizes an "A-men" chord in the browser with Web Audio and makes the sunbeams blaze. It only plays on click.
-- **Motion:** slowly rotating rays, twinkling sparkles, a bobbing halo and the litany marquee. All of it stops under `prefers-reduced-motion`.
+- **Adornments:** inline SVG ornaments live in `src/components/Ornaments.astro`:
+  - acanthus-scroll corners on every parchment card,
+  - a scrollwork crest across the top edge of each card,
+  - rosettes on the corners of the gilt frames,
+  - rosette-and-scroll dividers under every heading,
+  - laurel branches framing the hero (`Laurel.astro`).
+- **Layered motion:**
+  - two counter-rotating sets of sunbeams,
+  - doves (`Dove.astro`) flapping across the sky at three depths,
+  - two layers of swaying clouds,
+  - rose petals falling and golden dust rising across the whole page,
+  - a glint of light sweeping across each gilt frame,
+  - frames that tilt on hover,
+  - the halo pulse and the litany marquee.
+- **Whimsy** (`src/scripts/cathedral.ts`, with sounds from `src/scripts/holy-audio.ts`, all synthesized with Web Audio):
+  - **The Heavenly Choir:** an "A-men" chord that blazes the sunbeams and releases doves and a shower of petals.
+  - **Click the sky:** releases a dove with a bell chime.
+  - **Click a relic to venerate it:** a harp flourish, a sparkle-and-heart burst and a per-relic count.
+  - **Votive candles:** twelve candles that each ring a bell. Lighting all twelve triggers a miracle: the choir, a golden flash and a giant HAROOOO!
+  - **The hidden miracle:** typing "haroooo" triggers the rapture, in which the page levitates and a flock of doves swarms up.
+  - **Saved state:** venerations and candles are remembered in the viewer's own browser (localStorage), and the page works without it.
+  - **Sound:** only ever plays after a click or keypress.
+- **Reduced motion:** under `prefers-reduced-motion`, doves, petals, dust and all ambient animation are hidden or stopped. The sounds and counters still work.
 - **Contrast:** dark text sits on light (crimson or brown on parchment and cream, with glow shadows in the sky); light text sits on dark (gold or parchment on night).

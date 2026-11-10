@@ -10,17 +10,25 @@ interface Props {
 const { relic, ordinal, flip = false } = Astro.props;
 const firstP = relic.blocks.findIndex((b) => 'p' in b);
 const english = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh'][Number(relic.no) - 1] ?? relic.no;
+const corners = ['tl', 'tr', 'bl', 'br'];
 ---
 
 <article class:list={['relic', { flip }]} id={relic.id} aria-labelledby={`${relic.id}-title`}>
   <figure class="relic-figure">
     <div class="halo" aria-hidden="true"></div>
-    <div class="gilt">
+    <button type="button" class="gilt" data-venerate={relic.id} aria-label={`Venerate the relic: ${relic.title}`}>
       <Image src={relic.image} alt={relic.alt} />
-    </div>
-    <figcaption class="plaque">Reliquia {ordinal} · No. {relic.no}</figcaption>
+      <span class="sheen" aria-hidden="true"></span>
+      {corners.map((c) => <svg class:list={['rosette', c]} aria-hidden="true"><use href="#orn-rosette" /></svg>)}
+    </button>
+    <figcaption class="plaque">
+      <span>Reliquia {ordinal} · No. {relic.no}</span>
+      <span class="venerations" data-venerations={relic.id} aria-live="polite">Click the relic to venerate</span>
+    </figcaption>
   </figure>
   <div class="parchment">
+    {corners.map((c) => <svg class:list={['corner', c]} aria-hidden="true"><use href="#orn-corner" /></svg>)}
+    <svg class="crest" aria-hidden="true"><use href="#orn-divider" /></svg>
     <p class="relic-kicker">✦ Relic the {english} ✦</p>
     <h3 id={`${relic.id}-title`} class="relic-title">{relic.title}</h3>
     <div class="relic-body">
@@ -42,17 +50,20 @@ const english = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Sevent
 
 <style>
   /* Cathedral relic card. Tokens come from cathedral.css. */
-  .relic { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .relic { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 80px); align-items: center; }
   .relic.flip .relic-figure { order: 2; }
 
-  .relic-figure { position: relative; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .relic-figure { position: relative; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 22px; perspective: 900px; }
   .halo {
     position: absolute; inset: -18% -22%; z-index: 0; pointer-events: none;
     background: radial-gradient(closest-side, var(--c-glow) 0%, rgba(255, 226, 140, 0.25) 45%, transparent 72%);
     animation: halo-pulse 5s ease-in-out infinite;
+    transition: filter 0.4s ease;
   }
+  .relic-figure:hover .halo { filter: brightness(1.35); }
   .gilt {
-    position: relative; z-index: 1; padding: 14px;
+    position: relative; z-index: 1; display: block; padding: 14px; overflow: visible;
+    font: inherit; color: inherit; border: 0; cursor: pointer;
     background: linear-gradient(135deg, var(--c-gold-hi), var(--c-gold) 30%, var(--c-gold-lo) 55%, var(--c-gold) 75%, var(--c-gold-hi));
     box-shadow:
       0 0 0 3px var(--c-gold-lo),
@@ -60,17 +71,32 @@ const english = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Sevent
       0 0 0 10px var(--c-gold-lo),
       0 0 50px 10px rgba(255, 214, 120, 0.55),
       inset 0 0 0 3px var(--c-gold-lo);
+    transition: transform 0.5s cubic-bezier(.2, .8, .2, 1);
   }
+  .relic-figure:hover .gilt { transform: rotateY(-5deg) rotateX(3deg) scale(1.02); }
+  .relic.flip .relic-figure:hover .gilt { transform: rotateY(5deg) rotateX(3deg) scale(1.02); }
+  .gilt:focus-visible { outline: 4px solid var(--c-crimson); outline-offset: 14px; }
   .gilt :global(img) { display: block; width: auto; max-width: 100%; max-height: 640px; box-shadow: inset 0 0 0 2px rgba(0,0,0,0.4); }
+  .sheen {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 240, 0.55) 50%, transparent 58%);
+    background-size: 300% 100%; background-repeat: no-repeat; mix-blend-mode: screen;
+    animation: sheen 7s ease-in-out infinite;
+  }
+  .rosette { position: absolute; width: 34px; height: 34px; color: var(--c-gold-hi); filter: drop-shadow(0 0 4px rgba(255, 220, 120, 0.9)); }
+  .rosette.tl { top: -19px; left: -19px; } .rosette.tr { top: -19px; right: -19px; }
+  .rosette.bl { bottom: -19px; left: -19px; } .rosette.br { bottom: -19px; right: -19px; }
+
   .plaque {
-    position: relative; z-index: 1; padding: 6px 18px;
+    position: relative; z-index: 1; padding: 6px 20px; display: flex; flex-direction: column; align-items: center; gap: 2px;
     font-family: var(--f-roman); font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--c-brown); background: linear-gradient(180deg, var(--c-gold-hi), var(--c-gold));
     border: 2px solid var(--c-gold-lo); box-shadow: 0 2px 0 var(--c-gold-lo);
   }
+  .venerations { font-family: var(--f-print); font-style: italic; font-weight: 400; font-size: 13px; letter-spacing: 0.02em; text-transform: none; color: var(--c-crimson); }
 
   .parchment {
-    position: relative; min-width: 0; padding: clamp(28px, 4vw, 56px);
+    position: relative; min-width: 0; padding: clamp(36px, 4vw, 60px);
     color: var(--c-brown); font-family: var(--f-print); font-size: clamp(18px, 1.5vw, 21px); line-height: 1.65;
     background:
       radial-gradient(ellipse at center, transparent 55%, rgba(120, 72, 20, 0.22) 100%),
@@ -101,7 +127,12 @@ const english = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Sevent
   .relic-body :global(.cry) { font-family: var(--f-roman); font-weight: 900; color: var(--c-crimson); letter-spacing: 0.04em; }
 
   @keyframes halo-pulse { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
-  @media (prefers-reduced-motion: reduce) { .halo { animation: none; } }
+  @keyframes sheen { 0%, 55% { background-position: 150% 0; } 85%, 100% { background-position: -50% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .halo, .sheen { animation: none; }
+    .sheen { display: none; }
+    .relic-figure:hover .gilt, .relic.flip .relic-figure:hover .gilt { transform: none; }
+  }
 
   @media (max-width: 860px) {
     .relic { grid-template-columns: minmax(0, 1fr); }
