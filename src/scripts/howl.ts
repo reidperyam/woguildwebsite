@@ -24,6 +24,15 @@ export interface HowlParams {
   reverb: number;       // 0–1 wet mix
   reverbSize: number;   // seconds
   volume: number;       // 0–1
+  wolfMix: number;      // 0–1 synthesized wolf pack volume (0 = off)
+  wolfPack: number;     // 1–6 wolves
+  wolfPitch: number;    // Hz, the lead wolf
+  wolfLength: number;   // seconds per wolf howl
+  realMix: number;      // 0–1 recorded wolf volume (0 = off)
+  realPitch: number;    // playback speed of the recording (pitch and length together)
+  realLength: number;   // seconds of the recording to use
+  wolfEntry: number;    // seconds: negative = wolves start before you, positive = they answer after
+  wolfDistance: number; // 0 close – 1 far across the valley
 }
 
 export interface HowlControl {
@@ -56,6 +65,16 @@ export const HOWL_CONTROLS: HowlControl[] = [
   { key: 'spread', label: 'Spread', group: 'Pack', min: 0, max: 50, step: 1, unit: '¢' },
   { key: 'reverb', label: 'Cathedral', group: 'Space', min: 0, max: 1, step: 0.01 },
   { key: 'reverbSize', label: 'Hall size', group: 'Space', min: 0.5, max: 6, step: 0.1, unit: 's' },
+  // Wolves. Appended last so older share links still decode.
+  { key: 'wolfMix', label: 'Synth wolves', group: 'Synth wolves', min: 0, max: 1, step: 0.01 },
+  { key: 'wolfPack', label: 'Pack size', group: 'Synth wolves', min: 1, max: 6, step: 1 },
+  { key: 'wolfPitch', label: 'Wolf pitch', group: 'Synth wolves', min: 250, max: 900, step: 5, unit: 'Hz' },
+  { key: 'wolfLength', label: 'Wolf howl length', group: 'Synth wolves', min: 1, max: 6, step: 0.1, unit: 's' },
+  { key: 'realMix', label: 'Real wolves', group: 'Real wolves (NPS)', min: 0, max: 1, step: 0.01 },
+  { key: 'realPitch', label: 'Recording pitch', group: 'Real wolves (NPS)', min: 0.6, max: 1.4, step: 0.01, unit: '×' },
+  { key: 'realLength', label: 'Recording length', group: 'Real wolves (NPS)', min: 1, max: 8.5, step: 0.1, unit: 's' },
+  { key: 'wolfEntry', label: 'Wolves enter', group: 'Wolf placement', min: -3, max: 4, step: 0.1, unit: 's' },
+  { key: 'wolfDistance', label: 'Distance', group: 'Wolf placement', min: 0, max: 1, step: 0.01 },
 ];
 
 /** The official site HAROOOO. Replace with settings copied from the Howl Lab. */
@@ -63,13 +82,24 @@ export const DEFAULT_HOWL: HowlParams = {
   pitch: 150, formant: 1, hLength: 0.12, aLength: 0.2, rLength: 0.13, oLength: 2.2,
   rise: 7, riseTime: 0.45, fall: 6, vibratoRate: 5.6, vibratoDepth: 40,
   breath: 0.3, gravel: 0.2, roll: 0.45, voices: 1, spread: 12, reverb: 0.45, reverbSize: 3.2, volume: 0.8,
+  // Wolves are off in the official cry.
+  wolfMix: 0, wolfPack: 3, wolfPitch: 480, wolfLength: 3, realMix: 0, realPitch: 1, realLength: 6, wolfEntry: 1.2, wolfDistance: 0.5,
+};
+
+/** Credit for the recorded wolves (public domain, U.S. federal work). */
+export const WOLF_RECORDING = {
+  url: '/sounds/wolf-howl-nps.mp3',
+  credit: 'Real wolf recording: National Park Service, Denali National Park & Preserve (public domain).',
+  source: 'https://www.nps.gov/subjects/sound/sounds-wolf.htm',
 };
 
 export const HOWL_PRESETS: Record<string, Partial<HowlParams>> = {
   Saint: {},
   Elder: { pitch: 85, formant: 0.8, gravel: 0.5, rise: 5, oLength: 2.8, vibratoDepth: 28, reverb: 0.6, reverbSize: 4.5 },
   Whelp: { pitch: 300, formant: 1.35, rise: 10, oLength: 1.4, riseTime: 0.3, gravel: 0.05, breath: 0.4, vibratoRate: 7 },
-  Werewolf: { pitch: 120, rise: 12, riseTime: 0.9, oLength: 3.6, fall: 10, vibratoDepth: 70, gravel: 0.35, roll: 0.2, reverb: 0.55 },
+  Werewolf: { pitch: 120, rise: 12, riseTime: 0.9, oLength: 3.6, fall: 10, vibratoDepth: 70, gravel: 0.35, roll: 0.2, reverb: 0.55, wolfMix: 0.55, wolfPack: 3, wolfEntry: 2.4, wolfDistance: 0.55 },
+  'Full Moon': { oLength: 2.6, reverb: 0.55, realMix: 0.75, realLength: 7, wolfMix: 0.35, wolfPack: 4, wolfEntry: 1.4, wolfDistance: 0.65 },
+  'Lone Wolf': { wolfMix: 0.8, wolfPack: 1, wolfPitch: 520, wolfLength: 3.4, wolfEntry: -2.6, wolfDistance: 0.35 },
   Choir: { voices: 6, spread: 20, gravel: 0.05, breath: 0.2, reverb: 0.75, reverbSize: 5, vibratoDepth: 30, oLength: 2.8 },
   Battlecry: { pitch: 175, hLength: 0.06, aLength: 0.14, rLength: 0.08, oLength: 1.6, rise: 4, gravel: 0.7, roll: 0.8, breath: 0.15, reverb: 0.3, voices: 3, spread: 15 },
 };
@@ -134,8 +164,96 @@ export function pitchAt(p: HowlParams, t: number): number {
   return end;
 }
 
+const wolvesOn = (p: HowlParams) => p.wolfMix > 0 || p.realMix > 0;
+// Positions of each wolf in the pack, in semitones from the lead, and how late each joins.
+const PACK_STEPS = [0, 4, -3, 7, 2, -5];
+const PACK_DELAYS = [0, 0.55, 1.05, 0.3, 1.5, 0.8];
+
+/** Seconds the voice waits so that wolves set to enter early can howl first. */
+export function voiceOffset(p: HowlParams): number {
+  return wolvesOn(p) ? Math.max(0, -p.wolfEntry) : 0;
+}
+/** Seconds after the start when the wolves come in. */
+export function wolfOffset(p: HowlParams): number {
+  return Math.max(0, p.wolfEntry);
+}
+
 export function howlDuration(p: HowlParams): number {
-  return p.hLength + p.aLength + p.rLength + p.oLength + 0.35;
+  let end = voiceOffset(p) + p.hLength + p.aLength + p.rLength + p.oLength + 0.35;
+  if (p.wolfMix > 0) end = Math.max(end, wolfOffset(p) + PACK_DELAYS[Math.max(0, p.wolfPack - 1)] + p.wolfLength * 1.15);
+  if (p.realMix > 0) end = Math.max(end, wolfOffset(p) + p.realLength / p.realPitch);
+  return end;
+}
+
+// ---------- The real wolves (NPS recording) ----------
+let wolfBuffer: AudioBuffer | null = null;
+let wolfLoading: Promise<boolean> | null = null;
+
+/** Fetches and decodes the wolf recording once. Resolves true when it is ready. */
+export function preloadWolf(): Promise<boolean> {
+  if (wolfBuffer) return Promise.resolve(true);
+  const ac = audio();
+  if (!ac) return Promise.resolve(false);
+  wolfLoading ??= fetch(WOLF_RECORDING.url)
+    .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(`HTTP ${r.status}`))))
+    .then((data) => ac.decodeAudioData(data))
+    .then((buf) => { wolfBuffer = buf; return true; })
+    .catch(() => { wolfLoading = null; return false; });
+  return wolfLoading;
+}
+
+// ---------- The synthesized wolves ----------
+function wolfVoice(ac: AudioContext, dest: AudioNode, f: number, start: number, len: number, vol: number) {
+  const stop = start + len + 0.1;
+  const amp = ac.createGain();
+  amp.gain.setValueAtTime(0, start);
+  amp.gain.linearRampToValueAtTime(vol, start + 0.18);
+  amp.gain.setValueAtTime(vol, start + len * 0.55);
+  amp.gain.linearRampToValueAtTime(vol * 0.75, start + len * 0.78);
+  amp.gain.linearRampToValueAtTime(0, start + len);
+  amp.connect(dest);
+
+  // The waver: vibrato that grows in once the howl is up.
+  const lfo = ac.createOscillator();
+  lfo.frequency.value = 4.6 + Math.random() * 1.4;
+  const depth = ac.createGain();
+  depth.gain.setValueAtTime(0, start);
+  depth.gain.linearRampToValueAtTime(16, start + Math.min(0.9, len * 0.4));
+  lfo.connect(depth);
+  lfo.start(start);
+  lfo.stop(stop);
+
+  // A nearly pure tone plus two quiet harmonics, all following the same slide up, hold and sag.
+  [[1, 'sine', 1], [2, 'sine', 0.26], [3, 'triangle', 0.06]].forEach(([mult, type, level]) => {
+    const osc = ac.createOscillator();
+    osc.type = type as OscillatorType;
+    const base = f * (mult as number);
+    osc.frequency.setValueAtTime(base * 0.72, start);
+    osc.frequency.exponentialRampToValueAtTime(base, start + 0.35);
+    osc.frequency.linearRampToValueAtTime(base * 1.04, start + len * 0.45);
+    osc.frequency.setValueAtTime(base * 1.04, start + len * 0.72);
+    osc.frequency.exponentialRampToValueAtTime(base * 0.68, start + len);
+    depth.connect(osc.detune);
+    const g = ac.createGain();
+    g.gain.value = level as number;
+    osc.connect(g).connect(amp);
+    osc.start(start);
+    osc.stop(stop);
+  });
+
+  // A breath of air around the tone.
+  const air = ac.createBufferSource();
+  air.buffer = noise(ac);
+  air.loop = true;
+  const band = ac.createBiquadFilter();
+  band.type = 'bandpass';
+  band.frequency.value = f * 1.5;
+  band.Q.value = 2;
+  const airGain = ac.createGain();
+  airGain.gain.value = 0.05;
+  air.connect(band).connect(airGain).connect(amp);
+  air.start(start, Math.random());
+  air.stop(stop);
 }
 
 /** Plays the HAROOOO. Returns its length in ms (including the reverb tail). */
@@ -143,7 +261,8 @@ export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: Analys
   const ac = audio();
   if (!ac) return 0;
   const p: HowlParams = { ...DEFAULT_HOWL, ...params };
-  const t0 = ac.currentTime + 0.06;
+  const base = ac.currentTime + 0.06;
+  const t0 = base + voiceOffset(p);
   const tH = t0 + p.hLength;
   const tA = tH + p.aLength;
   const tR = tA + p.rLength;
@@ -278,5 +397,52 @@ export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: Analys
     lfo.stop(stop);
   }
 
-  return Math.round((end - t0 + p.reverb * p.reverbSize * 0.6) * 1000);
+  // The wolves: a synthesized pack and/or the NPS recording, placed in time and distance.
+  if (wolvesOn(p)) {
+    const wolfStart = base + wolfOffset(p);
+    const far = ac.createBiquadFilter();
+    far.type = 'lowpass';
+    far.frequency.value = 7000 - p.wolfDistance * 5600;
+    far.Q.value = 0.5;
+    const wolfDry = ac.createGain();
+    wolfDry.gain.value = 1 - p.wolfDistance * 0.55;
+    const wolfSend = ac.createGain();
+    wolfSend.gain.value = 0.25 + p.wolfDistance * 0.9;
+    far.connect(wolfDry).connect(out);
+    far.connect(wolfSend).connect(verb);
+
+    if (p.wolfMix > 0) {
+      const n = Math.round(p.wolfPack);
+      const pack = ac.createGain();
+      pack.gain.value = (p.wolfMix * 0.45) / Math.sqrt(n);
+      pack.connect(far);
+      for (let i = 0; i < n; i++) {
+        const f = p.wolfPitch * 2 ** (PACK_STEPS[i % PACK_STEPS.length] / 12) * (1 + (Math.random() - 0.5) * 0.02);
+        const start = wolfStart + PACK_DELAYS[i % PACK_DELAYS.length] + (i ? Math.random() * 0.2 : 0);
+        const len = p.wolfLength * (i ? 0.85 + Math.random() * 0.3 : 1);
+        wolfVoice(ac, pack, f, start, len, 1);
+      }
+    }
+
+    if (p.realMix > 0) {
+      if (wolfBuffer) {
+        const src = ac.createBufferSource();
+        src.buffer = wolfBuffer;
+        src.playbackRate.value = p.realPitch;
+        const played = Math.min(p.realLength, wolfBuffer.duration / p.realPitch);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0, wolfStart);
+        g.gain.linearRampToValueAtTime(p.realMix * 1.3, wolfStart + 0.06);
+        g.gain.setValueAtTime(p.realMix * 1.3, wolfStart + Math.max(0.1, played - 0.6));
+        g.gain.linearRampToValueAtTime(0, wolfStart + played);
+        src.connect(g).connect(far);
+        src.start(wolfStart, 0, played * p.realPitch + 0.05);
+      } else {
+        void preloadWolf();
+      }
+    }
+  }
+
+  const total = howlDuration(p) + p.reverb * p.reverbSize * 0.6 + (wolvesOn(p) ? p.wolfDistance * 1.5 : 0);
+  return Math.round(total * 1000);
 }

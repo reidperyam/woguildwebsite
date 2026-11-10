@@ -1,7 +1,7 @@
 ---
 // The Howl Lab: make, name and share your own custom HAROOOO. Linked from the nav's Fun menu.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL } from '../scripts/howl';
+import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL, WOLF_RECORDING } from '../scripts/howl';
 
 const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
 ---
@@ -61,6 +61,7 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
           </fieldset>
         ))}
       </div>
+      <p class="label credit">Wolves: <strong>Synth wolves</strong> are synthesized live. <strong>Real wolves</strong> are a recording from the <a href={WOLF_RECORDING.source} rel="noopener">National Park Service</a> (Denali National Park &amp; Preserve, public domain). Try the <strong>Full Moon</strong> and <strong>Lone Wolf</strong> presets.</p>
     </section>
 
     <section aria-labelledby="share-title">
@@ -128,6 +129,8 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
   }
   textarea:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
   .settings-row { margin-top: var(--space-2); align-items: center; }
+  .credit { margin-top: var(--space-3); max-width: 90ch; line-height: 1.6; letter-spacing: 0.06em; }
+  .credit a { color: var(--accent); }
   .status { min-height: 1.4em; color: var(--signal); overflow-wrap: anywhere; }
 
   .received { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); background: var(--accent); color: var(--on-accent); }
@@ -157,7 +160,7 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
 </style>
 
 <script>
-  import { howl, howlDuration, pitchAt, DEFAULT_HOWL, HOWL_PRESETS, HOWL_CONTROLS, type HowlParams } from '../scripts/howl';
+  import { howl, howlDuration, pitchAt, voiceOffset, wolfOffset, preloadWolf, DEFAULT_HOWL, HOWL_PRESETS, HOWL_CONTROLS, type HowlParams } from '../scripts/howl';
   import { audio } from '../scripts/holy-audio';
 
   const KEY = 'wo-howl-lab';
@@ -200,14 +203,30 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
     g.lineWidth = 1;
     for (let i = 1; i < 4; i++) { g.beginPath(); g.moveTo(0, (H * i) / 4); g.lineTo(W, (H * i) / 4); g.stroke(); }
     const dur = howlDuration(params);
+    const vo = voiceOffset(params);
+    const voiceEnd = vo + params.hLength + params.aLength + params.rLength + params.oLength + 0.35;
+    // Wolves: a shaded band where they howl.
+    if (params.wolfMix > 0 || params.realMix > 0) {
+      const ws = wolfOffset(params);
+      const we = Math.max(params.wolfMix > 0 ? ws + params.wolfLength * 1.15 : 0, params.realMix > 0 ? ws + params.realLength / params.realPitch : 0);
+      g.fillStyle = 'rgba(253, 235, 145, 0.12)';
+      g.fillRect((ws / dur) * W, H - 34, ((we - ws) / dur) * W, 34);
+      g.fillStyle = 'rgba(253, 235, 145, 0.85)';
+      g.font = '800 13px "Martian Mono", monospace';
+      g.fillText('WOLVES', (ws / dur) * W + 6, H - 12);
+    }
     const maxMul = Math.max(2 ** (params.rise / 12), 1) * 1.08;
     g.strokeStyle = ACCENT;
     g.lineWidth = 4;
     g.beginPath();
+    let started = false;
     for (let x = 0; x <= W; x += 3) {
-      const m = pitchAt(params, (x / W) * dur);
-      const y = H - 20 - ((m - 0.9) / (maxMul - 0.9)) * (H - 40);
-      x === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+      const t = (x / W) * dur - vo;
+      if (t < 0 || t > voiceEnd - vo) continue;
+      const m = pitchAt(params, t);
+      const y = H - 40 - ((m - 0.9) / (maxMul - 0.9)) * (H - 70);
+      started ? g.lineTo(x, y) : g.moveTo(x, y);
+      started = true;
     }
     g.stroke();
     // Phoneme markers.
@@ -215,18 +234,19 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
     g.fillStyle = 'rgba(255,255,255,0.7)';
     g.font = '800 14px "Martian Mono", monospace';
     for (const [label, t] of marks) {
-      const x = (t / dur) * W;
-      g.fillRect(x, 0, 2, H);
+      const x = ((t + vo) / dur) * W;
+      g.fillRect(x, 0, 2, H - 34);
       g.fillText(label, x + 6, 18);
     }
   }
 
   let analyser: AnalyserNode | null = null;
   let raf = 0;
-  function play() {
+  async function play() {
     const ac = audio();
     if (!ac) { status.textContent = 'This browser cannot play Web Audio.'; return; }
     if (!analyser) { analyser = ac.createAnalyser(); analyser.fftSize = 2048; }
+    if (params.realMix > 0 && !(await preloadWolf())) status.textContent = 'The real wolves could not be loaded. Playing without them.';
     const ms = howl(params, { analyser });
     playBtn.classList.add('playing');
     cancelAnimationFrame(raf);
@@ -332,9 +352,10 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
   }
   function decode(s: string): HowlParams | null {
     const parts = s.split('_').map(Number);
-    if (parts.length !== HOWL_CONTROLS.length || parts.some((n) => !Number.isFinite(n))) return null;
+    // Older links have fewer values (no wolves); missing ones keep their defaults.
+    if (parts.length < 19 || parts.length > HOWL_CONTROLS.length || parts.some((n) => !Number.isFinite(n))) return null;
     const next = { ...DEFAULT_HOWL };
-    HOWL_CONTROLS.forEach((c, i) => { next[c.key] = Math.min(c.max, Math.max(c.min, parts[i])); });
+    parts.forEach((v, i) => { const c = HOWL_CONTROLS[i]; next[c.key] = Math.min(c.max, Math.max(c.min, v)); });
     return next;
   }
 
@@ -378,5 +399,6 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
     });
   }
 
+  void preloadWolf();
   render();
 </script>

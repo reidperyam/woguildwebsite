@@ -23,3 +23,7 @@ Website for the Werewolf Orgasmahowl guild (World of Warcraft Forever · North A
 | `npm run preview` | Serve the built site locally |
 
 Brand rules are in [BRAND.md](BRAND.md) and page copy is in [CONTENT.md](CONTENT.md).
+
+## Credits
+- `public/sounds/wolf-howl-nps.mp3`: "Sounds of wolves howling", recorded at Denali National Park & Preserve by the National Park Service ([NPS Sound Library](https://www.nps.gov/subjects/sound/sounds-wolf.htm), originally `nri-WolfDENA.mp3`). Public domain (U.S. federal government work). Credited on the Howl Lab page.
+- The HAROOOO voice and the synthesized wolves are generated in the browser with Web Audio (`src/scripts/howl.ts`).
