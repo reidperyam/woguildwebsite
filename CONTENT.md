@@ -37,7 +37,7 @@ Nav: HOME · RECRUITMENT · LORE · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Lore: The Life of Saint Hornatius Orgasmahowl
 
-Presented as a museum catalogue that takes itself completely seriously, catalogued by Roadieoh, High Tauren Librarian (originally March 23, 2010). The copy is the guild's 2010 text, lightly edited for flow and spelling, with the wording and quotes kept. The full text is in `src/data/lore.ts`. Images are in `src/assets/lore/`, named by relic number. They are the guild's WoW fan-art edits, allowed here by the Lore exception in BRAND.md.
+Styled as "The Cathedral", a baroque, syrupy, over-the-top holy shrine (see BRAND.md, Lore sub-theme). Presented as a museum catalogue that takes itself completely seriously, catalogued by Roadieoh, High Tauren Librarian (originally March 23, 2010). The copy is the guild's 2010 text, lightly edited for flow and spelling, with the wording and quotes kept. The full text is in `src/data/lore.ts`. Images are in `src/assets/lore/`, named by relic number. They are the guild's WoW fan-art edits, allowed here by the Lore exception in BRAND.md.
 
 | Chapter | Relic | Title | Key line |
 |---|---|---|---|
@@ -48,6 +48,14 @@ Presented as a museum catalogue that takes itself completely seriously, catalogu
 | | 05 | The Second Temptation | The devil offers Stormwind |
 | | 06 | The Third Temptation | 100 pets, three Pendulums of Doom; he knelt to pray |
 | III. The Mysteries | 07 | The Saint Among the Beasts | The Rumsey Rum heist, and death by hugs |
+
+Around the relics, the page also has new Cathedral copy, all in `src/data/lore.ts`:
+- **Hero:** "Here beginneth… The most holy & glorious life of Saint Hornatius Orgasmahowl", HAROOOO IN EXCELSIS, Feast Day March 23, Patron of Low-Level Battlegrounds.
+- **Litany:** a scrolling list of nine epithets.
+- **Relic plaques:** Latin names, Reliquia Prima to Septima.
+- **Capitulum IV, The Beatitudes of the Battleground:** built from the recruitment expectations.
+- **A Prayer Before Queueing:** ends in HAROOOO! Amen.
+- **Closing band:** "Join the faithful. Grab three."
 
 ## Open questions for the guild
 

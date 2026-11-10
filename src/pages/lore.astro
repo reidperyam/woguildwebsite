@@ -1,61 +1,179 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RelicCard from '../components/RelicCard.astro';
+import '../styles/cathedral.css';
 import { guild, discordHref } from '../data/guild';
-import { chapters, intro, librarian, catalogued } from '../data/lore';
+import { chapters, intro, librarian, catalogued, feastDay, ordinals, epithets, beatitudes, prayer } from '../data/lore';
+
+const relicCount = chapters.reduce((n, c) => n + c.relics.length, 0);
+let relicIndex = 0;
+const sparkles = [
+  { x: 8, y: 18, s: 22, d: 3.2, delay: 0 }, { x: 18, y: 62, s: 14, d: 2.6, delay: 0.8 },
+  { x: 28, y: 30, s: 18, d: 3.8, delay: 1.4 }, { x: 72, y: 24, s: 20, d: 3, delay: 0.4 },
+  { x: 84, y: 56, s: 16, d: 2.8, delay: 1.1 }, { x: 92, y: 14, s: 24, d: 4, delay: 0.2 },
+  { x: 62, y: 70, s: 12, d: 2.4, delay: 1.8 }, { x: 40, y: 12, s: 14, d: 3.4, delay: 2.2 },
+];
 ---
 
-<BaseLayout title="Lore" description="The life of Saint Hornatius Orgasmahowl, patron of the guild: his three temptations, his deeds and his mysteries, as catalogued from the archives.">
-  <div class="wrap page">
-    <section class="intro" aria-labelledby="lore-title">
-      <p class="label">From the archives · Catalogued by {librarian}</p>
-      <h1 id="lore-title"><span class="pre">The life of Saint Hornatius</span><span class="display accent">Orgasma&shy;howl</span></h1>
-      <div class="prose">
-        {intro.map((p) => <p>{p}</p>)}
+<BaseLayout title="Lore" description="The most holy and glorious life of Saint Hornatius Orgasmahowl: his deeds, his three temptations and his mysteries, with the Beatitudes of the Battleground.">
+  <Fragment slot="head">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap" />
+  </Fragment>
+
+  <div class="cathedral">
+    <section class="heaven" aria-labelledby="lore-title">
+      <div class="rays" aria-hidden="true"></div>
+      <div class="sparkles" aria-hidden="true">
+        {sparkles.map((s) => <span style={`left:${s.x}%;top:${s.y}%;--s:${s.s}px;--d:${s.d}s;--delay:${s.delay}s`}>✦</span>)}
       </div>
-      <nav class="cells toc" aria-label="Chapters">
+      <div class="clouds" aria-hidden="true"></div>
+      <div class="wrap heaven-inner">
+        <p class="here">Here beginneth</p>
+        <h1 id="lore-title" class="holy-title">
+          <span class="t-small">The most holy &amp; glorious life of</span>
+          <span class="t-saint">Saint Hornatius</span>
+          <span class="ring" aria-hidden="true"></span>
+          <span class="t-name">Orgasma&shy;howl</span>
+        </h1>
+        <p class="ribbon">Haroooo in Excelsis</p>
+        <p class="subtitle">Being a most faithful, reverent &amp; entirely accurate account of the Deeds, Temptations &amp; Mysteries of the most wonderful, holy and virtuous Orc who ever lived.</p>
+        <ul class="vitals">
+          <li>Feast Day · {feastDay}</li>
+          <li>Patron of Low-Level Battlegrounds</li>
+          <li>{relicCount} Holy Relics</li>
+        </ul>
+        <button type="button" class="holy-btn" data-choir>✦ Summon the Heavenly Choir ✦</button>
+      </div>
+    </section>
+
+    <div class="litany" aria-label="Titles of the Saint">
+      <div class="litany-track">
+        {[...epithets, ...epithets].map((e, i) => <span aria-hidden={i >= epithets.length ? 'true' : undefined}>{e}</span>)}
+      </div>
+    </div>
+
+    <div class="wrap nave">
+      <section class="proem" aria-label="Introduction">
+        {intro.map((p, i) => <p class:list={{ illuminated: i === 0 }}>{p}</p>)}
+        <p class="signature">Catalogued by {librarian}</p>
+      </section>
+
+      <nav class="windows" aria-label="Chapters">
         {chapters.map((c) => (
-          <a href={`#${c.id}`}>
-            <span class="label">Chapter {c.numeral}</span>
-            <span class="toc-title">{c.title}</span>
+          <a class="window" href={`#${c.id}`}>
+            <span class="window-num">{c.numeral}</span>
+            <span class="window-title">{c.title}</span>
           </a>
         ))}
       </nav>
-    </section>
 
-    {chapters.map((c) => (
-      <section id={c.id} aria-labelledby={`${c.id}-title`}>
-        <div class="section-head chapter-head">
-          <h2 id={`${c.id}-title`}><span class="accent">{c.numeral}</span> {c.title}</h2>
-          <span class="label">{c.relics.length === 1 ? '1 relic' : `${c.relics.length} relics`}</span>
-        </div>
-        {c.relics.map((r) => <RelicCard relic={r} />)}
+      {chapters.map((c) => (
+        <section class="chapter" id={c.id} aria-labelledby={`${c.id}-title`}>
+          <header class="chapter-head">
+            <p class="cap">Capitulum {c.numeral}</p>
+            <h2 id={`${c.id}-title`} class="chapter-title">{c.title}</h2>
+            <div class="flourish" aria-hidden="true">❦</div>
+          </header>
+          {c.relics.map((r) => {
+            const i = relicIndex++;
+            return <RelicCard relic={r} ordinal={ordinals[i] ?? r.no} flip={i % 2 === 1} />;
+          })}
+        </section>
+      ))}
+
+      <section class="tablet" aria-labelledby="beatitudes-title">
+        <p class="cap">Capitulum IV</p>
+        <h2 id="beatitudes-title" class="chapter-title">The Beatitudes of the Battleground</h2>
+        <ul class="beatitudes">
+          {beatitudes.map((b) => (
+            <li><span class="blessed">{b.blessed}</span><span class="promise">{b.promise}</span></li>
+          ))}
+        </ul>
       </section>
-    ))}
 
-    <p class="label colophon">More relics are surely out there. If you find one, bring it to the Librarian. · Originally catalogued {catalogued}.</p>
-  </div>
+      <section class="prayer" aria-labelledby="prayer-title">
+        <header class="chapter-head">
+          <p class="cap">To be recited before every queue</p>
+          <h2 id="prayer-title" class="chapter-title">A Prayer Before Queueing</h2>
+          <div class="flourish" aria-hidden="true">❦</div>
+        </header>
+        <p class="prayer-lines">{prayer.map((l) => <span>{l}</span>)}</p>
+        <p class="great-cry">{guild.battleCry}</p>
+        <p class="amen">Amen.</p>
+      </section>
 
-  <section class="band" aria-labelledby="lore-cta">
-    <div class="wrap band-inner">
-      <h2 id="lore-cta" class="cta-cry">{guild.battleCry}</h2>
-      <a class="btn" href={discordHref}>Join the Discord</a>
+      <p class="colophon">More relics are surely out there. If you find one, bring it to the Librarian. Originally catalogued {catalogued}.</p>
     </div>
-  </section>
+
+    <section class="glory" aria-labelledby="glory-title">
+      <div class="rays" aria-hidden="true"></div>
+      <div class="wrap glory-inner">
+        <h2 id="glory-title" class="glory-cry">{guild.battleCry}</h2>
+        <p>Join the faithful. Grab three.</p>
+        <div class="btn-row" style="justify-content:center">
+          <a class="holy-btn crimson" href={discordHref}>Join the Discord</a>
+          <button type="button" class="holy-btn" data-choir>Sing it again</button>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
-<style>
-  .intro { display: flex; flex-direction: column; gap: var(--space-4); }
-  h1 { display: flex; flex-direction: column; gap: var(--space-2); }
-  .pre { font-size: var(--fs-h2); line-height: 1.1; letter-spacing: 0; }
-  .toc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .toc a { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); color: var(--ink); text-decoration: none; min-height: var(--target-min); }
-  .toc a:hover { background: var(--accent); color: var(--on-accent); }
-  .toc-title { font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.15; }
-  .chapter-head { margin-bottom: 0; }
-  .colophon { max-width: 60ch; }
-  .cta-cry { font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -0.04em; }
-  @media (max-width: 700px) {
-    .toc { grid-template-columns: minmax(0, 1fr); }
+<script>
+  // The Heavenly Choir: a synthesized plagal "A-men" cadence (F major, then C major), made with Web Audio.
+  let ctx: AudioContext | null = null;
+  let singing = false;
+
+  function chord(ac: AudioContext, out: AudioNode, freqs: number[], start: number, dur: number) {
+    for (const f of freqs) {
+      for (const detune of [-8, 0, 8]) {
+        const osc = ac.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.value = f;
+        osc.detune.value = detune;
+        const vibrato = ac.createOscillator();
+        vibrato.frequency.value = 5 + Math.random();
+        const depth = ac.createGain();
+        depth.gain.value = 6;
+        vibrato.connect(depth).connect(osc.detune);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0, start);
+        g.gain.linearRampToValueAtTime(0.05, start + 0.35);
+        g.gain.setValueAtTime(0.05, start + dur - 0.3);
+        g.gain.linearRampToValueAtTime(0, start + dur);
+        osc.connect(g).connect(out);
+        osc.start(start); vibrato.start(start);
+        osc.stop(start + dur + 0.05); vibrato.stop(start + dur + 0.05);
+      }
+    }
   }
-</style>
+
+  function sing() {
+    if (singing) return;
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AC) return;
+    ctx ??= new AC();
+    void ctx.resume();
+    singing = true;
+    const now = ctx.currentTime + 0.05;
+    // "Aah" vowel: a lowpass plus a formant bump around 900 Hz.
+    const lowpass = ctx.createBiquadFilter();
+    lowpass.type = 'lowpass'; lowpass.frequency.value = 2200; lowpass.Q.value = 0.5;
+    const formant = ctx.createBiquadFilter();
+    formant.type = 'peaking'; formant.frequency.value = 900; formant.gain.value = 8; formant.Q.value = 1.2;
+    const master = ctx.createGain();
+    master.gain.value = 0.5;
+    lowpass.connect(formant).connect(master).connect(ctx.destination);
+
+    chord(ctx, lowpass, [174.61, 220.0, 261.63, 349.23], now, 1.9);        // A-
+    chord(ctx, lowpass, [130.81, 196.0, 261.63, 329.63, 523.25], now + 1.8, 2.8); // -men
+
+    document.documentElement.classList.add('choir-on');
+    window.setTimeout(() => {
+      document.documentElement.classList.remove('choir-on');
+      singing = false;
+    }, 4700);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-choir]').forEach((b) => b.addEventListener('click', sing));
+</script>

@@ -122,3 +122,15 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - Never invent facts. Use placeholders until they're provided: `[CLASS]`, `[ROLE]`, `[DISCORD INVITE]`, `[YOUR TAGLINE]`.
 - Don't use Blizzard or World of Warcraft logos, crests or game art. **Exception:** the Lore page's relic images (the guild's own fan-art edits, with orc heads and Pendulum of Doom axes on classical paintings) are allowed there and only there. Show each in a 4px ink frame, never recolored or filtered.
 - Icons are inline stroke SVG with square caps and `currentColor`. No emoji.
+
+## Lore sub-theme: The Cathedral
+
+The Lore page (`/lore`) deliberately breaks the brutalist rules above. Inside the nav and footer, it's a baroque, over-the-top holy shrine to Saint Hornatius Orgasmahowl: syrupy, gilded and silly, played completely straight. Everything is scoped under `.cathedral` in `src/styles/cathedral.css`. Don't use it on any other page.
+
+- **Palette:** night `#0d0820`, crimson `#7a0f1f`, gold `#e8c15a` (highlight `#fff1b8`, shadow `#9a6b12`), parchment `#fbf1d6`, brown ink `#2a1608`, plus ruby, sapphire and emerald for the stained-glass windows. Gradients, glows and halos are allowed here.
+- **Type:** Cinzel Decorative (Roman capitals for titles, plaques and buttons), IM Fell English (old-print body and italics), UnifrakturMaguntia (blackletter drop caps, "Here beginneth", "Amen.").
+- **Pieces:** a sunburst-and-clouds hero with a halo over the name, a crimson ribbon reading HAROOOO IN EXCELSIS, a scrolling litany of the Saint's titles, a parchment proem, stained-glass chapter windows, relics in gilded frames with glowing halos and Latin plaques ("Reliquia Prima"), illuminated drop caps, scroll-style pull quotes, an arched Beatitudes tablet, a Prayer Before Queueing, and a golden closing band.
+- **Shape:** rounded corners are allowed here (pill buttons, arched windows and tablet).
+- **The Heavenly Choir:** a button synthesizes an "A-men" chord in the browser with Web Audio and makes the sunbeams blaze. It only plays on click.
+- **Motion:** slowly rotating rays, twinkling sparkles, a bobbing halo and the litany marquee. All of it stops under `prefers-reduced-motion`.
+- **Contrast:** dark text sits on light (crimson or brown on parchment and cream, with glow shadows in the sky); light text sits on dark (gold or parchment on night).

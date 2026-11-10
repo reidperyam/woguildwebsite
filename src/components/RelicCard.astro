@@ -2,28 +2,38 @@
 import { Image } from 'astro:assets';
 import type { Relic } from '../data/lore';
 
-interface Props { relic: Relic }
-const { relic } = Astro.props;
+interface Props {
+  relic: Relic;
+  ordinal: string;
+  flip?: boolean;
+}
+const { relic, ordinal, flip = false } = Astro.props;
+const firstP = relic.blocks.findIndex((b) => 'p' in b);
+const english = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh'][Number(relic.no) - 1] ?? relic.no;
 ---
 
-<article class="relic" id={relic.id} aria-labelledby={`${relic.id}-title`}>
-  <figure class="frame">
-    <Image src={relic.image} alt={relic.alt} />
+<article class:list={['relic', { flip }]} id={relic.id} aria-labelledby={`${relic.id}-title`}>
+  <figure class="relic-figure">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="gilt">
+      <Image src={relic.image} alt={relic.alt} />
+    </div>
+    <figcaption class="plaque">Reliquia {ordinal} · No. {relic.no}</figcaption>
   </figure>
-  <div class="text">
-    <p class="label">Relic {relic.no}</p>
-    <h3 id={`${relic.id}-title`}>{relic.title}</h3>
-    <div class="prose">
-      {relic.blocks.map((b) =>
+  <div class="parchment">
+    <p class="relic-kicker">✦ Relic the {english} ✦</p>
+    <h3 id={`${relic.id}-title`} class="relic-title">{relic.title}</h3>
+    <div class="relic-body">
+      {relic.blocks.map((b, i) =>
         'quote' in b ? (
-          <blockquote>
+          <blockquote class="scroll">
             {b.quote.map((line) => <p>“{line}”</p>)}
-            {b.cite && <footer class="label">— {b.cite}</footer>}
+            {b.cite && <footer>— {b.cite}</footer>}
           </blockquote>
         ) : 'html' in b ? (
           <p set:html={b.html} />
         ) : (
-          <p>{b.p}</p>
+          <p class:list={{ illuminated: i === firstP }}>{b.p}</p>
         )
       )}
     </div>
@@ -31,14 +41,70 @@ const { relic } = Astro.props;
 </article>
 
 <style>
-  .relic { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-5); align-items: start; padding-block: var(--space-5); border-top: var(--rule) solid var(--ink); }
-  .frame { margin: 0; border: var(--rule) solid var(--ink); justify-self: start; max-width: 100%; }
-  .frame :global(img) { width: auto; max-width: 100%; }
-  .text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
-  .text h3 { margin-bottom: var(--space-1); }
-  blockquote { margin: var(--space-1) 0; display: flex; flex-direction: column; gap: var(--space-1); color: var(--accent); font-weight: var(--fw-heavy); font-size: clamp(19px, 2vw, 24px); line-height: 1.35; }
-  blockquote footer { color: var(--ink); font-weight: var(--fw-regular); }
-  @media (max-width: 800px) {
-    .relic { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  /* Cathedral relic card. Tokens come from cathedral.css. */
+  .relic { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .relic.flip .relic-figure { order: 2; }
+
+  .relic-figure { position: relative; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .halo {
+    position: absolute; inset: -18% -22%; z-index: 0; pointer-events: none;
+    background: radial-gradient(closest-side, var(--c-glow) 0%, rgba(255, 226, 140, 0.25) 45%, transparent 72%);
+    animation: halo-pulse 5s ease-in-out infinite;
+  }
+  .gilt {
+    position: relative; z-index: 1; padding: 14px;
+    background: linear-gradient(135deg, var(--c-gold-hi), var(--c-gold) 30%, var(--c-gold-lo) 55%, var(--c-gold) 75%, var(--c-gold-hi));
+    box-shadow:
+      0 0 0 3px var(--c-gold-lo),
+      0 0 0 7px var(--c-gold-hi),
+      0 0 0 10px var(--c-gold-lo),
+      0 0 50px 10px rgba(255, 214, 120, 0.55),
+      inset 0 0 0 3px var(--c-gold-lo);
+  }
+  .gilt :global(img) { display: block; width: auto; max-width: 100%; max-height: 640px; box-shadow: inset 0 0 0 2px rgba(0,0,0,0.4); }
+  .plaque {
+    position: relative; z-index: 1; padding: 6px 18px;
+    font-family: var(--f-roman); font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--c-brown); background: linear-gradient(180deg, var(--c-gold-hi), var(--c-gold));
+    border: 2px solid var(--c-gold-lo); box-shadow: 0 2px 0 var(--c-gold-lo);
+  }
+
+  .parchment {
+    position: relative; min-width: 0; padding: clamp(28px, 4vw, 56px);
+    color: var(--c-brown); font-family: var(--f-print); font-size: clamp(18px, 1.5vw, 21px); line-height: 1.65;
+    background:
+      radial-gradient(ellipse at center, transparent 55%, rgba(120, 72, 20, 0.22) 100%),
+      var(--c-parchment);
+    border: 3px solid var(--c-gold-lo);
+    outline: 2px solid var(--c-gold); outline-offset: 6px;
+    box-shadow: 0 0 0 10px rgba(232, 193, 90, 0.15), 0 30px 60px rgba(0, 0, 0, 0.5);
+  }
+  .relic-kicker { margin: 0 0 6px; font-family: var(--f-roman); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--c-crimson); }
+  .relic-title { margin: 0 0 18px; font-family: var(--f-roman); font-weight: 900; font-size: clamp(26px, 3vw, 40px); line-height: 1.1; text-transform: none; color: var(--c-crimson); letter-spacing: 0.01em; }
+  .relic-body { display: flex; flex-direction: column; gap: 14px; }
+  .relic-body p { margin: 0; }
+  .illuminated::first-letter {
+    float: left; font-family: var(--f-black); font-size: 3.4em; line-height: 0.85;
+    padding: 0.1em 0.14em 0.06em; margin: 0.06em 0.14em 0 0;
+    color: var(--c-gold-hi); background: var(--c-crimson);
+    border: 3px double var(--c-gold); text-shadow: 0 0 8px rgba(255, 220, 120, 0.8);
+  }
+  .scroll {
+    margin: 6px 0; padding: 18px 26px; text-align: center;
+    font-style: italic; font-size: 1.12em; line-height: 1.45; color: var(--c-crimson);
+    background: linear-gradient(180deg, rgba(232, 193, 90, 0.18), rgba(232, 193, 90, 0.05));
+    border-top: 2px solid var(--c-gold-lo); border-bottom: 2px solid var(--c-gold-lo);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .scroll::before, .scroll::after { content: '❦'; display: block; font-style: normal; color: var(--c-gold-lo); font-size: 0.9em; }
+  .scroll footer { font-family: var(--f-roman); font-style: normal; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-brown); }
+  .relic-body :global(.cry) { font-family: var(--f-roman); font-weight: 900; color: var(--c-crimson); letter-spacing: 0.04em; }
+
+  @keyframes halo-pulse { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .halo { animation: none; } }
+
+  @media (max-width: 860px) {
+    .relic { grid-template-columns: minmax(0, 1fr); }
+    .relic.flip .relic-figure { order: 0; }
   }
 </style>

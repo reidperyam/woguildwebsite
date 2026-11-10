@@ -157,4 +157,35 @@ export const chapters: Chapter[] = [
   },
 ];
 
-export const teaserRelic = chapters.flatMap((c) => c.relics).find((r) => r.id === 'warsong-gulch')!;
+// The Cathedral extras below are new, deliberately syrupy copy written for the Lore page (2026).
+export const feastDay = 'March 23';
+export const ordinals = ['Prima', 'Secunda', 'Tertia', 'Quarta', 'Quinta', 'Sexta', 'Septima'];
+
+export const epithets = [
+  'He Who Grabbed Three',
+  'Defender of Shadowfang',
+  'Deliverer of the Flag',
+  'Refuser of Stormwind',
+  'Keeper of a Hundred Pets',
+  'Scourge of the Zerg',
+  'Bane of the Vile Goblin',
+  'Smothered by Hugs',
+  'Most Virtuous of Orcs',
+];
+
+export const beatitudes = [
+  { blessed: 'Blessed are they who play to win, not to farm kills,', promise: 'for they shall hold the Lumber Mill, and the Stables, and the Blacksmith also.' },
+  { blessed: 'Blessed are the supportive teammates,', promise: 'for they shall be healed, and peeled for, and never left to perish alone at the Farm.' },
+  { blessed: 'Blessed are the flag carriers,', promise: 'for the Saint shall deliver them from evil.' },
+  { blessed: 'Blessed are they who play to have fun,', promise: 'for theirs is the Fun++.' },
+];
+
+export const prayer = [
+  'O Blessed Hornatius, who grabbed THREE when lesser orcs would hold two,',
+  'grant us a swift queue and a balanced team.',
+  'Deliver our flag from evil,',
+  'lead us not into the Alliance zerg,',
+  'and when the battle is won, let us cry with one voice:',
+];
+
+export const teaserRelic =chapters.flatMap((c) => c.relics).find((r) => r.id === 'warsong-gulch')!;
