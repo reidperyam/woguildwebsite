@@ -59,7 +59,7 @@ Styled as "The Cathedral", a baroque, syrupy, over-the-top holy shrine (see BRAN
 | III. The Mysteries | 07 | The Saint Among the Beasts | The Rumsey Rum heist, and death by hugs |
 
 Around the relics, the page also has new Cathedral copy, all in `src/data/lore.ts`:
-- **Hero:** "Here beginneth… The most holy & glorious life of Saint Hornatius Orgasmahowl", HAROOOO IN EXCELSIS, Feast Day March 23, Patron of Low-Level Battlegrounds.
+- **Hero:** "Here beginneth… The most holy & glorious life of Saint Hornatius Orgasmahowl", HAROOOO IN EXCELSIS, Feast Day March 23, Patron Saint of Low-Level Battlegrounds.
 - **Litany:** a scrolling list of nine epithets.
 - **Relic plaques:** Latin names, Reliquia Prima to Septima.
 - **Capitulum IV, The Beatitudes of the Battleground:** built from the recruitment expectations.
