@@ -211,6 +211,11 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
       </div>
     </div>
 
+    <button type="button" class="chant-toggle" data-chant aria-pressed="false">
+      <span class="chant-icon" aria-hidden="true">✠</span>
+      <span data-chant-label>Wake the monks</span>
+    </button>
+
     <div class="fx-layer" aria-hidden="true"></div>
   </div>
 </BaseLayout>

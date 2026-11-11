@@ -200,3 +200,23 @@ button.great-cry:focus-visible { outline: 4px solid var(--c-gold); outline-offse
   .crest.bottom { bottom: -18px; }
   .petal:nth-child(2n) { display: none; }
 }
+
+/* The monks' chant toggle (bottom left, always reachable) */
+.chant-toggle {
+  position: fixed; left: 16px; bottom: 16px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 18px;
+  font-family: var(--f-roman); font-weight: 900; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--c-gold-hi); background: rgba(13, 8, 32, 0.88); cursor: pointer;
+  border: 2px solid var(--c-gold); border-radius: 999px; box-shadow: 0 0 18px rgba(255, 214, 120, 0.45);
+}
+.chant-toggle:hover { box-shadow: 0 0 0 3px var(--c-gold-hi), 0 0 28px var(--c-gold-hi); }
+.chant-toggle:focus-visible { outline: 4px solid var(--c-crimson); outline-offset: 4px; }
+.chant-icon { font-size: 18px; line-height: 1; }
+.chant-toggle[aria-pressed='true'] .chant-icon { animation: chant-glow 2.4s ease-in-out infinite; }
+.chant-toggle.waiting { animation: chant-beckon 2s ease-in-out infinite; }
+@keyframes chant-glow { 50% { text-shadow: 0 0 12px var(--c-gold-hi); transform: scale(1.15); } }
+@keyframes chant-beckon { 50% { box-shadow: 0 0 0 4px var(--c-gold-hi), 0 0 36px var(--c-gold-hi); } }
+@media (prefers-reduced-motion: reduce) {
+  .chant-toggle[aria-pressed='true'] .chant-icon, .chant-toggle.waiting { animation: none; }
+}
+

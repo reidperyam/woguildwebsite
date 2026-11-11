@@ -68,6 +68,7 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 - **Light a Votive Candle:** "One for every flag delivered from evil. Light all twelve, and the Saint may grant a miracle." When all twelve are lit: "A miracle! The Saint is pleased. HAROOOO!"
 - **The cry:** the giant HAROOOO! in the prayer plays the synthesized cry ("Click the cry to hear it."). The closing band has **Howl it**, **Sing it again** and **Share the cry** buttons. Shared links (`/lore#haroooo`) open a "You have been summoned" card with **Receive the HAROOOO** and **Enter quietly**.
 - **Hints:** "Psst: click anywhere in the heavens to release a dove." on the hero, and a colophon line, "Legend holds that whoever types the Saint's battle cry shall witness a miracle."
+- **The monks' chant:** soft holy chanting starts when the page opens (or on the first click, if the browser blocks sound until then). A button fixed in the bottom-left corner reads **Wake the monks** / **Silence the monks**; it glows while waiting for that first click, and the choice is remembered.
 
 ## Open questions for the guild
 

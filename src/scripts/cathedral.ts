@@ -1,7 +1,8 @@
 // Interactive whimsy for the Cathedral (Lore page): doves, petals, veneration, votive candles,
 // the Heavenly Choir and a hidden miracle. Sounds come from holy-audio.ts.
-import { bell, choir, harp, PENTATONIC } from './holy-audio';
+import { audio, bell, choir, harp, PENTATONIC } from './holy-audio';
 import { howl } from './howl';
+import { chanting, duckChant, startChant, stopChant } from './chant';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fx = document.querySelector<HTMLElement>('.fx-layer');
@@ -130,6 +131,7 @@ function summonChoir(amenOnly = false) {
   if (singing) return;
   singing = true;
   const ms = choir(amenOnly) || 4700;
+  duckChant(ms);
   document.documentElement.classList.add('choir-on');
   releaseFlock(10);
   petalShower(40);
@@ -147,6 +149,7 @@ function haroooo() {
   if (howling) return 0;
   howling = true;
   const ms = howl() || 3000;
+  duckChant(ms);
   document.documentElement.classList.add('howling');
   releaseFlock(5);
   window.setTimeout(() => {
@@ -311,3 +314,63 @@ document.addEventListener('keydown', (e) => {
     petalShower(70);
   }
 });
+
+// ---------- The monks' chant ----------
+// Plays when the page opens if the browser allows sound (usually after clicking through from
+// another page); otherwise it starts on the first click, tap or key. The toggle stops it, and
+// the choice is remembered.
+
+const chantBtn = document.querySelector<HTMLButtonElement>('[data-chant]');
+const chantLabel = chantBtn?.querySelector<HTMLElement>('[data-chant-label]');
+const CHANT_KEY = 'wo-chant';
+let chantWanted = store<string>(CHANT_KEY, 'on') !== 'off';
+
+function renderChant(waiting = false) {
+  if (!chantBtn || !chantLabel) return;
+  const on = chanting();
+  chantBtn.setAttribute('aria-pressed', String(on));
+  chantBtn.classList.toggle('waiting', waiting && !on);
+  chantLabel.textContent = on ? 'Silence the monks' : 'Wake the monks';
+}
+
+function beginChant() {
+  if (chantWanted && startChant()) renderChant();
+}
+
+chantBtn?.addEventListener('click', () => {
+  if (chanting()) {
+    stopChant();
+    chantWanted = false;
+  } else {
+    chantWanted = true;
+    startChant();
+  }
+  save(CHANT_KEY, chantWanted ? 'on' : 'off');
+  renderChant();
+});
+
+if (chantWanted) {
+  const firstTouch = (e: Event) => {
+    ['pointerup', 'keydown', 'touchend'].forEach((t) => window.removeEventListener(t, firstTouch, true));
+    if (chantBtn && e.target instanceof Node && chantBtn.contains(e.target)) return; // the toggle handles itself
+    beginChant();
+  };
+  ['pointerup', 'keydown', 'touchend'].forEach((t) => window.addEventListener(t, firstTouch, true));
+  // Try right away. Firefox can tell us whether sound is allowed; elsewhere (Chrome often allows
+  // it once you've clicked around the site) we try to start audio and check that it's running.
+  const nav = navigator as Navigator & { getAutoplayPolicy?: (type: string) => string };
+  const policy = nav.getAutoplayPolicy?.('audiocontext');
+  if (policy === 'allowed') beginChant();
+  else if (policy === undefined) {
+    const ac = audio();
+    window.setTimeout(() => { if (ac?.state === 'running' && !chanting()) beginChant(); }, 300);
+  }
+  renderChant(!chanting());
+}
+
+// Hush when the tab is hidden, and pick up again when it comes back.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && chanting()) stopChant();
+  else if (!document.hidden && chantWanted && !chanting() && chantBtn?.getAttribute('aria-pressed') === 'true') beginChant();
+});
+

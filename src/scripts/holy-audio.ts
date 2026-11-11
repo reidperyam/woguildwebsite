@@ -81,7 +81,7 @@ function chord(ac: AudioContext, out: AudioNode, freqs: number[], start: number,
 }
 
 /** A cathedral reverb impulse: decaying noise, a few seconds long. */
-function nave(ac: AudioContext, seconds: number): AudioBuffer {
+export function nave(ac: AudioContext, seconds: number): AudioBuffer {
   const len = Math.floor(ac.sampleRate * seconds);
   const buf = ac.createBuffer(2, len, ac.sampleRate);
   for (let ch = 0; ch < 2; ch++) {
