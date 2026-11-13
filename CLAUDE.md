@@ -8,7 +8,7 @@ Website for Werewolf Orgasmahowl, a Horde guild in World of Warcraft Forever (No
 - Page copy: [CONTENT.md](CONTENT.md). Guild facts live in `src/data/guild.ts` and Lore copy in `src/data/lore.ts`; keep CONTENT.md in step with them.
 
 ## Stack
-- Astro 7, static output, deployed to Vercel later. No UI framework; plain `.astro` components and `src/styles/global.css`.
+- Astro 7, static output, deployed on Vercel (project `woguildwebsite`; every push to `main` deploys). Vercel Speed Insights is in `BaseLayout.astro`. No UI framework; plain `.astro` components and `src/styles/global.css`.
 - `npm run dev` for local work (or `npx astro dev --background`, then `npx astro dev stop`). `npm run build` must pass before committing.
 - The synthesized HAROOOO lives in `src/scripts/howl.ts`. The official cry is `DEFAULT_HOWL` (the "Saint" preset: the voice plus a six-wolf synth pack, approved 2026-11-10, stressed like "kangaroo" as ha-ROOOO since 2026-11-13); only change it when the user asks. The old HA-roooo is the "Classic" preset. Presets without their own wolves spread `NO_WOLVES` so they stay wolf-free, and the older presets spread `CLASSIC_WORD` so they keep the HA-roooo. The public Howl Lab (`/howl-lab`, nav Fun menu) lets visitors make and share custom ones.
 - The Discord invite lives in `discordUrl` in `src/data/guild.ts` and in `vercel.json` (the `/discord` short link). Change both together.
