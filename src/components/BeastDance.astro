@@ -1,0 +1,50 @@
+---
+// The war dance: a scene that rises from the bottom of the screen while the war drums play.
+// Six pack warriors stomp around the Beast on the beat, and the Beast rears up on every bar.
+// Driven by classes beast.ts puts on <html>: dancing (the whole piece), drum-fill (the last bar),
+// drum-hit (the final unison hit). Styles in src/styles/tempest-dance.css.
+
+// Dancers across the ring: x position (%), height (px, smaller = further back), mirrored, off-beat.
+const dancers = [
+  { x: 9, h: 160, flip: false, off: false, spear: true },
+  { x: 22, h: 132, flip: false, off: true, spear: false },
+  { x: 34, h: 180, flip: false, off: false, spear: true },
+  { x: 66, h: 180, flip: true, off: true, spear: true },
+  { x: 78, h: 132, flip: true, off: false, spear: false },
+  { x: 91, h: 160, flip: true, off: true, spear: true },
+];
+---
+
+<div class="war-dance" aria-hidden="true">
+  <div class="dance-glow"></div>
+  <svg class="dance-beast"><use href="#bw-sigil" /></svg>
+
+  {dancers.map((d) => (
+    <div class:list={['dancer', { flip: d.flip, off: d.off }]} style={`left:${d.x}%;--h:${d.h}px`}>
+      <div class="dancer-shuffle">
+        <svg class="dancer-body" viewBox="0 -16 80 136">
+          <g class="pose pose-a">
+            <circle cx="40" cy="22" r="9" />
+            <path d="M37 13 Q40 3 43 13Z" />
+            <path d="M30 34 Q40 30 50 34 L47 66 L33 66Z" />
+            <path d="M31 36 L18 14 L24 11 L36 32Z M49 36 L62 14 L56 11 L44 32Z" />
+            <path d="M33 64 L47 64 L44 76 L40 72 L36 76Z" />
+            <path d="M34 66 L30 116 L37 116 L40 70Z M44 66 L56 82 L50 98 L45 96 L49 84 L40 72Z" />
+            {d.spear && <path d="M58 -4 L61 -4 L61 70 L58 70Z M55 -2 L59.5 -15 L64 -2Z" />}
+          </g>
+          <g class="pose pose-b">
+            <circle cx="40" cy="24" r="9" />
+            <path d="M37 15 Q40 5 43 15Z" />
+            <path d="M30 36 Q40 32 50 36 L47 68 L33 68Z" />
+            <path d="M31 39 L14 50 L18 56 L34 47Z M49 39 L66 50 L62 56 L46 47Z" />
+            <path d="M33 66 L47 66 L44 78 L40 74 L36 78Z" />
+            <path d="M46 68 L50 116 L43 116 L40 72Z M36 68 L24 84 L30 100 L35 98 L31 86 L40 74Z" />
+            {d.spear && <path d="M63 30 L66 30 L66 106 L63 106Z M60 32 L64.5 19 L69 32Z" />}
+          </g>
+        </svg>
+      </div>
+    </div>
+  ))}
+
+  <div class="dance-ground"></div>
+</div>

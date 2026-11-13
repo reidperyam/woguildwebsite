@@ -3,13 +3,14 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { guild, discordHref, factsLine } from '../data/guild';
 import { teaserRelic } from '../data/lore';
+import { bannerHistory } from '../data/tabards';
 ---
 
 <BaseLayout description={`${guild.name}: a ${guild.faction} guild in ${guild.game}, ${guild.region}, focused on low-level battleground PvP. Recruiting all classes and specs.`}>
   <div class="wrap page">
     <section class="hero" aria-labelledby="hero-title">
       <p class="label">{guild.game} · {factsLine}</p>
-      <h1 id="hero-title" class="display">Werewolf<br /><span class="accent">Orgasma&shy;howl</span></h1>
+      <h1 id="hero-title" class="display"><span class="accent" aria-hidden="true">&lt;</span>Werewolf<br /><span class="accent">Orgasma&shy;howl</span><span aria-hidden="true">&gt;</span></h1>
       <p class="tagline">{guild.tagline}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href={discordHref}>Join the Discord</a>
@@ -33,6 +34,56 @@ import { teaserRelic } from '../data/lore';
           <div><dt class="label">Focus</dt><dd>{guild.focus}</dd></div>
           <div><dt class="label">Recruiting</dt><dd><span class="chip">{guild.recruiting.open ? 'Open' : 'Closed'}</span></dd></div>
         </dl>
+      </div>
+    </section>
+
+    <section aria-labelledby="banners-title">
+      <div class="section-head">
+        <h2 id="banners-title">Our history</h2>
+        <span class="label">Three tabards, one pack</span>
+      </div>
+      <ol class="cells banners">
+        {bannerHistory.map((b) => (
+          <li class="banner" tabindex="0">
+            <div class="faces">
+              <div class="face front">
+                <Image src={b.tabard.image} alt={b.tabard.alt} width={180} class="tabard" />
+                <span class="label">{b.when}</span>
+                <h3>{b.title}</h3>
+                <p class="prose-sm">{b.text}</p>
+                <span class="label hint" aria-hidden="true"><span class="hint-hover">Hover</span><span class="hint-tap">Tap</span> to read the banner</span>
+              </div>
+              <div class="face back">
+                <span class="label">{b.when} · Reading the banner</span>
+                <ul class="meaning">
+                  {b.meaning.colors.map((c) => (
+                    <li><span class="swatch" style={`--c:${c.hex}`} aria-hidden="true"></span><p><b>{c.name}.</b> {c.text}</p></li>
+                  ))}
+                  <li><svg class:list={["swatch-chevron", { up: b.meaning.chevronUp }]} style={`--c:${b.meaning.chevronHex}`} viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5 L10 13 L18 5 L18 10 L10 18 L2 10Z" /></svg><p><b>The chevron.</b> {b.meaning.chevron}</p></li>
+                </ul>
+              </div>
+            </div>
+            {b.link && <a class="banner-link" href={b.link.href}>{b.link.label}</a>}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="section-head">
+        <h2 id="faq-title">FAQ</h2>
+        <span class="label">Before you queue</span>
+      </div>
+      <div class="cells faq">
+        {guild.faq.map((item) => (
+          <details>
+            <summary><h3>{item.q}</h3></summary>
+            <div class="faq-a">
+              <p>{item.a}</p>
+              {item.link && <a href={item.link.href}>{item.link.label}</a>}
+            </div>
+          </details>
+        ))}
       </div>
     </section>
 
@@ -73,6 +124,43 @@ import { teaserRelic } from '../data/lore';
   .saint-frame { margin: 0; border: var(--rule) solid var(--ink); max-width: 338px; }
   .saint-text { display: flex; flex-direction: column; gap: var(--space-3); max-width: 60ch; }
 
+  .banners { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Each banner cell has two faces stacked in one grid area, so the cell is as tall as the longer one.
+     Hover or focus (a tap, on touch) inverts the cell and shows the back: what the tabard means. */
+  .banner { display: flex; flex-direction: column; cursor: default; transition: background-color 0.15s ease, color 0.15s ease; }
+  .banner:hover, .banner:focus-within { background: var(--ink); color: var(--ground); }
+  .banner:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
+  .faces { display: grid; flex: 1; }
+  .face { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); padding: var(--space-4) var(--space-3) var(--space-2); transition: opacity 0.2s ease; }
+  .back { opacity: 0; pointer-events: none; }
+  .banner:hover .front, .banner:focus-within .front { opacity: 0; }
+  .banner:hover .back, .banner:focus-within .back { opacity: 1; }
+  .banners .tabard { width: 140px; margin-bottom: var(--space-2); }
+  .banners h3 { font-size: clamp(18px, 2vw, 22px); line-height: 1.2; }
+  .hint { margin-top: auto; padding-top: var(--space-2); color: var(--accent); }
+  .hint-tap { display: none; }
+  @media (hover: none) { .hint-hover { display: none; } .hint-tap { display: inline; } }
+  .meaning { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .meaning li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: var(--space-2); align-items: start; font-size: var(--fs-body-sm); line-height: 1.45; }
+  .meaning p { margin: 0; }
+  .meaning b { font-weight: var(--fw-heavy); text-transform: uppercase; }
+  .swatch { width: 20px; height: 20px; margin-top: 2px; background: var(--c); border: var(--rule) solid currentColor; }
+  /* The chevron in the tabard's own chevron color, outlined like the swatches so black shows on black. */
+  .swatch-chevron { width: 20px; height: 20px; margin-top: 2px; overflow: visible; fill: var(--c); stroke: currentColor; stroke-width: 1.5; stroke-linejoin: miter; }
+  .swatch-chevron.up { rotate: 180deg; }
+  .banner-link { display: inline-flex; align-items: center; min-height: var(--target-min); margin: 0 var(--space-3) var(--space-3); font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--fs-button); }
+  @media (prefers-reduced-motion: reduce) { .banner, .face { transition: none; } }
+
+  .faq summary { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); min-height: var(--target-min); padding: var(--space-3); cursor: pointer; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover h3 { color: var(--accent); }
+  .faq summary:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: calc(-2 * var(--rule)); }
+  .faq h3 { min-width: 0; overflow-wrap: anywhere; font-size: clamp(18px, 2.2vw, var(--fs-h3)); line-height: 1.25; }
+  .faq summary::after { content: '+'; flex-shrink: 0; font-size: var(--fs-h3); font-weight: var(--fw-heavy); line-height: 1; color: var(--accent); }
+  .faq details[open] summary::after { content: '\2212'; }
+  .faq-a { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); max-width: 65ch; padding: 0 var(--space-3) var(--space-3); }
+  .faq-a a { display: inline-flex; align-items: center; min-height: var(--target-min); font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--fs-button); }
+
   .cta-cry { font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -0.04em; }
   .cry-btn { all: unset; cursor: pointer; display: inline-block; transform-origin: 50% 60%; }
   .cry-btn:hover { text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.08em; }
@@ -86,7 +174,7 @@ import { teaserRelic } from '../data/lore';
   @media (prefers-reduced-motion: reduce) { .cry-btn.howling { animation: none; } }
 
   @media (max-width: 800px) {
-    .about, .saint { grid-template-columns: minmax(0, 1fr); }
+    .about, .saint, .banners { grid-template-columns: minmax(0, 1fr); }
     .saint-frame { max-width: 260px; }
   }
 </style>

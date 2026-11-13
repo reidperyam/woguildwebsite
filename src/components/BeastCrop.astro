@@ -1,0 +1,25 @@
+---
+// A detail cropped from the Bearwolftriceratiger painting, like a museum close-up.
+// The crop is in the painting's own pixels (400 × 368); the browser zooms with background-size.
+import { getImage } from 'astro:assets';
+import { relic } from '../data/beast';
+
+interface Props {
+  crop: { x: number; y: number; w: number; h: number };
+  label: string;
+  class?: string;
+}
+const { crop, label, class: cls } = Astro.props;
+const W = relic.image.width;
+const H = relic.image.height;
+const img = await getImage({ src: relic.image, width: W, format: 'webp', quality: 90 });
+const pos = (at: number, size: number, full: number) => (size >= full ? 0 : (at / (full - size)) * 100);
+const style = [
+  `aspect-ratio:${crop.w}/${crop.h}`,
+  `background-image:url(${img.src})`,
+  `background-size:${(W / crop.w) * 100}% auto`,
+  `background-position:${pos(crop.x, crop.w, W)}% ${pos(crop.y, crop.h, H)}%`,
+].join(';');
+---
+
+<span class:list={['crop', cls]} role="img" aria-label={label} style={style}></span>

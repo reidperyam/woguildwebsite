@@ -1,0 +1,88 @@
+/* The war dance (BeastDance.astro): a scene that rises while the war drums play.
+   Everything moves on --beat (the drums' 160 bpm). Scoped under .tempest like tempest.css. */
+
+.war-dance {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 65; height: min(46vh, 400px);
+  pointer-events: none; overflow: hidden;
+  opacity: 0; translate: 0 40%; transition: opacity 0.5s ease, translate 0.5s cubic-bezier(.2, .8, .3, 1);
+}
+html.dancing .war-dance { opacity: 1; translate: 0 0; }
+
+.dance-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 100%, rgba(255, 214, 10, 0.4), transparent 75%),
+    linear-gradient(to top, rgba(255, 214, 10, 0.3) 0%, rgba(255, 214, 10, 0.1) 45%, transparent 85%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+}
+html.dancing .dance-glow { animation: glow-pulse var(--beat) ease-out infinite; }
+@keyframes glow-pulse { 0% { opacity: 1; } 100% { opacity: 0.8; } }
+.dance-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: var(--s-black); }
+
+/* The Beast rears up in the middle of the ring on every bar. */
+.dance-beast {
+  position: absolute; left: 50%; bottom: 10px; width: min(40vw, 330px); height: min(35vw, 289px);
+  translate: -50% 0; color: var(--s-black); --sigil-cut: transparent;
+  transform-origin: 70% 100%; filter: drop-shadow(0 0 2px var(--s-yellow-lo));
+}
+html.dancing .dance-beast { animation: beast-rear calc(var(--beat) * 4) ease-in-out infinite; }
+@keyframes beast-rear {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  12% { transform: rotate(-7deg) translateY(-12px); }
+  30% { transform: rotate(-3deg) translateY(-4px); }
+  50% { transform: rotate(0) translateY(0); }
+}
+
+/* Dancers: stomp on every beat, swap poses every beat, shuffle around the ring every two bars. */
+.dancer { position: absolute; bottom: 14px; height: var(--h); width: calc(var(--h) * 0.6); translate: -50% 0; }
+.dancer.flip .dancer-body { scale: -1 1; }
+.dancer-shuffle { width: 100%; height: 100%; }
+/* Black silhouettes, rim-lit in yellow so they read against the dark page. */
+.dancer-body { width: 100%; height: 100%; overflow: visible; fill: var(--s-black); filter: drop-shadow(0 0 1.5px var(--s-yellow)) drop-shadow(0 0 8px rgba(255, 214, 10, 0.55)); }
+.pose-b { opacity: 0; }
+/* Animations only run while the dance is on, so they start together on the drums' first beat. */
+html.dancing .dancer-shuffle { animation: dancer-shuffle calc(var(--beat) * 8) ease-in-out infinite; }
+html.dancing .dancer.off .dancer-shuffle { animation-direction: reverse; }
+html.dancing .dancer-body { animation: dancer-stomp var(--beat) cubic-bezier(.3, 0, .6, 1) infinite; }
+html.dancing .dancer.off .dancer-body { animation-delay: calc(var(--beat) / -2); }
+html.dancing .pose-a { animation: pose-a calc(var(--beat) * 2) steps(1) infinite; }
+html.dancing .pose-b { animation: pose-b calc(var(--beat) * 2) steps(1) infinite; }
+html.dancing .dancer.off .pose-a, html.dancing .dancer.off .pose-b { animation-delay: calc(var(--beat) * -1); }
+@keyframes pose-a { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes pose-b { 0% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes dancer-stomp {
+  0% { transform: translateY(0) scaleY(0.94); }
+  35% { transform: translateY(-16%) scaleY(1.03); }
+  70% { transform: translateY(-4%) scaleY(1); }
+  100% { transform: translateY(0) scaleY(0.94); }
+}
+@keyframes dancer-shuffle {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(28%) rotate(4deg); }
+  50% { transform: translateX(0) rotate(0); }
+  75% { transform: translateX(-28%) rotate(-4deg); }
+}
+/* The fill bar: double time. */
+html.dancing.drum-fill .dancer-body { animation-duration: calc(var(--beat) / 2); }
+html.dancing.drum-fill .pose-a, html.dancing.drum-fill .pose-b { animation-duration: var(--beat); }
+html.dancing.drum-fill .dance-glow { animation-duration: calc(var(--beat) / 2); }
+/* The final hit: everyone leaps and the Beast roars up. */
+html.dancing.drum-hit .dancer-body { animation: dancer-leap 0.9s cubic-bezier(.2, .8, .3, 1) forwards; }
+html.dancing.drum-hit .pose-a { animation: none; opacity: 1; }
+html.dancing.drum-hit .pose-b { animation: none; opacity: 0; }
+html.dancing.drum-hit .dance-beast { animation: beast-roar 0.9s cubic-bezier(.2, .8, .3, 1) forwards; }
+@keyframes dancer-leap { 0% { transform: translateY(0); } 35% { transform: translateY(-38%) scale(1.05); } 100% { transform: translateY(0); } }
+@keyframes beast-roar { 0% { transform: none; } 30% { transform: rotate(-10deg) translateY(-20px) scale(1.08); } 100% { transform: rotate(-4deg) translateY(-6px) scale(1.04); } }
+
+@media (max-width: 700px) {
+  .war-dance { height: min(40vh, 300px); }
+  .dancer { --h: 92px !important; }
+  .dancer:nth-child(4), .dancer:nth-child(7) { display: none; }
+}
+
+/* Reduced motion: the scene still appears with the drums, but holds still. */
+@media (prefers-reduced-motion: reduce) {
+  .war-dance { transition: opacity 0.3s ease; translate: 0 0; }
+  .war-dance * { animation: none !important; }
+  .pose-b { opacity: 0; }
+}

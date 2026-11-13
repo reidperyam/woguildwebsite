@@ -1,0 +1,126 @@
+---
+// Inline art for the Bearwolftriceratiger saga: details cropped from the painting, and black-and-
+// yellow illustrations drawn in its likeness. Each Telling places one with an { art } block.
+import { Image } from 'astro:assets';
+import BeastCrop from './BeastCrop.astro';
+import { details } from '../data/beast';
+import { tabards } from '../data/tabards';
+
+export type ArtName = 'frozen-name' | 'four-echoes' | 'banner' | 'saint-on-ice';
+interface Props { name: ArtName }
+const { name } = Astro.props;
+
+// Snow for the Blizzard, placed the same way every time.
+const snow = Array.from({ length: 34 }, (_, i) => ({
+  x: (i * 53) % 640, y: (i * 37) % 250, l: 10 + ((i * 7) % 16),
+}));
+// The crack the Blizzard put through the name.
+const crack = '330,46 316,78 338,104 320,134 342,174';
+---
+
+{name === 'frozen-name' && (
+  <figure class="art art-wide">
+    <svg class="art-svg frozen" viewBox="0 0 640 280" role="img" aria-labelledby="art-frozen">
+      <title id="art-frozen">The burgundy Werewolf Orgasmahowl banner with its gold chevron, frozen solid in a blizzard, the name cracked in two and breaking away.</title>
+      <defs>
+        <clipPath id="frozen-left"><polygon points={`150,40 ${crack} 150,180`} /></clipPath>
+        <clipPath id="frozen-right"><polygon points={`${crack} 500,180 500,40`} /></clipPath>
+        <g id="frozen-cloth">
+          <!-- The old tabard's colors: burgundy cloth, teal edge, gold chevron. -->
+          <rect x="158" y="50" width="330" height="120" fill="#6e1f3f" stroke="#1f5a63" stroke-width="7" />
+          <path d="M172 128 L204 96 L236 128 L236 146 L204 114 L172 146Z" fill="#c9a646" />
+          <text x="362" y="102" text-anchor="middle" class="frozen-word">WEREWOLF</text>
+          <text x="362" y="146" text-anchor="middle" class="frozen-word">ORGASMAHOWL</text>
+          <rect x="158" y="50" width="330" height="120" fill="var(--s-flash)" opacity="0.18" />
+          <path d="M170 60 l26 22 m-14 -8 l10 -10 M440 64 l24 18 m-12 -7 l8 -10 M220 150 l20 -14 m-8 5 l-8 -9 M400 152 l22 -12" stroke="var(--s-flash)" stroke-width="2" opacity="0.7" fill="none" />
+        </g>
+      </defs>
+      <path d="M560 70 m-44 0 a44 44 0 1 1 44 44 a30 30 0 1 1 -30 -30 a17 17 0 1 1 17 17" fill="none" stroke="var(--s-bone)" stroke-width="3" opacity="0.35" />
+      <g class="frozen-snow" stroke="var(--s-bone)" stroke-width="2" opacity="0.5">
+        {snow.map((s) => <line x1={s.x} y1={s.y} x2={s.x - s.l} y2={s.y + s.l * 0.6} />)}
+      </g>
+      <path d="M0 252 L70 240 L150 254 L230 238 L330 250 L420 236 L510 252 L640 242 V280 H0Z" fill="#1d2028" stroke="var(--s-bone)" stroke-opacity="0.4" stroke-width="2" />
+      <rect x="148" y="38" width="9" height="214" fill="var(--s-ash)" />
+      <path d="M144 38 152.5 18 161 38Z" fill="var(--s-yellow)" />
+      <use href="#frozen-cloth" clip-path="url(#frozen-left)" />
+      <g class="frozen-break">
+        <use href="#frozen-cloth" clip-path="url(#frozen-right)" />
+      </g>
+      <polyline points={crack} fill="none" stroke="var(--s-flash)" stroke-width="3" />
+      <path d="M170 170 l6 20 l6 -20 M210 170 l4 14 l4 -14 M246 170 l7 26 l7 -26 M290 170 l4 12 l4 -12" fill="var(--s-flash)" opacity="0.85" />
+      <path d="M520 96 h70 M528 112 h48 M516 128 h62" stroke="var(--s-bone)" stroke-width="3" stroke-linecap="square" opacity="0.4" />
+    </svg>
+    <figcaption><span class="plaque">Fig. I</span>The name, frozen solid and snapped from the banner.</figcaption>
+  </figure>
+)}
+
+{name === 'four-echoes' && (
+  <figure class="art">
+    <div class="echoes">
+      {details.four.map((d) => (
+        <div class="echo">
+          <BeastCrop crop={d.crop} label={d.label} />
+          <span class="echo-name"><svg aria-hidden="true"><use href={`#bw-${d.id}`} /></svg>{d.name}</span>
+          <span class="echo-part">{d.part}</span>
+        </div>
+      ))}
+    </div>
+    <figcaption><span class="plaque">Details</span>Where each of the four echoes lives on in the Beast.</figcaption>
+  </figure>
+)}
+
+{name === 'banner' && (
+  <figure class="art art-banner">
+    <div class="tabard-relic">
+      <span class="tabard-glow" aria-hidden="true"></span>
+      <Image src={tabards.beast.image} alt={tabards.beast.alt} width={250} />
+    </div>
+    <div class="swatches">
+      <div class="swatch"><span class="chip-black"></span><span><b>Black</b> for the storm that took the old name</span></div>
+      <div class="swatch"><span class="chip-yellow"></span><span><b>Bright yellow</b> for the lightning, and the Tiger’s eye</span></div>
+    </div>
+    <figcaption><span class="plaque">Fig. II</span>The tabard the storm left behind.</figcaption>
+  </figure>
+)}
+
+{name === 'saint-on-ice' && (
+  <figure class="art art-wide">
+    <svg class="art-svg saint-scene" viewBox="0 0 640 300" role="img" aria-labelledby="art-saint">
+      <title id="art-saint">A lone orc stands on the ice with his arms raised, a halo behind him and lightning above, while the horned Beast kneels before him.</title>
+      <polyline class="saint-bolt" points="232,0 212,44 236,50 206,96 224,100 202,112" fill="none" stroke="var(--s-flash)" stroke-width="4" stroke-linejoin="bevel" />
+      <circle cx="200" cy="130" r="52" fill="var(--s-yellow)" fill-opacity="0.12" stroke="var(--s-yellow)" stroke-width="3" class="saint-halo" />
+      <path d="M40 232 L120 222 L250 236 L330 224 L470 232 L600 226 L620 246 L560 256 L380 250 L200 258 L60 252Z" fill="#1d2028" stroke="var(--s-bone)" stroke-opacity="0.5" stroke-width="2" />
+      <path d="M0 268 Q40 256 80 268 T160 268 T240 268 T320 268 T400 268 T480 268 T560 268 T640 268" fill="none" stroke="var(--s-bone)" stroke-opacity="0.35" stroke-width="2" />
+      <path d="M0 286 Q50 274 100 286 T200 286 T300 286 T400 286 T500 286 T600 286 T700 286" fill="none" stroke="var(--s-bone)" stroke-opacity="0.2" stroke-width="2" />
+      <g fill="var(--s-bone)">
+        <path d="M188 236 L193 200 L200 204 L207 200 L212 236 L204 236 L200 214 L196 236Z" />
+        <path d="M176 158 Q200 148 224 158 L215 206 L185 206Z" />
+        <path d="M180 162 Q168 138 158 106 L167 101 Q178 130 193 155Z" />
+        <path d="M220 162 Q232 138 242 106 L233 101 Q222 130 207 155Z" />
+        <circle cx="162" cy="99" r="7" />
+        <circle cx="238" cy="99" r="7" />
+        <circle cx="200" cy="140" r="12" />
+        <path d="M195 130 Q200 116 205 130Z" />
+      </g>
+      <path d="M186 204 L214 204 L210 220 L200 214 L190 220Z" fill="var(--s-yellow-lo)" />
+      <path d="M195 147 l-2 6 M205 147 l2 6" stroke="#000" stroke-width="2" />
+      <g class="kneeling">
+        <path d="M562 200 Q606 196 604 160 Q602 140 618 132" fill="none" stroke="var(--s-yellow)" stroke-width="5" stroke-linecap="round" />
+        <path d="M414 236 C404 196 424 160 474 150 C534 138 588 160 600 206 C604 222 602 236 598 236Z" fill="var(--s-cloud)" stroke="var(--s-yellow)" stroke-width="3" />
+        <path d="M470 151 Q480 172 470 194 Q488 172 486 149Z M505 145 Q516 170 506 192 Q524 168 521 145Z M540 148 Q550 172 540 194 Q558 170 555 152Z M572 162 Q578 182 568 200 Q588 182 584 170Z" fill="#000" />
+        <path d="M550 236 C542 214 558 196 580 200 C598 206 600 226 592 236" fill="none" stroke="var(--s-yellow-lo)" stroke-width="3" />
+        <path d="M424 236 L408 206 Q418 194 432 202 L450 236Z" fill="var(--s-cloud)" stroke="var(--s-yellow)" stroke-width="3" stroke-linejoin="bevel" />
+        <path d="M378 236 Q382 222 404 222 L420 236Z" fill="var(--s-cloud)" stroke="var(--s-yellow)" stroke-width="3" />
+        <path d="M380 236 l-8 -4 M388 230 l-8 -6 M397 225 l-6 -8" stroke="var(--s-flash)" stroke-width="2.5" stroke-linecap="round" />
+        <polygon points="364,190 372,160 386,176 396,146 404,172 420,150 422,178 440,166 432,192 446,190 426,212 382,214" fill="var(--s-yellow)" />
+        <path d="M410 196 Q382 186 354 206 Q340 220 346 233 Q368 238 394 228 Q414 214 410 196Z" fill="var(--s-cloud)" stroke="var(--s-yellow)" stroke-width="3" stroke-linejoin="bevel" />
+        <path d="M388 200 Q362 182 318 180 Q354 194 380 212Z" fill="var(--s-yellow)" />
+        <path d="M398 194 Q380 164 344 150 Q372 174 390 205Z" fill="var(--s-yellow)" />
+        <path d="M352 216 L336 208 L356 210Z" fill="var(--s-yellow)" />
+        <path d="M372 206 L384 208 L376 213Z" fill="var(--s-yellow)" />
+        <path d="M350 228 Q362 232 374 226" fill="none" stroke="var(--s-yellow)" stroke-width="2" />
+      </g>
+    </svg>
+    <figcaption><span class="plaque">Fig. III</span>On the night of the Blizzard, the Beast kneels.</figcaption>
+  </figure>
+)}

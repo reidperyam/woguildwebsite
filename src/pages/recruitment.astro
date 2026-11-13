@@ -1,17 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RecruitCard from '../components/RecruitCard.astro';
+import { Image } from 'astro:assets';
 import { guild } from '../data/guild';
+import { tabards } from '../data/tabards';
 ---
 
 <BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec for ${guild.recruiting.bracket} battlegrounds. ${guild.faction}, ${guild.game}, ${guild.region}.`}>
   <div class="wrap page">
     <section class="intro" aria-labelledby="rec-title">
+      <div class="intro-text">
       <span class:list={['chip', { 'chip-off': !guild.recruiting.open }]}>{guild.recruiting.open ? 'Open' : 'Closed'}</span>
       {guild.recruiting.open
         ? <h1 id="rec-title">Recruiting for <span class="accent">{guild.recruiting.bracket}</span> battlegrounds</h1>
         : <h1 id="rec-title">Recruitment is <span class="accent">closed</span></h1>}
       <p class="lead">{guild.recruiting.summary}</p>
+      </div>
+      <figure class="intro-tabard">
+        <Image src={tabards.current.image} alt={tabards.current.alt} width={250} />
+        <figcaption class="label">Wear the tabard</figcaption>
+      </figure>
     </section>
 
     <section class="split" aria-label="Who we want">
@@ -52,7 +60,12 @@ import { guild } from '../data/guild';
 </BaseLayout>
 
 <style>
-  .intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-4); align-items: center; }
+  .intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  /* Shrinks on the narrowest phones so BATTLEGROUNDS (13 letters) never overflows. */
+  .intro h1 { font-size: min(var(--fs-h1), calc((100vw - 2 * var(--gutter)) * 0.105)); }
+  .intro-tabard { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); }
+  .intro-tabard img { width: clamp(150px, 18vw, 220px); }
   .lead { font-size: clamp(18px, 2vw, 22px); max-width: 48ch; }
 
   .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-5); align-items: start; }
@@ -68,6 +81,8 @@ import { guild } from '../data/guild';
 
   @media (max-width: 960px) {
     .split { grid-template-columns: minmax(0, 1fr); }
+    .intro { grid-template-columns: minmax(0, 1fr); }
+    .intro-tabard { order: -1; align-items: flex-start; }
   }
   @media (max-width: 700px) {
     .lists, .steps { grid-template-columns: minmax(0, 1fr); }

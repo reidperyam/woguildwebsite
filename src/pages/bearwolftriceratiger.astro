@@ -1,0 +1,261 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BeastIcons from '../components/BeastIcons.astro';
+import BeastArt from '../components/BeastArt.astro';
+import BeastCrop from '../components/BeastCrop.astro';
+import BeastDance from '../components/BeastDance.astro';
+import '../styles/tempest.css';
+import '../styles/tempest-whimsy.css';
+import '../styles/tempest-art.css';
+import '../styles/tempest-dance.css';
+import { discordHref } from '../data/guild';
+import { keeper, born, roarText, relic, intro, tellings, epithets, fieldCard, four, laws, oath, details } from '../data/beast';
+
+// Ambient layers. Positions are fixed so the page renders the same every time.
+const heroRain = Array.from({ length: 46 }, (_, i) => ({
+  x: (i * 37 + 5) % 100, h: 50 + ((i * 13) % 50), dur: 0.55 + ((i * 7) % 5) * 0.09, delay: -((i * 0.173) % 1.2), o: 0.25 + ((i * 11) % 5) * 0.1,
+}));
+const pageRain = Array.from({ length: 24 }, (_, i) => ({
+  x: (i * 43 + 17) % 100, h: 40 + ((i * 17) % 40), dur: 0.9 + ((i * 5) % 6) * 0.12, delay: -((i * 0.37) % 2), o: 0.08 + ((i * 7) % 4) * 0.04,
+}));
+const titleParts = ['Bear', 'wolf', 'tricera', 'tiger'];
+---
+
+<BaseLayout title="The Bearwolftriceratiger" description="The saga of the Bearwolftriceratiger: four beasts in one hide, born of the Blizzard of 2010, when Werewolf Orgasmahowl lost its name and found a longer one.">
+  <Fragment slot="head">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bitter:ital,wght@0,400;0,700;1,400&family=Metal+Mania&display=swap" />
+  </Fragment>
+
+  <BeastIcons />
+
+  <div class="tempest">
+    <div class="downpour" aria-hidden="true">
+      {pageRain.map((r) => <span style={`left:${r.x}%;--h:${r.h}px;--dur:${r.dur}s;--delay:${r.delay}s;--o:${r.o}`}></span>)}
+    </div>
+
+    <section class="storm" aria-labelledby="beast-title" data-sky>
+      <div class="clouds" aria-hidden="true"></div>
+      <div class="clouds clouds-front" aria-hidden="true"></div>
+      <div class="sky-flash" aria-hidden="true"></div>
+      <div class="sky-flash sky-flash-2" aria-hidden="true"></div>
+      <svg class="sky-bolt" aria-hidden="true" viewBox="0 0 60 300" preserveAspectRatio="none"><path d="M34 0 22 92 38 96 14 196 30 200 6 300" /></svg>
+      <svg class="sky-bolt sky-bolt-2" aria-hidden="true" viewBox="0 0 60 300" preserveAspectRatio="none"><path d="M20 0 36 80 18 88 40 170 24 176 44 300" /></svg>
+      <div class="rain" aria-hidden="true">
+        {heroRain.map((r) => <span style={`left:${r.x}%;--h:${r.h}px;--dur:${r.dur}s;--delay:${r.delay}s;--o:${r.o}`}></span>)}
+      </div>
+
+      <svg class="hero-sigil" aria-hidden="true"><use href="#bw-sigil" /></svg>
+      <div class="wrap storm-inner">
+        <p class="beware"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Beware<svg aria-hidden="true"><use href="#bw-warn" /></svg></p>
+        <h1 id="beast-title" class="beast-title">
+          <span class="bt-the">The saga of the</span>
+          <span class="sr-only">Bearwolftriceratiger</span>
+          {titleParts.map((p, i) => <span class={`bt-part bt-${i + 1}`} aria-hidden="true">{p}</span>)}
+        </h1>
+        <p class="hero-tag">Four beasts. Three horns. One roar.</p>
+        <ul class="vitals">
+          <li>Born in {born}</li>
+          <li>Guardian of the Pack</li>
+          <li>Black &amp; Lightning</li>
+        </ul>
+        <button type="button" class="beast-btn" data-drums><svg aria-hidden="true"><use href="#bw-bolt" /></svg>Sound the war drums<svg aria-hidden="true"><use href="#bw-bolt" /></svg></button>
+        <p class="sky-hint">Psst: click anywhere in the storm to call down lightning.</p>
+      </div>
+
+      <svg class="waves waves-back" aria-hidden="true" viewBox="0 0 1600 120" preserveAspectRatio="none"><path d="M0 60 Q100 20 200 60 T400 60 T600 60 T800 60 T1000 60 T1200 60 T1400 60 T1600 60 V120 H0Z" /></svg>
+      <svg class="waves waves-front" aria-hidden="true" viewBox="0 0 1600 120" preserveAspectRatio="none"><path d="M0 70 Q80 30 160 70 T320 70 T480 70 T640 70 T800 70 T960 70 T1120 70 T1280 70 T1440 70 T1600 70 V120 H0Z" /></svg>
+    </section>
+
+    <div class="tape" aria-label="Names of the Beast">
+      <div class="tape-track">
+        {[...epithets, ...epithets].map((e, i) => (
+          <span aria-hidden={i >= epithets.length ? 'true' : undefined}>{e}<svg aria-hidden="true"><use href="#bw-bolt" /></svg></span>
+        ))}
+      </div>
+    </div>
+
+    <div class="wrap lair">
+      <section class="placard" aria-label="Introduction">
+        <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Read before approaching the Beast</p>
+        <div class="placard-body">
+          {intro.map((p) => <p>{p}</p>)}
+          <p class="signature">Set down by {keeper}</p>
+        </div>
+      </section>
+
+      <nav class="slashes" aria-label="The tellings">
+        {tellings.map((t) => (
+          <a class="slash" href={`#${t.id}`}>
+            <span class="slash-num">{t.numeral}</span>
+            <span class="slash-title">{t.title}</span>
+          </a>
+        ))}
+      </nav>
+
+      {tellings.map((t) => (
+        <section class="telling" id={t.id} aria-labelledby={`${t.id}-title`}>
+          <header class="telling-head">
+            <span class="telling-num" aria-hidden="true">{t.numeral}</span>
+            <div>
+              <p class="telling-cap">Telling {t.numeral}</p>
+              <h2 id={`${t.id}-title`} class="telling-title">{t.title}</h2>
+            </div>
+            <svg class="claw-marks" aria-hidden="true"><use href="#bw-claw" /></svg>
+          </header>
+          <svg class="stripes" aria-hidden="true" preserveAspectRatio="none"><use href="#bw-stripes" /></svg>
+          <div class="tale">
+            {t.blocks.map((b) => {
+              if ('relic' in b) return (
+                <figure class="specimen">
+                  <button type="button" class="specimen-frame" data-pet aria-label={`Pet the Beast: ${relic.title}`}>
+                    <Image src={relic.image} alt={relic.alt} width={400} />
+                    <span class="glint" aria-hidden="true"></span>
+                  </button>
+                  <figcaption>
+                    <span class="plaque">{relic.plaque}</span>
+                    <span class="specimen-title">{relic.title}</span>
+                    <span class="pets" data-pets aria-live="polite">Click the Beast to pet it. Carefully.</span>
+                  </figcaption>
+                </figure>
+              );
+              if ('art' in b) return <BeastArt name={b.art} />;
+              if ('deed' in b) return (
+                <div class:list={['deed', { 'has-detail': b.detail }]}>
+                  <div class="deed-text"><h3>{b.deed}</h3><p>{b.p}</p></div>
+                  {b.detail && (
+                    <figure class="deed-detail">
+                      <BeastCrop crop={b.detail.crop} label={b.detail.label} />
+                      <figcaption>{b.detail.caption}</figcaption>
+                    </figure>
+                  )}
+                </div>
+              );
+              if ('quote' in b) return (
+                <blockquote class="roar-quote">
+                  {b.quote.map((l) => <p>{b.roar
+                    ? <button type="button" class="inline-roar" data-roar aria-label={`${l} Click to hear the Bearwolftriceratiger roar`}>{l}</button>
+                    : l}</p>)}
+                  {b.cite && <cite>{b.cite}</cite>}
+                </blockquote>
+              );
+              if ('note' in b) return <p class="historian"><span class="historian-label">Historian’s note</span>{b.note}</p>;
+              return <p>{b.p}</p>;
+            })}
+          </div>
+          {t.id === 'saint' && <p class="cross"><a href="/lore">Read the life of Saint Hornatius Orgasmahowl</a></p>}
+        </section>
+      ))}
+
+      <section class="field-card" aria-labelledby="field-title">
+        <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Field guide</p>
+        <div class="field-body">
+          <h2 id="field-title" class="telling-title">Know Your Beast</h2>
+          <div class="field-grid">
+          <figure class="field-photo">
+            <BeastCrop crop={details.head.crop} label={details.head.label} />
+            <figcaption>{details.head.caption}</figcaption>
+          </figure>
+          <dl class="field-rows">
+            {fieldCard.map((r) => <div><dt>{r.label}</dt><dd>{r.value}</dd></div>)}
+            <div>
+              <dt>Danger</dt>
+              <dd class="danger"><span class="meter" aria-hidden="true">{[1, 2, 3, 4, 5].map(() => <i></i>)}</span><span class="extreme">Extreme</span></dd>
+            </div>
+          </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="four" aria-labelledby="four-title">
+        <header class="telling-head">
+          <svg class="telling-num telling-icon" aria-hidden="true"><use href="#bw-paw" /></svg>
+          <div>
+            <p class="telling-cap">For the bold</p>
+            <h2 id="four-title" class="telling-title">Awaken the Four</h2>
+          </div>
+          <svg class="claw-marks" aria-hidden="true"><use href="#bw-claw" /></svg>
+        </header>
+        <p class="four-intro">The four echoes still sleep inside the Beast. Wake all four, and the storm may grant a fusion.</p>
+        <div class="totems">
+          {four.map((b) => (
+            <button type="button" class="totem" data-beast={b.id} aria-pressed="false">
+              <svg class="totem-icon" aria-hidden="true"><use href={`#bw-${b.id}`} /></svg>
+              <span class="totem-name">{b.name}</span>
+              <span class="totem-part">{b.part} · {b.gift}</span>
+              <span class="totem-state" data-state>Asleep</span>
+            </button>
+          ))}
+        </div>
+        <p class="four-count" aria-live="polite"><span data-awake-count>0</span> of {four.length} awake</p>
+        <p class="fusion" data-fusion hidden>Fusion! The Beast is whole. {roarText}</p>
+        <button type="button" class="beast-btn ghost small" data-sleep>Let them sleep</button>
+      </section>
+
+      <section class="laws" aria-labelledby="laws-title">
+        <header class="telling-head">
+          <span class="telling-num" aria-hidden="true">§</span>
+          <div>
+            <p class="telling-cap">Carved on the Beast-Fire stone</p>
+            <h2 id="laws-title" class="telling-title">The Laws of the Pack</h2>
+          </div>
+          <svg class="claw-marks" aria-hidden="true"><use href="#bw-claw" /></svg>
+        </header>
+        <ol class="law-list">
+          {laws.map((l) => <li><span class="law">{l.law}</span><span class="gloss">{l.gloss}</span></li>)}
+        </ol>
+      </section>
+
+      <section class="oath" aria-labelledby="oath-title">
+        <p class="telling-cap">Sworn before every charge</p>
+        <h2 id="oath-title" class="telling-title">The Oath of the Charge</h2>
+        <svg class="stripes" aria-hidden="true" preserveAspectRatio="none"><use href="#bw-stripes" /></svg>
+        <p class="oath-lines">{oath.map((l) => <span>{l}</span>)}</p>
+        <button type="button" class="great-roar" data-roar aria-label="Hear the roar of the Bearwolftriceratiger">{roarText}</button>
+        <p class="roar-hint">Click the roar to hear it.</p>
+        <p class="so-roars">So roars the pack.</p>
+      </section>
+
+      <p class="colophon">More of the saga surely lies out in the storm. If you hear any, bring it to the Librarian.<br />Legend holds that the Beast answers anyone who rawrs at it.</p>
+    </div>
+
+    <section class="final" aria-labelledby="final-title" data-sky>
+      <div class="wrap final-inner">
+        <svg class="final-sigil" aria-hidden="true"><use href="#bw-sigil" /></svg>
+        <h2 id="final-title" class="final-cry">{roarText}</h2>
+        <p>Join the pack. Grab three.</p>
+        <div class="btn-row final-btns">
+          <a class="beast-btn dark" href={discordHref}>Join the Discord</a>
+          <button type="button" class="beast-btn dark ghost" data-roar>Roar it</button>
+          <button type="button" class="beast-btn dark ghost" data-drums>Sound the drums</button>
+          <button type="button" class="beast-btn dark ghost" data-share>Share the roar</button>
+        </div>
+        <p class="share-status" data-share-status aria-live="polite"></p>
+      </div>
+    </section>
+
+    <div class="summon" data-summon hidden>
+      <div class="summon-card" role="dialog" aria-modal="true" aria-labelledby="summon-title">
+        <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>A packmate sends word</p>
+        <div class="summon-body">
+          <h2 id="summon-title" class="summon-title">The Beast has been summoned</h2>
+          <button type="button" class="beast-btn" data-summon-go>Face the Beast</button>
+          <button type="button" class="summon-skip" data-summon-skip>Sneak past</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="storm-toggle" data-storm aria-pressed="false">
+      <svg aria-hidden="true"><use href="#bw-bolt" /></svg>
+      <span data-storm-label>Stir the storm</span>
+    </button>
+
+    <BeastDance />
+
+    <div class="fx" aria-hidden="true"></div>
+  </div>
+</BaseLayout>
+
+<script>
+  import '../scripts/beast';
+</script>

@@ -72,7 +72,7 @@ export const chapters: Chapter[] = [
           { quote: ['Let’s hold 2.', 'Yah, better than none.', 'Ya relax, Hornatius.'] },
           { p: 'To this our beloved Saint replied:' },
           { quote: ['Instead of holding TWO, I will grab THREE!'] },
-          { html: 'He then scooped up the three tar heels and flung them off the northern cliff’s ledge onto two enemy hunters far, far below, killing all five. At this he shouted <strong class="cry">“HAROOOO!”</strong> (his magnificent and heralded battle cry) and flung himself into the onslaught of Alliance denizens en route to the Lumber Mill, as depicted here.' },
+          { html: 'He then scooped up the three tar heels and flung them off the northern cliff’s ledge onto two enemy hunters far, far below, killing all five. At this he shouted <button type="button" class="cry inline-cry" data-howl aria-label="HAROOOO! Click to hear the Saint’s battle cry">“HAROOOO!”</button> (his magnificent and heralded battle cry) and flung himself into the onslaught of Alliance denizens en route to the Lumber Mill, as depicted here.' },
         ],
       },
       {

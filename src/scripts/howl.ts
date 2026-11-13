@@ -33,6 +33,7 @@ export interface HowlParams {
   realLength: number;   // seconds of the recording to use
   wolfEntry: number;    // seconds: negative = wolves start before you, positive = they answer after
   wolfDistance: number; // 0 close – 1 far across the valley
+  stress: number;       // 0 = HA-rooo (the Classic cry), 1 = ha-ROOOO, stressed like "kangaroo" (the Saint)
 }
 
 export interface HowlControl {
@@ -75,15 +76,19 @@ export const HOWL_CONTROLS: HowlControl[] = [
   { key: 'realLength', label: 'Recording length', group: 'Real wolves (NPS)', min: 1, max: 8.5, step: 0.1, unit: 's' },
   { key: 'wolfEntry', label: 'Wolves enter', group: 'Wolf placement', min: -3, max: 4, step: 0.1, unit: 's' },
   { key: 'wolfDistance', label: 'Distance', group: 'Wolf placement', min: 0, max: 1, step: 0.01 },
+  // Appended after the wolves for the same reason; it still shows in the Word timing group.
+  { key: 'stress', label: 'Stress: HA-roo ↔ ha-ROO', group: 'Word timing', min: 0, max: 1, step: 0.01 },
 ];
 
 /** The official site HAROOOO. Replace with settings copied from the Howl Lab. */
 export const DEFAULT_HOWL: HowlParams = {
-  pitch: 150, formant: 1, hLength: 0.12, aLength: 0.2, rLength: 0.13, oLength: 2.2,
-  rise: 7, riseTime: 0.45, fall: 6, vibratoRate: 5.6, vibratoDepth: 40,
+  pitch: 150, formant: 1, hLength: 0.07, aLength: 0.09, rLength: 0.1, oLength: 2.2,
+  rise: 7, riseTime: 0.2, fall: 6, vibratoRate: 5.6, vibratoDepth: 40,
   breath: 0.3, gravel: 0.2, roll: 0.45, voices: 1, spread: 12, reverb: 0.45, reverbSize: 3.2, volume: 0.8,
   // The official cry howls together with a full synthesized pack (approved 2026-11-10).
   wolfMix: 1, wolfPack: 6, wolfPitch: 455, wolfLength: 2.6, realMix: 0, realPitch: 1, realLength: 6, wolfEntry: 0, wolfDistance: 0.5,
+  // Stressed like "kangaroo": a quick, low "ha", then a big "ROOOO" (approved 2026-11-13).
+  stress: 1,
 };
 
 /** Credit for the recorded wolves (public domain, U.S. federal work). */
@@ -95,15 +100,20 @@ export const WOLF_RECORDING = {
 
 // Presets override the official cry. Ones without their own wolves set wolfMix: 0 so they stay wolf-free.
 const NO_WOLVES: Partial<HowlParams> = { wolfMix: 0, realMix: 0 };
+// The original HA-roooo word shape (the official cry until 2026-11-13). Presets made before the
+// kangaroo stress spread it so they keep sounding the way they always did.
+const CLASSIC_WORD: Partial<HowlParams> = { stress: 0, hLength: 0.12, aLength: 0.2, rLength: 0.13, riseTime: 0.45 };
 export const HOWL_PRESETS: Record<string, Partial<HowlParams>> = {
   Saint: {},
-  Elder: { ...NO_WOLVES, pitch: 85, formant: 0.8, gravel: 0.5, rise: 5, oLength: 2.8, vibratoDepth: 28, reverb: 0.6, reverbSize: 4.5 },
-  Whelp: { ...NO_WOLVES, pitch: 300, formant: 1.35, rise: 10, oLength: 1.4, riseTime: 0.3, gravel: 0.05, breath: 0.4, vibratoRate: 7 },
-  Werewolf: { pitch: 120, rise: 12, riseTime: 0.9, oLength: 3.6, fall: 10, vibratoDepth: 70, gravel: 0.35, roll: 0.2, reverb: 0.55, wolfMix: 0.55, wolfPack: 3, wolfEntry: 2.4, wolfDistance: 0.55 },
-  'Full Moon': { oLength: 2.6, reverb: 0.55, realMix: 0.75, realLength: 7, wolfMix: 0.35, wolfPack: 4, wolfEntry: 1.4, wolfDistance: 0.65 },
-  'Lone Wolf': { wolfMix: 0.8, wolfPack: 1, wolfPitch: 520, wolfLength: 3.4, wolfEntry: -2.6, wolfDistance: 0.35 },
-  Choir: { ...NO_WOLVES, voices: 6, spread: 20, gravel: 0.05, breath: 0.2, reverb: 0.75, reverbSize: 5, vibratoDepth: 30, oLength: 2.8 },
-  Battlecry: { ...NO_WOLVES, pitch: 175, hLength: 0.06, aLength: 0.14, rLength: 0.08, oLength: 1.6, rise: 4, gravel: 0.7, roll: 0.8, breath: 0.15, reverb: 0.3, voices: 3, spread: 15 },
+  // The old official cry: the Saint's voice and wolves with the original HA-roooo.
+  Classic: { ...CLASSIC_WORD },
+  Elder: { ...CLASSIC_WORD, ...NO_WOLVES, pitch: 85, formant: 0.8, gravel: 0.5, rise: 5, oLength: 2.8, vibratoDepth: 28, reverb: 0.6, reverbSize: 4.5 },
+  Whelp: { ...CLASSIC_WORD, ...NO_WOLVES, pitch: 300, formant: 1.35, rise: 10, oLength: 1.4, riseTime: 0.3, gravel: 0.05, breath: 0.4, vibratoRate: 7 },
+  Werewolf: { ...CLASSIC_WORD, pitch: 120, rise: 12, riseTime: 0.9, oLength: 3.6, fall: 10, vibratoDepth: 70, gravel: 0.35, roll: 0.2, reverb: 0.55, wolfMix: 0.55, wolfPack: 3, wolfEntry: 2.4, wolfDistance: 0.55 },
+  'Full Moon': { ...CLASSIC_WORD, oLength: 2.6, reverb: 0.55, realMix: 0.75, realLength: 7, wolfMix: 0.35, wolfPack: 4, wolfEntry: 1.4, wolfDistance: 0.65 },
+  'Lone Wolf': { ...CLASSIC_WORD, wolfMix: 0.8, wolfPack: 1, wolfPitch: 520, wolfLength: 3.4, wolfEntry: -2.6, wolfDistance: 0.35 },
+  Choir: { ...CLASSIC_WORD, ...NO_WOLVES, voices: 6, spread: 20, gravel: 0.05, breath: 0.2, reverb: 0.75, reverbSize: 5, vibratoDepth: 30, oLength: 2.8 },
+  Battlecry: { ...CLASSIC_WORD, ...NO_WOLVES, pitch: 175, hLength: 0.06, aLength: 0.14, rLength: 0.08, oLength: 1.6, rise: 4, gravel: 0.7, roll: 0.8, breath: 0.15, reverb: 0.3, voices: 3, spread: 15 },
 };
 
 // Formant targets (Hz) for an adult voice: [F1, F2, F3].
@@ -112,7 +122,13 @@ const VOWELS = {
   r: [490, 1350, 1690],
   o: [570, 840, 2410],
   u: [320, 800, 2240],
+  uh: [600, 1170, 2390], // the unstressed "ha" of ha-ROO
+  oo: [290, 740, 2250],  // the tight "oo" of kangaROO
 } as const;
+type Formants = readonly number[];
+const mixVowel = (a: Formants, b: Formants, s: number) => a.map((hz, i) => hz + (b[i] - hz) * s);
+/** How far the unstressed "ha" sits below the ROO (a multiplier of the base pitch). */
+const haDrop = (p: HowlParams) => 2 ** ((-4 * p.stress) / 12);
 
 const impulseCache = new Map<string, AudioBuffer>();
 function impulse(ac: AudioContext, seconds: number): AudioBuffer {
@@ -157,8 +173,10 @@ export function pitchAt(p: HowlParams, t: number): number {
   const tO = tR + p.oLength;
   const top = 2 ** (p.rise / 12);
   const end = 2 ** ((p.rise - p.fall) / 12);
-  if (t < tA * 0.6) return 0.94 + (0.06 * t) / (tA * 0.6);
-  if (t < tR) return 1;
+  const drop = haDrop(p);
+  if (t < tA * 0.6) return (0.94 + (0.06 * t) / (tA * 0.6)) * drop;
+  if (t < tA) return drop;
+  if (t < tR) return drop + (1 - drop) * ((t - tA) / p.rLength);
   if (t < tR + p.riseTime) return 1 * (top / 1) ** ((t - tR) / p.riseTime);
   const fallStart = Math.max(tR + p.riseTime, tO - Math.min(0.6, p.oLength * 0.35));
   if (t < fallStart) return top;
@@ -309,20 +327,26 @@ export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: Analys
   bodyGain.gain.value = 0.12;
   bankIn.connect(body).connect(bodyGain).connect(out);
 
-  const setVowel = (v: keyof typeof VOWELS, at: number, ramp: boolean) => {
+  const setVowel = (v: keyof typeof VOWELS | Formants, at: number, ramp: boolean) => {
+    const target = typeof v === 'string' ? VOWELS[v] : v;
     formants.forEach((bp, i) => {
-      const hz = VOWELS[v][i] * p.formant;
+      const hz = target[i] * p.formant;
       if (ramp) bp.frequency.linearRampToValueAtTime(hz, at);
       else bp.frequency.setValueAtTime(hz, at);
     });
   };
-  setVowel('a', t0, false);
-  setVowel('a', tA, true);
+  // With stress, the "aa" relaxes to an unstressed "uh" and the "oooo" starts closer to "oo".
+  const aVowel = mixVowel(VOWELS.a, VOWELS.uh, p.stress);
+  // At full stress it skips "oh" and goes straight to a tight "oo", and stays there.
+  const oVowel = mixVowel(VOWELS.o, VOWELS.oo, p.stress);
+  const uVowel = mixVowel(VOWELS.u, VOWELS.oo, p.stress);
+  setVowel(aVowel, t0, false);
+  setVowel(aVowel, tA, true);
   setVowel('r', tA + p.rLength * 0.6, true);
   setVowel('r', tR, true);
-  setVowel('o', tR + 0.12, true);
-  setVowel('u', tR + p.oLength * 0.55, true);
-  setVowel('u', end, true);
+  setVowel(oVowel, tR + 0.12 - 0.05 * p.stress, true);
+  setVowel(uVowel, tR + p.oLength * 0.55, true);
+  setVowel(uVowel, end, true);
 
   // Breath noise: loud for the "H", a whisper underneath the vowels.
   const breath = ac.createBufferSource();
@@ -365,9 +389,12 @@ export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: Analys
     const s = t0 + (p.voices > 1 ? Math.random() * 0.05 : 0);
     const osc = ac.createOscillator();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(f * 0.94, s);
-    osc.frequency.linearRampToValueAtTime(f, s + (tA - t0) * 0.6);
-    osc.frequency.setValueAtTime(f, tR);
+    // With stress, the "ha" sits low and the "r" slides up into the ROO.
+    const drop = haDrop(p);
+    osc.frequency.setValueAtTime(f * 0.94 * drop, s);
+    osc.frequency.linearRampToValueAtTime(f * drop, s + (tA - t0) * 0.6);
+    osc.frequency.setValueAtTime(f * drop, tA);
+    osc.frequency.linearRampToValueAtTime(f, tR);
     osc.frequency.exponentialRampToValueAtTime(f * 2 ** (p.rise / 12), tR + p.riseTime);
     osc.frequency.setValueAtTime(f * 2 ** (p.rise / 12), fallStart);
     osc.frequency.exponentialRampToValueAtTime(f * 2 ** ((p.rise - p.fall) / 12), end);
@@ -384,10 +411,14 @@ export function howl(params: Partial<HowlParams> = {}, opts: { analyser?: Analys
     const amp = ac.createGain();
     amp.gain.setValueAtTime(0, s);
     amp.gain.linearRampToValueAtTime(0.08, tH);
-    amp.gain.linearRampToValueAtTime(1, tH + 0.05);
-    amp.gain.setValueAtTime(1, tA);
+    // With stress, the "ha" is quieter and the ROO lands with an accent.
+    const haLevel = 1 - 0.45 * p.stress;
+    const accentEnd = Math.min(tR + 0.4, fallStart);
+    amp.gain.linearRampToValueAtTime(haLevel, tH + 0.05);
+    amp.gain.setValueAtTime(haLevel, tA);
     amp.gain.linearRampToValueAtTime(0.75, tA + p.rLength * 0.5);
-    amp.gain.linearRampToValueAtTime(1, tR + 0.08);
+    amp.gain.linearRampToValueAtTime(1 + 0.25 * p.stress, tR + 0.08);
+    amp.gain.linearRampToValueAtTime(1, accentEnd);
     amp.gain.setValueAtTime(1, fallStart);
     amp.gain.linearRampToValueAtTime(0.7, tO);
     amp.gain.linearRampToValueAtTime(0, end);

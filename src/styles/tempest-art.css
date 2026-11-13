@@ -1,0 +1,89 @@
+/* The Storm's inline art: painting details (BeastCrop), illustrations (BeastArt) and the sigil.
+   Scoped under .tempest like tempest.css. */
+
+/* ---------- Painting details ---------- */
+.tempest .crop {
+  display: block; width: 100%; background-repeat: no-repeat; background-color: var(--s-storm);
+  border: 4px solid var(--s-yellow); box-shadow: 6px 6px 0 var(--s-cloud);
+}
+
+/* ---------- Figures ---------- */
+.art { margin: var(--space-3) 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.art-wide { width: min(100%, 760px); }
+.art figcaption, .deed-detail figcaption, .field-photo figcaption {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 15px; font-style: italic; color: var(--s-ash);
+}
+.art-svg { width: 100%; height: auto; overflow: visible; }
+
+/* Fig. I: the frozen name */
+.frozen-word { font-family: var(--f-sign); font-size: 34px; letter-spacing: 0.04em; fill: #c9a646; }
+.frozen-snow { animation: snow-drift 3s linear infinite; }
+@keyframes snow-drift { from { transform: translate(0, -20px); } to { transform: translate(-24px, 0); } }
+.frozen-break { transform-box: view-box; transform-origin: 340px 110px; animation: name-break 5s ease-in-out infinite; }
+@keyframes name-break {
+  0%, 30% { transform: translate(0, 0) rotate(0); }
+  55%, 85% { transform: translate(22px, -10px) rotate(6deg); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
+
+/* The four echoes, as details of the painting */
+.echoes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+.echo { display: flex; flex-direction: column; gap: 10px; }
+.echo-name { display: flex; align-items: center; gap: 8px; font-family: var(--f-sign); font-size: 18px; text-transform: uppercase; color: var(--s-yellow); line-height: 1.1; }
+.echo-name svg { width: 26px; height: 26px; flex-shrink: 0; }
+.echo-part { font-size: 15px; font-style: italic; color: var(--s-ash); margin-top: -6px; }
+
+/* Fig. II: the banner and its colors */
+.art-banner { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: var(--space-2) var(--space-4); align-items: center; }
+.art-banner figcaption { grid-column: 1 / -1; }
+.tabard-relic { position: relative; display: grid; place-items: center; }
+.tabard-relic img { position: relative; width: 100%; max-width: 240px; animation: tabard-sway 6s ease-in-out infinite; transform-origin: 50% 20%; }
+.tabard-glow { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 10, 0.35), transparent 70%); }
+@keyframes tabard-sway { 0%, 100% { rotate: -1.5deg; } 50% { rotate: 1.5deg; } }
+.swatches { display: flex; flex-direction: column; gap: var(--space-2); }
+.swatch { display: flex; align-items: center; gap: var(--space-2); font-size: 17px; line-height: 1.5; }
+.swatch b { font-family: var(--f-sign); font-weight: 400; font-size: 20px; text-transform: uppercase; color: var(--s-yellow); letter-spacing: 0.04em; }
+.chip-black, .chip-yellow { flex-shrink: 0; width: 72px; height: 72px; border: 4px solid var(--s-yellow); box-shadow: 6px 6px 0 var(--s-cloud); }
+.chip-black { background: var(--s-black); }
+.chip-yellow { background: var(--s-yellow); }
+
+/* Fig. III: the Beast kneels */
+.saint-halo { transform-box: fill-box; transform-origin: center; animation: halo-pulse 3.2s ease-in-out infinite; }
+@keyframes halo-pulse { 50% { transform: scale(1.08); fill-opacity: 0.22; } }
+.saint-bolt { filter: drop-shadow(0 0 6px var(--s-yellow)); animation: bolt-flicker 7s steps(1) infinite; }
+@keyframes bolt-flicker { 0%, 84%, 100% { opacity: 1; } 86% { opacity: 0.2; } 90% { opacity: 1; } }
+
+/* ---------- Deeds with details ---------- */
+.deed.has-detail { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: var(--space-3); align-items: start; }
+.deed-detail { margin: 6px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.deed:nth-of-type(even).has-detail { grid-template-columns: 170px minmax(0, 1fr); }
+.deed:nth-of-type(even).has-detail .deed-detail { order: -1; }
+
+/* ---------- Field card photo ---------- */
+.field-grid { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+.field-photo { margin: 0; display: flex; flex-direction: column; gap: 8px; transform: rotate(-2deg); }
+
+/* ---------- The sigil ---------- */
+.hero-sigil {
+  position: absolute; left: 50%; top: 46%; z-index: 1; width: min(96vw, 900px); height: min(84vw, 788px);
+  color: var(--s-yellow); opacity: 0.07; translate: -50% -50%; pointer-events: none;
+  --sigil-cut: transparent;
+}
+.final-sigil { width: clamp(150px, 20vw, 230px); height: clamp(131px, 17.5vw, 201px); color: var(--s-black); --sigil-cut: var(--s-yellow); }
+
+@media (max-width: 760px) {
+  .echoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .art-banner { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .art-banner .tabard-relic { max-width: 240px; }
+  .deed.has-detail, .deed:nth-of-type(even).has-detail { grid-template-columns: minmax(0, 1fr); }
+  .deed-detail { max-width: 220px; }
+  .deed:nth-of-type(even).has-detail .deed-detail { order: 0; }
+  .field-grid { grid-template-columns: minmax(0, 1fr); }
+  .field-photo { max-width: 200px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frozen-snow, .frozen-break, .tabard-relic img, .saint-halo, .saint-bolt { animation: none; }
+  .frozen-break { transform: translate(22px, -10px) rotate(6deg); }
+}

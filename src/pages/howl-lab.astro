@@ -354,7 +354,8 @@ const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
     const parts = s.split('_').map(Number);
     // Older links have fewer values (no wolves); missing ones keep their defaults.
     if (parts.length < 19 || parts.length > HOWL_CONTROLS.length || parts.some((n) => !Number.isFinite(n))) return null;
-    const next = { ...DEFAULT_HOWL };
+    // Links made before the stress dial were the Classic HA-roooo, so a missing stress means 0.
+    const next = { ...DEFAULT_HOWL, stress: 0 };
     parts.forEach((v, i) => { const c = HOWL_CONTROLS[i]; next[c.key] = Math.min(c.max, Math.max(c.min, v)); });
     return next;
   }

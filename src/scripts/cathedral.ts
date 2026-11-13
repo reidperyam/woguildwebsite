@@ -158,7 +158,14 @@ function haroooo() {
   }, ms);
   return ms;
 }
-document.querySelectorAll<HTMLButtonElement>('[data-howl]').forEach((b) => b.addEventListener('click', haroooo));
+document.querySelectorAll<HTMLButtonElement>('[data-howl]').forEach((b) => b.addEventListener('click', () => {
+  const ms = haroooo();
+  // The cry in the Lumber Mill text swells and shakes while it plays.
+  if (ms && b.classList.contains('inline-cry')) {
+    b.classList.add('crying');
+    window.setTimeout(() => b.classList.remove('crying'), ms);
+  }
+}));
 
 // Share a link that summons the cry: /lore#haroooo
 const shareStatus = document.querySelector<HTMLElement>('[data-share-status]');

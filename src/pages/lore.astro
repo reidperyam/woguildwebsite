@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { tabards } from '../data/tabards';
 import RelicCard from '../components/RelicCard.astro';
 import Ornaments from '../components/Ornaments.astro';
 import Laurel from '../components/Laurel.astro';
@@ -175,7 +177,7 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
         <button type="button" class="holy-btn crimson small" data-snuff>Snuff the candles</button>
       </section>
 
-      <p class="colophon">More relics are surely out there. If you find one, bring it to the Librarian. Originally catalogued {catalogued}.<br />Legend holds that whoever types the Saint’s battle cry shall witness a miracle.</p>
+      <p class="colophon">More relics are surely out there. If you find one, bring it to the Librarian. Originally catalogued {catalogued}.<br />Legend holds that whoever types the Saint’s battle cry shall witness a miracle.<br />The Saint’s beast has a saga of its own: <a href="/bearwolftriceratiger">the Bearwolftriceratiger</a>.</p>
     </div>
 
     <section class="glory" aria-labelledby="glory-title" data-sky>
@@ -188,6 +190,11 @@ const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) 
         ))}
       </div>
       <div class="wrap glory-inner">
+        <figure class="glory-tabard">
+          <span class="glory-halo" aria-hidden="true"></span>
+          <Image src={tabards.current.image} alt={tabards.current.alt} width={250} />
+          <figcaption>The Banner of the Faithful</figcaption>
+        </figure>
         <h2 id="glory-title" class="glory-cry">{guild.battleCry}</h2>
         <p>Join the faithful. Grab three.</p>
         <div class="btn-row" style="justify-content:center">

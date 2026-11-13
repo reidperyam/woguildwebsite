@@ -81,8 +81,8 @@ p { margin: 0; }
   text-transform: uppercase;
   letter-spacing: -0.04em;
   line-height: 0.92;
-  /* Sized so ORGASMAHOWL (11 letters) fits the column at any width. */
-  font-size: min(120px, calc((100vw - 2 * var(--gutter)) * 0.125));
+  /* Sized so ORGASMAHOWL> (11 letters and the closing guild-tag bracket) fits the column at any width. */
+  font-size: min(120px, calc((100vw - 2 * var(--gutter)) * 0.114));
   hyphens: manual;
 }
 

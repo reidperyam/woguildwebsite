@@ -6,12 +6,22 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/recruitment', label: 'Recruitment' },
-  { href: '/lore', label: 'Lore' },
 ];
-const fun = [
-  { href: '/howl-lab', label: 'Howl Lab', note: 'Make your own HAROOOO!' },
+const menus = [
+  {
+    label: 'Lore',
+    items: [
+      { href: '/lore', label: 'Saint Hornatius Orgasmahowl', note: 'The holy life of our patron' },
+      { href: '/bearwolftriceratiger', label: 'Bearwolftriceratiger', note: 'The beast born of the Blizzard' },
+    ],
+  },
+  {
+    label: 'Fun',
+    items: [
+      { href: '/howl-lab', label: 'Howl Lab', note: 'Make your own HAROOOO!' },
+    ],
+  },
 ];
-const inFun = fun.some((f) => f.href === path);
 ---
 
 <header class="nav-wrap">
@@ -24,36 +34,43 @@ const inFun = fun.some((f) => f.href === path);
       {links.map((l) => (
         <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
       ))}
-      <details class="fun" data-fun>
-        <summary class:list={{ current: inFun }}>Fun</summary>
-        <div class="menu">
-          {fun.map((f) => (
-            <a href={f.href} aria-current={path === f.href ? 'page' : undefined}>
-              <span class="menu-label">{f.label}</span>
-              <span class="menu-note">{f.note}</span>
-            </a>
-          ))}
-        </div>
-      </details>
+      {menus.map((m) => (
+        <details class="drop" data-menu>
+          <summary class:list={{ current: m.items.some((f) => f.href === path) }}>{m.label}</summary>
+          <div class="menu">
+            {m.items.map((f) => (
+              <a href={f.href} aria-current={path === f.href ? 'page' : undefined}>
+                <span class="menu-label">{f.label}</span>
+                <span class="menu-note">{f.note}</span>
+              </a>
+            ))}
+          </div>
+        </details>
+      ))}
       <a class="btn btn-primary" href={discordHref}>Apply</a>
     </div>
   </nav>
 </header>
 
 <script>
-  // Close the Fun menu on outside click or Escape.
-  const fun = document.querySelector<HTMLDetailsElement>('[data-fun]');
-  if (fun) {
-    document.addEventListener('click', (e) => {
-      if (fun.open && !fun.contains(e.target as Node)) fun.open = false;
+  // Close the dropdown menus on outside click or Escape, and keep only one open at a time.
+  const menus = [...document.querySelectorAll<HTMLDetailsElement>('[data-menu]')];
+  menus.forEach((menu) => {
+    menu.addEventListener('toggle', () => {
+      if (menu.open) menus.forEach((m) => { if (m !== menu) m.open = false; });
     });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && fun.open) {
-        fun.open = false;
-        fun.querySelector('summary')?.focus();
-      }
+  });
+  document.addEventListener('click', (e) => {
+    menus.forEach((m) => { if (m.open && !m.contains(e.target as Node)) m.open = false; });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    menus.forEach((m) => {
+      if (!m.open) return;
+      m.open = false;
+      m.querySelector('summary')?.focus();
     });
-  }
+  });
 </script>
 
 <style>
@@ -62,19 +79,21 @@ const inFun = fun.some((f) => f.href === path);
   .brand { display: flex; align-items: center; gap: var(--space-2); color: var(--ink); text-decoration: none; }
   .word { font-size: 18px; font-weight: var(--fw-heavy); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2; }
   .links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); }
-  .links > a:not(.btn), .fun summary {
+  .links > a:not(.btn), .drop summary {
     display: inline-flex; align-items: center; min-height: var(--target-min);
     color: var(--ink); font-size: var(--fs-button); font-weight: var(--fw-heavy);
     letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer;
   }
-  .links > a:not(.btn):hover, .fun summary:hover { color: var(--accent); }
-  .links > a[aria-current='page'], .fun summary.current { text-decoration: underline; text-decoration-thickness: var(--rule); text-decoration-color: var(--accent); text-underline-offset: 6px; }
+  .links > a:not(.btn):hover, .drop summary:hover { color: var(--accent); }
+  .links > a[aria-current='page'], .drop summary.current { text-decoration: underline; text-decoration-thickness: var(--rule); text-decoration-color: var(--accent); text-underline-offset: 6px; }
 
-  .fun { position: relative; }
-  .fun summary { list-style: none; gap: 8px; }
-  .fun summary::-webkit-details-marker { display: none; }
-  .fun summary::after { content: ''; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid currentColor; transition: transform 0.15s ease; }
-  .fun[open] summary::after { transform: rotate(180deg); }
+  .drop { position: relative; }
+  /* Chrome still lays out a closed <details>' contents, which can widen the page on phones. */
+  .drop:not([open]) .menu { display: none; }
+  .drop summary { list-style: none; gap: 8px; }
+  .drop summary::-webkit-details-marker { display: none; }
+  .drop summary::after { content: ''; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid currentColor; transition: transform 0.15s ease; }
+  .drop[open] summary::after { transform: rotate(180deg); }
   .menu {
     position: absolute; top: calc(100% + 8px); right: 0; min-width: 280px; z-index: 30;
     display: flex; flex-direction: column; background: var(--ground); border: var(--rule) solid var(--ink);
