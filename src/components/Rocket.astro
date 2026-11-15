@@ -1,0 +1,32 @@
+---
+// The WO rocket for the Launch page: square strokes, the monogram in the porthole, and three
+// exhaust lines in accent that only show while it ignites (see the Launch page's styles).
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg class:list={['rocket', className]} viewBox="0 0 120 250" aria-hidden="true">
+  <g class="exhaust">
+    <path d="M46 206 V232" />
+    <path d="M60 206 V246" />
+    <path d="M74 206 V232" />
+  </g>
+  <g class="hull">
+    <path d="M30 150 L8 178 V204 L30 186 Z" />
+    <path d="M90 150 L112 178 V204 L90 186 Z" />
+    <path d="M38 186 H82 L88 200 H32 Z" />
+    <path d="M30 186 V72 L60 10 L90 72 V186 Z" />
+    <path d="M30 72 H90" />
+    <rect x="40" y="94" width="40" height="40" />
+    <text x="60" y="121" text-anchor="middle">WO</text>
+  </g>
+</svg>
+
+<style>
+  .rocket { display: block; overflow: visible; }
+  .hull path, .hull rect { fill: var(--ground); stroke: var(--ink); stroke-width: 4; stroke-linejoin: miter; stroke-linecap: square; }
+  .hull text { fill: var(--accent); font: var(--fw-heavy) 17px var(--font-mono); letter-spacing: -0.06em; }
+  .exhaust path { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: square; }
+</style>

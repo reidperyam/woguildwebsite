@@ -10,8 +10,13 @@ interface Props {
   title?: string;
   description: string;
   noindex?: boolean;
+  // Link-preview image in public/ (1200x630), e.g. '/og-launch.png', with its alt text.
+  image?: string;
+  imageAlt?: string;
 }
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, image, imageAlt } = Astro.props;
+// Previews need absolute URLs; `site` in astro.config.mjs supplies the origin.
+const imageUrl = image && new URL(image, Astro.site).href;
 const fullTitle = title ? `${title} · ${guild.name}` : guild.name;
 ---
 
@@ -28,6 +33,16 @@ const fullTitle = title ? `${title} · ${guild.name}` : guild.name;
     <meta property="og:site_name" content={guild.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site).href} />
+    {imageUrl && (
+      <>
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+        <meta name="twitter:card" content="summary_large_image" />
+      </>
+    )}
     <!-- Bump ?v= whenever the icons change; browsers (Firefox especially) cache them by URL. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />

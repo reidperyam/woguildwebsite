@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { guild, discordHref, factsLine } from '../data/guild';
 import { teaserRelic } from '../data/lore';
 import { bannerHistory } from '../data/tabards';
+import { launch } from '../data/launch';
 ---
 
 <BaseLayout description={`${guild.name}: a ${guild.faction} guild in ${guild.game}, ${guild.region}, focused on low-level battleground PvP. Recruiting all classes and specs.`}>
@@ -17,6 +18,13 @@ import { bannerHistory } from '../data/tabards';
         <a class="btn btn-secondary" href="/recruitment">See recruitment</a>
       </div>
     </section>
+
+    <a class="launch-strip" href={launch.path} data-launch-strip data-year={launch.date.year} data-month={launch.date.month} data-day={launch.date.day}>
+      <span class="ls-tag">Blast off</span>
+      <span class="ls-text"><strong>{launch.dateLabel}</strong> {launch.event}</span>
+      <span class="ls-count" data-ls-count>Get launch ready</span>
+      <span class="ls-go" aria-hidden="true">→</span>
+    </a>
 
     <section aria-labelledby="about-title">
       <div class="section-head">
@@ -114,6 +122,22 @@ import { bannerHistory } from '../data/tabards';
   .hero { display: flex; flex-direction: column; gap: var(--space-4); }
   .tagline { font-size: clamp(18px, 2vw, 22px); max-width: 40ch; }
 
+  /* The launch strip: a loud link to /launch between the hero and About. */
+  .launch-strip { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--space-3); padding: var(--space-3); border: var(--rule) solid var(--accent); color: var(--ink); text-decoration: none; }
+  .launch-strip:hover { background: var(--accent); color: var(--on-accent); }
+  .launch-strip:hover .ls-tag { background: var(--ground); color: var(--accent); }
+  .launch-strip:hover .ls-count { color: var(--on-accent); }
+  .ls-tag { padding: var(--space-1) 12px; background: var(--accent); color: var(--on-accent); font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+  .ls-text { font-size: var(--fs-body); line-height: 1.35; }
+  .ls-text strong { display: block; font-weight: var(--fw-heavy); text-transform: uppercase; }
+  .ls-count { font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: 0.06em; color: var(--signal); white-space: nowrap; }
+  .ls-go { font-size: 32px; font-weight: var(--fw-heavy); line-height: 1; }
+  @media (max-width: 700px) {
+    .launch-strip { grid-template-columns: minmax(0, 1fr) auto; }
+    .ls-tag { justify-self: start; grid-column: 1 / -1; }
+    .ls-text { grid-column: 1 / -1; }
+  }
+
   .about { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-5); align-items: start; }
   .facts { margin: 0; border: var(--rule) solid var(--ink); }
   .facts div { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-bottom: var(--rule) solid var(--ink); }
@@ -181,6 +205,17 @@ import { bannerHistory } from '../data/tabards';
 
 <script>
   import { howl } from '../scripts/howl';
+
+  // The launch strip's countdown, in days, to midnight on launch day in the viewer's own time.
+  const strip = document.querySelector<HTMLElement>('[data-launch-strip]');
+  const stripCount = strip?.querySelector<HTMLElement>('[data-ls-count]');
+  if (strip && stripCount) {
+    const target = new Date(Number(strip.dataset.year), Number(strip.dataset.month) - 1, Number(strip.dataset.day));
+    // Whole days left, matching the Launch page's countdown. Under a day left means launch is tomorrow.
+    const ms = target.getTime() - Date.now();
+    const days = Math.floor(ms / 86400000);
+    stripCount.textContent = ms <= -86400000 ? 'We have liftoff' : ms <= 0 ? 'Today!' : days === 0 ? 'Tomorrow' : `${days} ${days === 1 ? 'day' : 'days'} to go`;
+  }
 
   const cry = document.querySelector<HTMLButtonElement>('[data-cry]');
   let howling = false;

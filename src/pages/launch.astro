@@ -1,0 +1,568 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Rocket from '../components/Rocket.astro';
+import { guild, discordHref } from '../data/guild';
+import { launch, googleCalendarUrl } from '../data/launch';
+
+const { year, month, day } = launch.date;
+// The tape scrolls by repeating its items; two copies make the loop seamless.
+const tape = [...launch.tape, ...launch.tape];
+---
+
+<BaseLayout
+  title={`Blast off: ${launch.shortDate}`}
+  description={`${launch.event}: ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.game} (${guild.region}), on ${launch.dateLabel}. Every class, every spec. Roll Horde, hit 39 and join the pack.`}
+  image="/og-launch.png"
+  imageAlt={`Blast off: ${launch.event}, ${launch.dateLabel}. ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.region}. woguild.org/launch`}
+>
+  <div class="launch" data-launch data-year={year} data-month={month} data-day={day}>
+    <section class="wrap hero" aria-labelledby="launch-title">
+      <div class="hero-text">
+        <p class="label">&lt;WO&gt; · Launch day · {launch.dateLabel}</p>
+        <h1 id="launch-title" class="blast"><span>Blast</span> <span class="accent">off</span></h1>
+        <p class="event">{launch.event}</p>
+        <p class="lead">{launch.lead}</p>
+
+        <div class="countdown" data-countdown>
+          <div class="cells clock" aria-hidden="true">
+            <div><span class="num" data-unit="days">--</span><span class="label">Days</span></div>
+            <div><span class="num" data-unit="hours">--</span><span class="label">Hrs</span></div>
+            <div><span class="num" data-unit="mins">--</span><span class="label">Min</span></div>
+            <div><span class="num" data-unit="secs">--</span><span class="label">Sec</span></div>
+          </div>
+          <p class="label clock-note" data-clock-note>Until {launch.shortDate} begins, in your time</p>
+          <p class="sr-only" data-clock-sr>Launch day is {launch.dateLabel}.</p>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary ignite" data-ignite>Ignite<span class="sound">Sound on</span></button>
+          <a class="btn btn-secondary" href={discordHref}>Join the Discord</a>
+          <a class="btn btn-secondary" href="/launch.ics" download="wo-launch.ics">Add to calendar</a>
+        </div>
+        <p class="sr-only" role="status" data-ignite-status></p>
+      </div>
+
+      <div class="pad" aria-hidden="true">
+        <p class="callout" data-callout></p>
+        <div class="flight"><Rocket class="hero-rocket" /></div>
+        <div class="smoke">{Array.from({ length: 7 }, (_, i) => <span style={`--i:${i}`}></span>)}</div>
+        <div class="gantry"></div>
+        <p class="pad-label label">Pad 39 · {launch.shortDate}</p>
+      </div>
+    </section>
+
+    <div class="tape" aria-hidden="true">
+      <div class="tape-track">
+        {tape.map((t) => <span>{t}</span>)}
+      </div>
+    </div>
+
+    <div class="wrap page">
+      <section aria-labelledby="briefing-title">
+        <div class="section-head">
+          <h2 id="briefing-title">Mission briefing</h2>
+          <span class="label">The facts</span>
+        </div>
+        <dl class="cells briefing">
+          {launch.briefing.map((b) => (
+            <div><dt class="label">{b.label}</dt><dd>{b.value}</dd></div>
+          ))}
+        </dl>
+      </section>
+
+      <section class="why" aria-labelledby="why-title">
+        <div class="section-head">
+          <h2 id="why-title">Why {launch.shortDate}</h2>
+          <span class="label">The Feast Day</span>
+        </div>
+        <div class="why-grid">
+          <ol class="why-list">
+            {launch.whyMarch.map((line) => <li>{line}</li>)}
+          </ol>
+          <figure class="saint-quote">
+            <blockquote>“{launch.saintQuote}”</blockquote>
+            <figcaption class="label">Saint Hornatius Orgasmahowl, at the Lumber Mill</figcaption>
+            <a class="more" href="/lore">Read the Saint’s life</a>
+          </figure>
+        </div>
+      </section>
+
+      <section id="checklist" aria-labelledby="checklist-title">
+        <div class="section-head">
+          <h2 id="checklist-title">Pre-flight checklist</h2>
+          <span class="label">Get launch ready</span>
+        </div>
+        <div class="readiness" data-readiness>
+          <div class="meter" aria-hidden="true"><span data-meter></span></div>
+          <p class="readiness-text"><strong data-ready-count>0 / {launch.checklist.length}</strong> <span data-ready-word>Still on the pad.</span></p>
+        </div>
+        <ol class="cells checklist">
+          {launch.checklist.map((c, i) => (
+            <li>
+              <label class="check">
+                <input type="checkbox" data-check={c.id} />
+                <span class="box" aria-hidden="true"></span>
+                <span class="check-text">
+                  <span class="label">Step {i + 1}</span>
+                  <span class="check-title">{c.title}</span>
+                </span>
+              </label>
+              <p class="prose-sm">{c.text}</p>
+              {c.link && <a class="step-link" href={c.link.href}>{c.link.label}</a>}
+            </li>
+          ))}
+        </ol>
+        <p class="label note">Your ticks stay in this browser only.</p>
+      </section>
+
+      <section id="pace" aria-labelledby="pace-title">
+        <div class="section-head">
+          <h2 id="pace-title">Pace check</h2>
+          <span class="label">Hit 39 by {launch.shortDate}</span>
+        </div>
+        <div class="cells pace">
+          <div class="pace-in">
+            <label class="label" for="pace-level">Your level today</label>
+            <div class="stepper">
+              <button type="button" class="btn btn-secondary" data-step="-1" aria-label="One level lower">−</button>
+              <input id="pace-level" type="number" inputmode="numeric" min="1" max="39" value="1" data-level />
+              <button type="button" class="btn btn-secondary" data-step="1" aria-label="One level higher">+</button>
+            </div>
+            <p class="prose-sm">No character yet? Leave it at 1.</p>
+          </div>
+          <div class="pace-out" aria-live="polite">
+            <p class="pace-big"><span data-rate>--</span><span class="pace-unit" data-rate-unit>levels a week</span></p>
+            <p class="pace-verdict" data-verdict>Pick your level to see your pace.</p>
+            <div class="track" aria-hidden="true">
+              <span class="track-fill" data-track></span>
+              <span class="track-end">39</span>
+            </div>
+            <p class="label" data-weeks></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="spread" aria-labelledby="spread-title">
+        <div class="section-head">
+          <h2 id="spread-title">Spread the word</h2>
+          <span class="label">The Saint never held two. Bring three.</span>
+        </div>
+        <div class="spread-top">
+          <button type="button" class="btn btn-primary" data-share>Share the launch</button>
+          <a class="btn btn-secondary" href="/launch.ics" download="wo-launch.ics">Apple / Outlook calendar</a>
+          <a class="btn btn-secondary" href={googleCalendarUrl} rel="noopener" target="_blank">Google Calendar</a>
+          <p class="label share-status" role="status" data-share-status></p>
+        </div>
+        <div class="cells shouts">
+          {launch.shouts.map((s) => (
+            <figure class="shout">
+              <figcaption class="label">{s.where}</figcaption>
+              <pre data-shout>{s.text}</pre>
+              <button type="button" class="btn btn-secondary copy" data-copy>Copy</button>
+            </figure>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <section class="band final" aria-labelledby="final-title">
+      <div class="wrap band-inner">
+        <div>
+          <p class="label">{launch.dateLabel} · {launch.time}</p>
+          <h2 id="final-title" class="final-cry">Blast off<br />{launch.shortDate}</h2>
+          <p class="final-days"><span data-final-days>Countdown</span></p>
+        </div>
+        <div class="btn-row">
+          <a class="btn" href={discordHref}>Join the Discord</a>
+          <a class="btn" href="#checklist">Get launch ready</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Outside .launch: the page jolts with a transform, which would pin these to it instead of the screen. -->
+  <div class="blast-flash" aria-hidden="true"></div>
+  <p class="blast-cry" aria-hidden="true">{guild.battleCry}</p>
+</BaseLayout>
+
+<style>
+  /* The Launch page: the main brutalist brand, turned all the way up. See BRAND.md, Launch page. */
+  .launch { overflow-x: clip; }
+
+  /* ---------- Hero ---------- */
+  .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-5); align-items: end; padding-block: var(--space-6) var(--space-5); }
+  .hero-text { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+  .blast {
+    font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: -0.05em; line-height: 0.86;
+    /* "BLAST OFF" is nine monospace letters (about 0.62em each): sized to fit the column. */
+    font-size: min(176px, calc((100vw - 2 * var(--gutter)) * 0.165));
+  }
+  @media (min-width: 900px) { .blast { font-size: min(176px, calc((100vw - 2 * var(--gutter)) * 0.6 * 0.165)); } }
+  .event { font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.15; }
+  .lead { font-size: var(--fs-body); max-width: 52ch; }
+
+  .clock { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 640px; }
+  .clock > div { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: var(--space-2); }
+  .num { font-size: clamp(32px, 6vw, 64px); font-weight: var(--fw-heavy); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .clock > div:first-child { background: var(--accent); color: var(--on-accent); }
+  .clock-note { margin-top: var(--space-1); }
+
+  .ignite { position: relative; gap: var(--space-1); padding-inline: var(--space-4); font-size: 20px; }
+  .ignite .sound { font-size: 11px; font-weight: var(--fw-regular); letter-spacing: 0.12em; opacity: 0.75; }
+  .ignite:disabled { cursor: progress; }
+  :global(html.igniting) .ignite { animation: ignite-throb 0.4s steps(2) infinite; }
+  @keyframes ignite-throb { 50% { background: var(--signal); border-color: var(--signal); } }
+
+  /* The pad, the rocket and its smoke. */
+  .pad { position: relative; align-self: stretch; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+  .flight { position: relative; z-index: 2; width: min(190px, 40vw); }
+  .flight :global(.rocket) { width: 100%; height: auto; }
+  .flight :global(.exhaust) { opacity: 0; }
+  :global(html.igniting) .flight :global(.exhaust) { opacity: 1; animation: exhaust 0.12s steps(2) infinite; }
+  @keyframes exhaust { 50% { transform: scaleY(1.35); } }
+  :global(html.igniting) .flight :global(.exhaust) { transform-origin: 50% 82%; }
+  :global(html.igniting) .flight { animation: rumble 0.09s linear infinite; }
+  @keyframes rumble { 0%, 100% { translate: 0 0; } 25% { translate: -2px 1px; } 75% { translate: 2px -1px; } }
+  :global(html.liftoff) .flight { animation: liftoff 1.6s cubic-bezier(.5, 0, .9, .4) forwards; }
+  @keyframes liftoff { 0% { translate: 0 0; } 15% { translate: -2px 6px; } 100% { translate: 0 -160vh; } }
+  :global(html.landing) .flight { animation: land 0.9s cubic-bezier(.2, .8, .3, 1) both; }
+  @keyframes land { 0% { translate: 0 40px; opacity: 0; } 100% { translate: 0 0; opacity: 1; } }
+
+  .gantry { width: 100%; height: var(--rule-heavy); background: var(--ink); }
+  .pad-label { margin-top: var(--space-1); align-self: flex-start; }
+  .smoke { position: absolute; left: 0; right: 0; bottom: calc(var(--rule-heavy) + 30px); height: 0; z-index: 3; pointer-events: none; }
+  .smoke span {
+    position: absolute; left: calc(50% - 28px); bottom: 0; width: 56px; height: 56px;
+    background: var(--ground); border: var(--rule) solid var(--ink); opacity: 0;
+  }
+  :global(html.liftoff) .smoke span { animation: smoke 2.6s cubic-bezier(.2, .7, .3, 1) forwards; animation-delay: calc(var(--i) * 40ms); }
+  @keyframes smoke {
+    0% { opacity: 1; transform: translate(0, 0) scale(0.4) rotate(0); }
+    60% { opacity: 1; }
+    100% { opacity: 0; transform: translate(calc((var(--i) - 3) * 70px), calc(-20px - (var(--i) % 3) * 36px)) scale(2) rotate(calc((var(--i) - 3) * 25deg)); }
+  }
+  .callout {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 4; text-align: center;
+    font-size: clamp(22px, 3vw, 34px); font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: -0.02em; color: var(--signal);
+  }
+  .callout:empty { display: none; }
+  .callout.pop { animation: pop 0.35s cubic-bezier(.2, .8, .3, 1.4); }
+  @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+  /* The hit: one pink flash, the page jolts and the battle cry slams in. */
+  .blast-flash { position: fixed; inset: 0; z-index: 80; background: var(--accent); opacity: 0; pointer-events: none; }
+  :global(html.blasted) .blast-flash { animation: flash 0.7s ease-out; }
+  @keyframes flash { 0% { opacity: 0.9; } 100% { opacity: 0; } }
+  .blast-cry {
+    position: fixed; left: 50%; top: 50%; z-index: 81; pointer-events: none; opacity: 0;
+    /* HAROOOO! is eight monospace letters (about 5em wide): fits any screen with room for the tilt. */
+    font-size: min(16vw, 200px); font-weight: var(--fw-heavy); letter-spacing: -0.05em; line-height: 1;
+    color: var(--ink); -webkit-text-stroke: 3px var(--ground); white-space: nowrap;
+    translate: -50% -50%;
+  }
+  :global(html.blasted) .blast-cry { animation: cry-slam 2.6s cubic-bezier(.2, .8, .3, 1) forwards; }
+  @keyframes cry-slam {
+    0% { opacity: 0; transform: scale(2.4) rotate(-6deg); }
+    12% { opacity: 1; transform: scale(1) rotate(-3deg); }
+    80% { opacity: 1; transform: scale(1.06) rotate(-3deg); }
+    100% { opacity: 0; transform: scale(1.1) rotate(-3deg); }
+  }
+  :global(html.blasted) .launch { animation: jolt 0.5s linear; }
+  @keyframes jolt { 0%, 100% { translate: 0 0; } 20% { translate: -10px 6px; } 40% { translate: 8px -6px; } 60% { translate: -6px 4px; } 80% { translate: 4px -2px; } }
+
+  /* ---------- Tape ---------- */
+  .tape { overflow: hidden; background: var(--signal); color: var(--on-signal); border-block: var(--rule) solid var(--ink); }
+  .tape-track { display: flex; width: max-content; animation: tape 40s linear infinite; }
+  .tape-track span { padding: var(--space-2) var(--space-3); font-weight: var(--fw-heavy); font-size: clamp(16px, 2vw, 22px); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+  .tape-track span::after { content: '///'; margin-left: var(--space-3); color: var(--accent); -webkit-text-stroke: 1px var(--ground); }
+  @keyframes tape { to { transform: translateX(-50%); } }
+
+  /* ---------- Briefing ---------- */
+  .briefing { margin: 0; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  @media (max-width: 1100px) { .briefing { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .briefing { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .briefing div { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); }
+  .briefing dd { margin: 0; font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.15; overflow-wrap: anywhere; }
+
+  /* ---------- Why March 23 ---------- */
+  .why-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-5); align-items: start; }
+  .why-list { margin: 0; padding: 0; list-style: none; counter-reset: why; display: flex; flex-direction: column; gap: var(--space-3); }
+  .why-list li { counter-increment: why; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: var(--space-2); font-size: var(--fs-body); }
+  .why-list li::before { content: counter(why, decimal-leading-zero); font-weight: var(--fw-heavy); color: var(--accent); font-size: 28px; line-height: 1.1; }
+  .saint-quote { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); padding: var(--space-4); border: var(--rule) solid var(--ink); }
+  .saint-quote blockquote { margin: 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: var(--fw-heavy); line-height: 1.1; text-transform: uppercase; color: var(--accent); }
+  .more, .step-link { display: inline-flex; align-items: center; min-height: var(--target-min); font-weight: var(--fw-heavy); text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--fs-button); }
+
+  /* ---------- Checklist ---------- */
+  .readiness { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .meter { height: 28px; border: var(--rule) solid var(--ink); }
+  .meter span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.4s cubic-bezier(.2, .8, .3, 1); }
+  .readiness.done .meter span { background: var(--signal); }
+  .readiness-text { font-size: var(--fs-body); }
+  .readiness-text strong { font-weight: var(--fw-heavy); color: var(--accent); margin-right: var(--space-1); }
+  .readiness.done .readiness-text strong { color: var(--signal); }
+  .checklist { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .checklist li { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); padding: var(--space-3); transition: background-color 0.15s ease; }
+  .checklist li:has(input:checked) { background: var(--accent); color: var(--on-accent); }
+  .checklist li:has(input:checked) .step-link { color: var(--on-accent); }
+  .check { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; min-height: var(--target-min); }
+  .check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .box { flex-shrink: 0; width: 40px; height: 40px; border: var(--rule) solid currentColor; display: grid; place-items: center; }
+  .check input:checked + .box::after { content: ''; width: 20px; height: 11px; border-left: 5px solid currentColor; border-bottom: 5px solid currentColor; rotate: -45deg; translate: 0 -3px; }
+  .check input:focus-visible + .box { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
+  .checklist li:has(input:checked) .check input:focus-visible + .box { outline-color: var(--ink); }
+  .check-text { display: flex; flex-direction: column; }
+  .check-title { font-size: clamp(18px, 2vw, 22px); font-weight: var(--fw-heavy); text-transform: uppercase; line-height: 1.2; }
+  .note { margin-top: var(--space-2); }
+
+  /* ---------- Pace ---------- */
+  .pace { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); }
+  .pace > div { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); }
+  .stepper { display: flex; align-items: stretch; }
+  .stepper .btn { width: 64px; padding: 0; font-size: 28px; }
+  .stepper input {
+    width: 120px; min-height: 72px; border: var(--rule) solid var(--ink); border-inline: 0; background: var(--ground); color: var(--ink);
+    font: var(--fw-heavy) 44px/1 var(--font-mono); text-align: center; border-radius: 0; -moz-appearance: textfield; appearance: textfield;
+  }
+  .stepper input::-webkit-inner-spin-button, .stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .stepper input:focus-visible { outline: var(--rule) solid var(--focus-ring); outline-offset: 4px; }
+  .pace-big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-2); }
+  .pace-big [data-rate] { font-size: clamp(56px, 9vw, 112px); font-weight: var(--fw-heavy); line-height: 0.9; letter-spacing: -0.05em; color: var(--accent); }
+  .pace-unit { font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; }
+  .pace-verdict { font-size: var(--fs-body); max-width: 50ch; }
+  .track { position: relative; height: 28px; border: var(--rule) solid var(--ink); margin-top: var(--space-1); }
+  .track-fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--ink); transition: width 0.3s ease; }
+  .track-end { position: absolute; right: 6px; top: 50%; translate: 0 -50%; font-size: 12px; font-weight: var(--fw-heavy); mix-blend-mode: difference; color: var(--ink); }
+
+  /* ---------- Spread ---------- */
+  .spread-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .share-status { color: var(--signal); }
+  .shouts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .shout { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); padding: var(--space-3); }
+  .shout pre { margin: 0; flex: 1; width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; font: var(--fw-regular) var(--fs-body-sm)/1.5 var(--font-mono); }
+
+  /* ---------- Final band ---------- */
+  .final-cry { font-size: clamp(48px, 10vw, 140px); line-height: 0.88; letter-spacing: -0.05em; text-transform: uppercase; margin-block: var(--space-1); }
+  .final-days { font-size: var(--fs-h3); font-weight: var(--fw-heavy); text-transform: uppercase; }
+
+  @media (max-width: 960px) {
+    .checklist, .shouts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: minmax(0, 1fr); padding-top: var(--space-5); }
+    .pad { min-height: 280px; }
+    .flight { width: min(150px, 38vw); }
+    .why-grid, .pace { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .checklist, .shouts { grid-template-columns: minmax(0, 1fr); }
+    .clock > div { padding: 12px 10px; }
+    .clock .label { font-size: 11px; letter-spacing: 0.08em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tape-track { animation: none; flex-wrap: wrap; width: auto; }
+    .tape-track span:nth-child(n + 10) { display: none; }
+    :global(html.igniting) .flight, :global(html.igniting) .flight :global(.exhaust), :global(html.igniting) .ignite,
+    :global(html.blasted) .launch, .callout.pop { animation: none; }
+    :global(html.liftoff) .flight { animation: none; opacity: 0; transition: opacity 0.3s; }
+    :global(html.liftoff) .smoke span, :global(html.landing) .flight { animation: none; }
+    :global(html.blasted) .blast-flash { animation: none; }
+    :global(html.blasted) .blast-cry { animation: cry-fade 2.6s ease forwards; }
+    @keyframes cry-fade { 0%, 100% { opacity: 0; } 15%, 80% { opacity: 1; } }
+    .meter span, .track-fill { transition: none; }
+  }
+</style>
+
+<script>
+  import { guitarSolo, SOLO_LIFTOFF_MS, SOLO_HIT_MS } from '../scripts/launch-audio';
+  import { howl } from '../scripts/howl';
+
+  const root = document.querySelector<HTMLElement>('[data-launch]')!;
+  const html = document.documentElement;
+  const target = new Date(Number(root.dataset.year), Number(root.dataset.month) - 1, Number(root.dataset.day));
+
+  // ---------- Countdown (to midnight on launch day, in the viewer's own time) ----------
+  const units = {
+    days: root.querySelector<HTMLElement>('[data-unit="days"]')!,
+    hours: root.querySelector<HTMLElement>('[data-unit="hours"]')!,
+    mins: root.querySelector<HTMLElement>('[data-unit="mins"]')!,
+    secs: root.querySelector<HTMLElement>('[data-unit="secs"]')!,
+  };
+  const note = root.querySelector<HTMLElement>('[data-clock-note]')!;
+  const srClock = root.querySelector<HTMLElement>('[data-clock-sr]')!;
+  const finalDays = root.querySelector<HTMLElement>('[data-final-days]')!;
+  const pad2 = (n: number) => String(n).padStart(2, '0');
+
+  function tick() {
+    const ms = target.getTime() - Date.now();
+    if (ms <= 0) {
+      const today = new Date();
+      const isDay = today.getFullYear() === target.getFullYear() && today.getMonth() === target.getMonth() && today.getDate() === target.getDate();
+      Object.values(units).forEach((u) => (u.textContent = '00'));
+      note.textContent = isDay ? 'It’s launch day. We have liftoff.' : 'The pack has launched.';
+      srClock.textContent = note.textContent;
+      finalDays.textContent = isDay ? 'Today. Get in here.' : 'We have liftoff';
+      return false;
+    }
+    const s = Math.floor(ms / 1000);
+    const days = Math.floor(s / 86400);
+    units.days.textContent = String(days);
+    units.hours.textContent = pad2(Math.floor((s % 86400) / 3600));
+    units.mins.textContent = pad2(Math.floor((s % 3600) / 60));
+    units.secs.textContent = pad2(s % 60);
+    const left = `${days} ${days === 1 ? 'day' : 'days'} to go`;
+    srClock.textContent = `${left} until launch day.`;
+    finalDays.textContent = left;
+    return true;
+  }
+  if (tick()) {
+    const timer = window.setInterval(() => { if (!tick()) window.clearInterval(timer); }, 1000);
+  }
+
+  // ---------- Ignite: the guitar solo, the countdown callouts, liftoff and the cry ----------
+  const ignite = root.querySelector<HTMLButtonElement>('[data-ignite]')!;
+  const status = root.querySelector<HTMLElement>('[data-ignite-status]')!;
+  const callout = root.querySelector<HTMLElement>('[data-callout]')!;
+  const timers: number[] = [];
+  const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+  const say = (text: string) => {
+    callout.textContent = text;
+    callout.classList.remove('pop');
+    void callout.offsetWidth;
+    callout.classList.add('pop');
+  };
+
+  ignite.addEventListener('click', () => {
+    if (ignite.disabled) return;
+    const ms = guitarSolo();
+    if (!ms) { status.textContent = 'This browser cannot play Web Audio.'; return; }
+    ignite.disabled = true;
+    status.textContent = 'Ignition. The launch solo is playing.';
+    html.classList.remove('landing');
+    html.classList.add('igniting');
+    // Callouts on the solo's bars (1.6 s each at 150 bpm).
+    say('Ignition');
+    at(1600, () => say('Main engines'));
+    at(4800, () => say('Throttle up'));
+    at(8000, () => say('3 · 2 · 1'));
+    at(SOLO_LIFTOFF_MS, () => { say('Liftoff!'); html.classList.add('liftoff'); });
+    at(SOLO_HIT_MS, () => {
+      html.classList.add('blasted');
+      howl();
+      say('');
+    });
+    at(SOLO_HIT_MS + 2600, () => html.classList.remove('blasted'));
+    at(ms, () => {
+      html.classList.remove('igniting', 'liftoff');
+      html.classList.add('landing');
+      say('');
+      ignite.disabled = false;
+      status.textContent = 'We have liftoff. See you on March 23.';
+    });
+  });
+
+  // ---------- Pre-flight checklist (remembered in this browser) ----------
+  const KEY = 'wo-launch-checklist';
+  const boxes = [...root.querySelectorAll<HTMLInputElement>('[data-check]')];
+  const readiness = root.querySelector<HTMLElement>('[data-readiness]')!;
+  const meter = root.querySelector<HTMLElement>('[data-meter]')!;
+  const count = root.querySelector<HTMLElement>('[data-ready-count]')!;
+  const word = root.querySelector<HTMLElement>('[data-ready-word]')!;
+  const WORDS = ['Still on the pad.', 'Fuel loading.', 'Systems check.', 'Engines warming.', 'Final countdown.', 'Almost there.', 'Cleared for launch. HAROOOO!'];
+
+  let saved: string[] = [];
+  try { saved = JSON.parse(localStorage.getItem(KEY) ?? '[]'); } catch { /* storage unavailable */ }
+  boxes.forEach((b) => { b.checked = saved.includes(b.dataset.check!); });
+
+  function readinessUpdate() {
+    const done = boxes.filter((b) => b.checked).length;
+    const pct = Math.round((done / boxes.length) * 100);
+    meter.style.width = `${pct}%`;
+    count.textContent = `${done} / ${boxes.length}`;
+    word.textContent = WORDS[Math.round((done / boxes.length) * (WORDS.length - 1))];
+    readiness.classList.toggle('done', done === boxes.length);
+  }
+  boxes.forEach((b) => b.addEventListener('change', () => {
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.filter((x) => x.checked).map((x) => x.dataset.check))); } catch { /* storage unavailable */ }
+    readinessUpdate();
+  }));
+  readinessUpdate();
+
+  // ---------- Pace check ----------
+  const CAP = 39;
+  const LEVEL_KEY = 'wo-launch-level';
+  const level = root.querySelector<HTMLInputElement>('[data-level]')!;
+  const rate = root.querySelector<HTMLElement>('[data-rate]')!;
+  const rateUnit = root.querySelector<HTMLElement>('[data-rate-unit]')!;
+  const verdict = root.querySelector<HTMLElement>('[data-verdict]')!;
+  const track = root.querySelector<HTMLElement>('[data-track]')!;
+  const weeksOut = root.querySelector<HTMLElement>('[data-weeks]')!;
+  try { const l = localStorage.getItem(LEVEL_KEY); if (l) level.value = l; } catch { /* storage unavailable */ }
+
+  function pace() {
+    const lv = Math.min(CAP, Math.max(1, Math.round(Number(level.value) || 1)));
+    const days = Math.max(0, (target.getTime() - Date.now()) / 86400000);
+    const weeks = days / 7;
+    const left = CAP - lv;
+    track.style.width = `${(lv / CAP) * 100}%`;
+    weeksOut.textContent = days > 0 ? `${Math.floor(days)} days (${weeks.toFixed(1)} weeks) until launch · ${left} ${left === 1 ? 'level' : 'levels'} to go` : 'Launch day is here.';
+    if (left <= 0) {
+      rate.textContent = '39';
+      rateUnit.textContent = 'reached';
+      verdict.textContent = 'You’re at the bracket. Gear up, practice the cry and bring three packmates.';
+      return;
+    }
+    if (days <= 0) {
+      rate.textContent = String(left);
+      rateUnit.textContent = left === 1 ? 'level to go' : 'levels to go';
+      verdict.textContent = 'The launch has started. Get to 39 and jump in. The pack is already queueing.';
+      return;
+    }
+    const perWeek = left / Math.max(weeks, 1 / 7);
+    rate.textContent = perWeek < 10 ? perWeek.toFixed(1) : String(Math.ceil(perWeek));
+    rateUnit.textContent = 'levels a week';
+    verdict.textContent =
+      perWeek <= 2 ? 'Easy cruising. A couple of levels a week and you’re there with time to gear up.'
+      : perWeek <= 5 ? 'Steady climb. Keep at it every week and you’ll make the launch.'
+      : 'Full throttle. Group up with packmates in the Discord and climb together.';
+  }
+  function setLevel(v: number) {
+    level.value = String(Math.min(CAP, Math.max(1, Math.round(v) || 1)));
+    try { localStorage.setItem(LEVEL_KEY, level.value); } catch { /* storage unavailable */ }
+    pace();
+  }
+  level.addEventListener('input', () => { pace(); try { localStorage.setItem(LEVEL_KEY, level.value); } catch { /* storage unavailable */ } });
+  level.addEventListener('change', () => setLevel(Number(level.value)));
+  root.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => b.addEventListener('click', () => setLevel(Number(level.value) + Number(b.dataset.step))));
+  pace();
+
+  // ---------- Spread the word ----------
+  const shareStatus = root.querySelector<HTMLElement>('[data-share-status]')!;
+  async function copy(text: string): Promise<boolean> {
+    try { await navigator.clipboard.writeText(text); return true; } catch { /* fall back below */ }
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.append(area);
+    area.select();
+    const ok = document.execCommand('copy');
+    area.remove();
+    return ok;
+  }
+  const url = `${location.origin}/launch`;
+  root.querySelector<HTMLButtonElement>('[data-share]')?.addEventListener('click', async () => {
+    const data = { title: 'Werewolf Orgasmahowl: Blast off, March 23', text: 'The first <WO> guild run: Level 39 battlegrounds, Horde, every class and spec. HAROOOO!', url };
+    if (navigator.share) {
+      try { await navigator.share(data); return; } catch (e) { if ((e as Error).name === 'AbortError') return; }
+    }
+    shareStatus.textContent = (await copy(url)) ? 'Link copied. Go spread it.' : `Copy this link: ${url}`;
+  });
+  root.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    const text = b.parentElement!.querySelector('[data-shout]')!.textContent ?? '';
+    const ok = await copy(text);
+    b.textContent = ok ? 'Copied!' : 'Select and copy';
+    window.setTimeout(() => (b.textContent = 'Copy'), 2000);
+  }));
+</script>

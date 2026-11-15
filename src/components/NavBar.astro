@@ -6,6 +6,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/recruitment', label: 'Recruitment' },
+  { href: '/launch', label: 'Launch', hot: true },
 ];
 const menus = [
   {
@@ -32,7 +33,7 @@ const menus = [
     </a>
     <div class="links">
       {links.map((l) => (
-        <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+        <a href={l.href} class:list={{ hot: l.hot }} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
       ))}
       {menus.map((m) => (
         <details class="drop" data-menu>
@@ -85,6 +86,12 @@ const menus = [
     letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer;
   }
   .links > a:not(.btn):hover, .drop summary:hover { color: var(--accent); }
+  /* The launch link: the one thing in the nav lit up in signal yellow, with a pulsing dot. */
+  .links > a.hot { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--signal); }
+  .links > a.hot::before { content: ''; width: 10px; height: 10px; background: var(--accent); animation: hot 1s steps(2) infinite; }
+  .links > a.hot:hover { color: var(--accent); }
+  @keyframes hot { 50% { background: var(--signal); } }
+  @media (prefers-reduced-motion: reduce) { .links > a.hot::before { animation: none; } }
   .links > a[aria-current='page'], .drop summary.current { text-decoration: underline; text-decoration-thickness: var(--rule); text-decoration-color: var(--accent); text-underline-offset: 6px; }
 
   .drop { position: relative; }

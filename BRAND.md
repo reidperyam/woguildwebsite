@@ -125,6 +125,18 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 - Don't use Blizzard or World of Warcraft logos, crests or game art. **Exception: the guild tabards.** The guild's in-game tabards (`src/assets/tabards/`, data in `src/data/tabards.ts`): the **current** Werewolf Orgasmahowl tabard, silver-gray with a black edge and a black chevron, used wherever the site stands for the guild today; and two older ones, kept for history: the **original** Werewolf Orgasmahowl tabard from 2009, burgundy with a teal edge and a gold chevron, and the 2010 **Bearwolftriceratiger** tabard, yellow-green with a black edge and chevron. They may appear anywhere on the site. Show them whole, on their transparent background, never recolored, filtered or cropped; they carry their own round bronze frame, so they need no ink frame. Small square swatches of a tabard's own colors may sit next to it (the Our history cells on the home page). Where a drawing needs one of the banners (like Fig. I on the Bearwolftriceratiger page), redraw it in its own colors. **Exception:** the two Lore pages may show the guild's own images, and only there: the Saint's relics on `/lore` (fan-art edits, with orc heads and Pendulum of Doom axes on classical paintings) and the Bearwolftriceratiger painting on `/bearwolftriceratiger` (the guild's 2010 beast image). Show each one framed, never recolored or filtered.
 - Icons are inline stroke SVG with square caps and `currentColor`. No emoji.
 
+## Launch page: Blast off
+
+The Launch page (`/launch`) stays in the main brutalist brand, turned all the way up: no sub-theme, no new fonts or colors. Black, white, pink and signal yellow, square edges, 4px rules, bordered cells.
+
+- **Type:** BLAST OFF is the biggest type on the site (sized so the nine letters fit the column). The countdown's day cell is pink; the rest are bordered cells.
+- **The rocket** (`src/components/Rocket.astro`): square-stroked, black hull with a white outline, the WO monogram in pink in the porthole, and three pink exhaust lines that only show while it ignites. Smoke is bordered black squares.
+- **Signal yellow** is used for the tape, the callouts and the nav's LAUNCH link (with a blinking pink square). The rule of "at most twice per screen" still holds.
+- **The solo** (`src/scripts/launch-audio.ts`): a heavy metal guitar solo in E minor at 150 bpm, on the same synthesized band as the Cathedral hymn (`src/scripts/metal.ts`). It only plays from the Ignite button, and the Saint's HAROOOO cries over its last chord.
+- **Flashing:** one pink flash on the last chord, nothing else. The nav dot and Ignite button blink at most twice a second.
+- **Reduced motion:** the tape stops, the rocket doesn't shake or fly (it fades out and back), and the HAROOOO! fades instead of slamming. The solo and the countdown still work.
+- **Saved state:** the checklist and the pace level live in the viewer's own browser, and the page works without them.
+
 ## Lore sub-theme: The Cathedral
 
 The Lore page (`/lore`) deliberately breaks the brutalist rules above. Inside the nav and footer, it's a baroque, over-the-top holy shrine to Saint Hornatius Orgasmahowl: syrupy, gilded and silly, played completely straight. Everything is scoped under `.cathedral` in `src/styles/cathedral.css`. Don't use it on any other page.

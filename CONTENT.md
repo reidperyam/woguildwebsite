@@ -19,16 +19,17 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 
 ## Pages
 
-Nav: HOME · RECRUITMENT · LORE (dropdown: Saint Hornatius Orgasmahowl, Bearwolftriceratiger) · FUN (dropdown: Howl Lab) · [APPLY]. A custom 404 page reads HAROOOO!
+Nav: HOME · RECRUITMENT · LAUNCH (signal yellow, with a blinking pink square) · LORE (dropdown: Saint Hornatius Orgasmahowl, Bearwolftriceratiger) · FUN (dropdown: Howl Lab) · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Home
 
 1. **Hero:** stacked wordmark <WEREWOLF / ORGASMAHOWL> (pink < and white >), then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline "A PvP guild for enjoyers of lower-level PvP in World of Warcraft Forever", and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
-2. **About:** "<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever." and "The guild was originally founded in 2009.", next to a facts box (game, region, faction, focus, recruiting status).
-3. **Our history** ("Three tabards, one pack"): three cells, each with a tabard. 2009 · Founded as Werewolf Orgasmahowl (the original burgundy tabard: "Burgundy, teal and gold. The original pack.") · 2010 · Renamed Bearwolftriceratiger ("Blizzard's naming rules forced a new name, and the guild became the Beast, in black and bright yellow.", with READ THE SAGA) · Now · Werewolf Orgasmahowl again (the current tabard, silver-gray with a black edge and a black chevron: "The original name is back, now in World of Warcraft Forever, just with a <WO> guild name."). Hovering, focusing or tapping a cell inverts it and shows READING THE BANNER: what each of the tabard's colors and its chevron stand for in the guild mythos (for example, the 2009 gold is the Saint's halo, the 2010 yellow is the lightning that fused the four beasts, today's silver is the full moon). A HOVER TO READ THE BANNER hint (TAP on touch screens) sits on each cell. Copy, including the meanings, in `src/data/tabards.ts`.
-4. **FAQ** (`#faq`, "Before you queue"): thirteen questions as expandable rows, answers in `guild.faq`. What is Werewolf Orgasmahowl? · Does <WO> Raid? (no, never) · Which bracket does <WO> play? (Level 39) · What class or spec? (any) · Which realm? (none: the game has no realms) · What is a Bearwolftriceratiger? (the 2010 rename; links to its saga) · Do I need a fully geared twink? (investment is up to each player, who funds and gears their own character; the guild will help where it can) · When do you queue? (whenever people are available; no premades yet, just a few friends carrying the pickup group) · Do I need to be on voice chat? (optional, but fun) · What kind of player fits in here? (the recruitment expectations) · How do I join? (links to How to apply) · Who is Saint Hornatius Orgasmahowl? (links to the Lore) · What does HAROOOO mean? (links to the Howl Lab).
-5. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
-6. **Closing call to action:** a full-width accent band reading **HAROOOO!** (click it to hear the Saint's cry; it shakes while it plays) with the JOIN THE DISCORD button.
+2. **Launch strip:** a pink-bordered link to `/launch`: BLAST OFF, "Tuesday, March 23, 2027", "The first <WO> guild run", and a live day count ("129 days to go").
+3. **About:** "<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever." and "The guild was originally founded in 2009.", next to a facts box (game, region, faction, focus, recruiting status).
+4. **Our history** ("Three tabards, one pack"): three cells, each with a tabard. 2009 · Founded as Werewolf Orgasmahowl (the original burgundy tabard: "Burgundy, teal and gold. The original pack.") · 2010 · Renamed Bearwolftriceratiger ("Blizzard's naming rules forced a new name, and the guild became the Beast, in black and bright yellow.", with READ THE SAGA) · Now · Werewolf Orgasmahowl again (the current tabard, silver-gray with a black edge and a black chevron: "The original name is back, now in World of Warcraft Forever, just with a <WO> guild name."). Hovering, focusing or tapping a cell inverts it and shows READING THE BANNER: what each of the tabard's colors and its chevron stand for in the guild mythos (for example, the 2009 gold is the Saint's halo, the 2010 yellow is the lightning that fused the four beasts, today's silver is the full moon). A HOVER TO READ THE BANNER hint (TAP on touch screens) sits on each cell. Copy, including the meanings, in `src/data/tabards.ts`.
+5. **FAQ** (`#faq`, "Before you queue"): thirteen questions as expandable rows, answers in `guild.faq`. What is Werewolf Orgasmahowl? · Does <WO> Raid? (no, never) · Which bracket does <WO> play? (Level 39) · What class or spec? (any) · Which realm? (none: the game has no realms) · What is a Bearwolftriceratiger? (the 2010 rename; links to its saga) · Do I need a fully geared twink? (investment is up to each player, who funds and gears their own character; the guild will help where it can) · When do you queue? (whenever people are available; no premades yet, just a few friends carrying the pickup group) · Do I need to be on voice chat? (optional, but fun) · What kind of player fits in here? (the recruitment expectations) · How do I join? (links to How to apply) · Who is Saint Hornatius Orgasmahowl? (links to the Lore) · What does HAROOOO mean? (links to the Howl Lab).
+6. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
+7. **Closing call to action:** a full-width accent band reading **HAROOOO!** (click it to hear the Saint's cry; it shakes while it plays) with the JOIN THE DISCORD button.
 
 ### Recruitment
 
@@ -46,6 +47,20 @@ Nav: HOME · RECRUITMENT · LORE (dropdown: Saint Hornatius Orgasmahowl, Bearwol
 4. **Controls:** 28 sliders in nine groups: Voice, Word timing, Howl, Texture, Pack, Space, Synth wolves, Real wolves (NPS), Wolf placement. A credit line under the controls names the National Park Service recording.
 5. **Share your HAROOOO:** a name field, plus **Share my HAROOOO** (shares or copies a link) and **Reset to the Saint**. A collapsible "Settings as text" section holds the copy and paste tools.
 6. **Opening a shared link:** shows "You've received {Name}'s HAROOOO!" with **Play it** and **Make my own**.
+
+### Launch: Blast off (`/launch`)
+
+The guild's first run: Level 39 battlegrounds on Tuesday, March 23, 2027, the Saint's Feast Day. Built to be shared and to get people leveling. All copy is in `src/data/launch.ts`; the time is still `[LAUNCH TIME]`.
+
+1. **Hero:** "<WO> · Launch day · Tuesday, March 23, 2027", **BLAST OFF**, "The first <WO> guild run", the lead ("The first <WO> guild run hits the Level 39 battlegrounds on the Feast Day of Saint Hornatius Orgasmahowl. Every class. Every spec. Roll Horde, level up and be there."), a live countdown (days, hours, minutes, seconds to midnight on March 23 in the viewer's own time), and **Ignite** (sound on), **Join the Discord**, **Add to calendar**. Beside it, the WO rocket on Pad 39.
+2. **Ignite:** a synthesized heavy metal guitar solo (about 14 seconds) with callouts over the rocket: IGNITION, MAIN ENGINES, THROTTLE UP, 3 · 2 · 1, LIFTOFF! The rocket rumbles, then flies off the top of the screen on the dive bomb; on the band's last chord the screen flashes pink once, the page jolts, a giant HAROOOO! slams in and the Saint's cry plays. The rocket lands back on the pad when it ends.
+3. **Tape:** a scrolling yellow tape: Blast off /// March 23, 2027 /// Level 39 battlegrounds /// Horde /// North America /// Every class /// Every spec /// Grab three /// HAROOOO!
+4. **Mission briefing:** Date, Time ([LAUNCH TIME]), Bracket, Faction, Region, Classes & specs.
+5. **Why March 23** ("The Feast Day"): the Feast Day and the pack's answer, beside the Saint's "Instead of holding TWO, I will grab THREE!" and READ THE SAINT'S LIFE.
+6. **Pre-flight checklist** (`#checklist`): Join the Discord · Roll Horde · Hit level 39 · Gear up · Learn the cry · Bring three, with a readiness meter (Still on the pad … Cleared for launch. HAROOOO!). Ticks are saved in the viewer's browser.
+7. **Pace check** (`#pace`): the viewer enters their level and sees how many levels a week they need to hit 39 by launch, with a verdict (Easy cruising / Steady climb / Full throttle).
+8. **Spread the word** (`#spread`, "The Saint never held two. Bring three."): Share the launch, Apple / Outlook calendar (`/launch.ics`), Google Calendar, and three ready-to-copy shouts (in-game chat, Discord, anywhere).
+9. **Closing band:** BLAST OFF MARCH 23, the day count, Join the Discord and Get launch ready.
 
 ### Lore: The Life of Saint Hornatius Orgasmahowl
 
@@ -103,6 +118,8 @@ Around the Tellings, the page also has:
 - **The storm:** ambient storm sound with a bottom-left **Stir the storm** / **Calm the storm** toggle.
 
 ## Open questions for the guild
+
+- The launch time on March 23, 2027 (`[LAUNCH TIME]` in `src/data/launch.ts`), and where the pack meets
 
 - Application and trial steps
 - Which battlegrounds we focus on in the Level 39 bracket, if the site should say so
