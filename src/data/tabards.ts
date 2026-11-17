@@ -4,7 +4,7 @@
 // `original` and `beast` are history (the 2009 and 2010 tabards). `original` is the guild's in-game image of it,
 // centered on the same 250 × 250 transparent canvas; unlike the other two, it has no bronze frame.
 import current from '../assets/tabards/werewolf-orgasmahowl-2026-gray.png';
-import original from '../assets/tabards/werewolf-orgasmahowl-2009.png';
+import original from '../assets/tabards/werewolf-orgasmahowl-2009-original.png';
 import beast from '../assets/tabards/bearwolftriceratiger-2010.png';
 
 export const tabards = {
