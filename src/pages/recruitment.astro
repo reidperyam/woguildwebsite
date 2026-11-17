@@ -6,7 +6,12 @@ import { guild } from '../data/guild';
 import { tabards } from '../data/tabards';
 ---
 
-<BaseLayout title="Recruitment" description={`${guild.name} is recruiting every class and spec for ${guild.recruiting.bracket} battlegrounds. ${guild.faction}, ${guild.game}, ${guild.region}.`}>
+<BaseLayout
+  title="Recruitment"
+  description={`${guild.name} is recruiting every class and spec for ${guild.recruiting.bracket} battlegrounds. ${guild.faction}, ${guild.game}, ${guild.region}.`}
+  image="/og-recruitment.png"
+  imageAlt={`Recruiting for ${guild.recruiting.bracket} battlegrounds: every class, every spec, ${guild.faction}, NA. Join the Discord, apply, no trial. woguild.org/recruitment`}
+>
   <div class="wrap page">
     <section class="intro" aria-labelledby="rec-title">
       <div class="intro-text">
@@ -39,9 +44,9 @@ import { tabards } from '../data/tabards';
     <section id="apply" aria-labelledby="apply-title">
       <div class="section-head">
         <h2 id="apply-title">How to apply</h2>
-        <span class="label">Three steps</span>
+        <span class="label">{['One step', 'Two steps', 'Three steps'][guild.applySteps.length - 1] ?? `${guild.applySteps.length} steps`}</span>
       </div>
-      <ol class="cells steps">
+      <ol class="cells steps" style={`--n: ${guild.applySteps.length}`}>
         {guild.applySteps.map((s, i) => (
           <li>
             <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -74,7 +79,7 @@ import { tabards } from '../data/tabards';
   .ruled { list-style: none; margin: 0; padding: 0; border-top: var(--rule) solid var(--ink); }
   .ruled li { padding: var(--space-2) 0; border-bottom: var(--rule) solid var(--ink); font-size: var(--fs-body-sm); line-height: 1.5; }
 
-  .steps { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); }
   .steps li { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4) var(--space-3); }
   .num { font-size: clamp(48px, 6vw, 72px); font-weight: var(--fw-heavy); line-height: 1; color: var(--accent); letter-spacing: -0.04em; }
   .apply-row { margin-top: var(--space-4); }

@@ -1,7 +1,7 @@
-// /launch.ics: the launch as an all-day calendar event (Apple Calendar, Outlook, and Google via import).
+// /launch.ics: the launch as a calendar event at 8 PM ET (Apple Calendar, Outlook, and Google via import).
 // Built once at build time, like every other page. Copy lives in src/data/launch.ts.
 import type { APIRoute } from 'astro';
-import { launch, launchDays } from '../data/launch';
+import { launch, launchTimes } from '../data/launch';
 
 // iCalendar text: escape \ ; , and newlines, and fold lines at 75 octets.
 const text = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
@@ -27,15 +27,22 @@ export const GET: APIRoute = () => {
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:launch-${launchDays.start}@woguild.org`,
+    // Same UID as the first, all-day version, and a higher SEQUENCE, so re-importing updates that event.
+    'UID:launch-20270323@woguild.org',
+    'SEQUENCE:1',
     `DTSTAMP:${stamp}`,
-    `DTSTART;VALUE=DATE:${launchDays.start}`,
-    `DTEND;VALUE=DATE:${launchDays.end}`,
+    `DTSTART:${launchTimes.start}`,
+    `DTEND:${launchTimes.end}`,
     `SUMMARY:${text(launch.calendar.summary)}`,
     `DESCRIPTION:${text(launch.calendar.description)}`,
     `LOCATION:${text(launch.calendar.location)}`,
     `URL:https://woguild.org${launch.path}`,
-    'TRANSP:TRANSPARENT',
+    // A reminder an hour before liftoff.
+    'BEGIN:VALARM',
+    'ACTION:DISPLAY',
+    'TRIGGER:-PT1H',
+    `DESCRIPTION:${text(`${launch.calendar.summary}: liftoff in one hour`)}`,
+    'END:VALARM',
     'END:VEVENT',
     'END:VCALENDAR',
   ];

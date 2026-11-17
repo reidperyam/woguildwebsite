@@ -11,7 +11,7 @@ export const guild = {
   battleCry: 'HAROOOO!',
 
   // Paste the invite link here; until then Discord buttons point to the apply steps.
-  discordUrl: 'https://discord.gg/ptykt8ppcV', // never expires; also in vercel.json for the /discord short link
+  discordUrl: 'https://discord.gg/5BcZaaEhcG', // never expires; also in vercel.json for the /discord short link
 
   about: [
     '<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever.',
@@ -32,10 +32,10 @@ export const guild = {
   expectations: ['Play to win, not to farm kills', 'Supportive teamwork', 'Play to have fun'],
   perks: ['Objective-driven teammates', 'Friends in queue', 'Fun++'],
 
+  // Matches the Discord setup in DISCORD.md: the welcome questions, then a post in #applications.
   applySteps: [
-    { title: 'Join the Discord', text: 'Say hello and tell us what you play.' },
-    { title: '[APPLY STEP]', text: '[Post in #applications, or fill out the form.]' },
-    { title: '[TRIAL STEP]', text: '[Queue into Level 39 battlegrounds with us for a trial period.]' },
+    { title: 'Join the Discord', text: 'Use the invite and answer the quick welcome questions: your class, your spec and how close you are to 39.' },
+    { title: 'Apply in the Discord', text: 'Post in #applications with your character name and a little about yourself. That’s it. No trial, no hoops.' },
   ],
 
   // Home page FAQ. A link is optional and shows after the answer.
@@ -83,7 +83,7 @@ export const guild = {
     },
     {
       q: 'How do I join?',
-      a: 'Start by joining our Discord and telling us what you play. The full steps are on the recruitment page.',
+      a: 'Join our Discord, answer the welcome questions and post in #applications. There is no trial. The full steps are on the recruitment page.',
       link: { href: '/recruitment#apply', label: 'How to apply' },
     },
     {

@@ -4,21 +4,20 @@ import Rocket from '../components/Rocket.astro';
 import { guild, discordHref } from '../data/guild';
 import { launch, googleCalendarUrl } from '../data/launch';
 
-const { year, month, day } = launch.date;
 // The tape scrolls by repeating its items; two copies make the loop seamless.
 const tape = [...launch.tape, ...launch.tape];
 ---
 
 <BaseLayout
   title={`Blast off: ${launch.shortDate}`}
-  description={`${launch.event}: ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.game} (${guild.region}), on ${launch.dateLabel}. Every class, every spec. Roll Horde, hit 39 and join the pack.`}
+  description={`${launch.event}: ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.game} (${guild.region}), on ${launch.dateLabel} at ${launch.time}. Every class, every spec. Roll Horde, hit 39 and join the pack.`}
   image="/og-launch.png"
-  imageAlt={`Blast off: ${launch.event}, ${launch.dateLabel}. ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.region}. woguild.org/launch`}
+  imageAlt={`Blast off: ${launch.event}, ${launch.dateLabel} at ${launch.time}. ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, ${guild.region}. woguild.org/launch`}
 >
-  <div class="launch" data-launch data-year={year} data-month={month} data-day={day}>
+  <div class="launch" data-launch data-start={launch.start} data-hours={launch.calendarHours}>
     <section class="wrap hero" aria-labelledby="launch-title">
       <div class="hero-text">
-        <p class="label">&lt;WO&gt; · Launch day · {launch.dateLabel}</p>
+        <p class="label">&lt;WO&gt; · Launch day · {launch.dateLabel} · {launch.time}</p>
         <h1 id="launch-title" class="blast"><span>Blast</span> <span class="accent">off</span></h1>
         <p class="event">{launch.event}</p>
         <p class="lead">{launch.lead}</p>
@@ -30,8 +29,8 @@ const tape = [...launch.tape, ...launch.tape];
             <div><span class="num" data-unit="mins">--</span><span class="label">Min</span></div>
             <div><span class="num" data-unit="secs">--</span><span class="label">Sec</span></div>
           </div>
-          <p class="label clock-note" data-clock-note>Until {launch.shortDate} begins, in your time</p>
-          <p class="sr-only" data-clock-sr>Launch day is {launch.dateLabel}.</p>
+          <p class="label clock-note" data-clock-note>Until liftoff: {launch.shortDate}, {launch.time}</p>
+          <p class="sr-only" data-clock-sr>Liftoff is {launch.dateLabel} at {launch.time}.</p>
         </div>
 
         <div class="btn-row">
@@ -379,9 +378,12 @@ const tape = [...launch.tape, ...launch.tape];
 
   const root = document.querySelector<HTMLElement>('[data-launch]')!;
   const html = document.documentElement;
-  const target = new Date(Number(root.dataset.year), Number(root.dataset.month) - 1, Number(root.dataset.day));
+  const target = new Date(root.dataset.start!);
+  // The run counts as "on" for the calendar slot after liftoff.
+  const runMs = Number(root.dataset.hours) * 3600000;
+  const sameLocalDay = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 
-  // ---------- Countdown (to midnight on launch day, in the viewer's own time) ----------
+  // ---------- Countdown (to liftoff at 8 PM ET, shown in the viewer's own clock too) ----------
   const units = {
     days: root.querySelector<HTMLElement>('[data-unit="days"]')!,
     hours: root.querySelector<HTMLElement>('[data-unit="hours"]')!,
@@ -393,15 +395,21 @@ const tape = [...launch.tape, ...launch.tape];
   const finalDays = root.querySelector<HTMLElement>('[data-final-days]')!;
   const pad2 = (n: number) => String(n).padStart(2, '0');
 
+  // Outside Eastern time, add the viewer's own clock time: "Until liftoff: March 23, 8 PM ET · 5:00 PM PDT your time".
+  const clock = (zone?: string) => target.toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: zone, timeZoneName: 'short' });
+  try {
+    const local = clock();
+    if (local !== clock('America/New_York')) note.textContent += ` · ${local} your time`;
+  } catch { /* no Intl time zones: the ET time alone still reads right */ }
+
   function tick() {
     const ms = target.getTime() - Date.now();
     if (ms <= 0) {
-      const today = new Date();
-      const isDay = today.getFullYear() === target.getFullYear() && today.getMonth() === target.getMonth() && today.getDate() === target.getDate();
+      const running = ms > -runMs;
       Object.values(units).forEach((u) => (u.textContent = '00'));
-      note.textContent = isDay ? 'It’s launch day. We have liftoff.' : 'The pack has launched.';
+      note.textContent = running ? 'We have liftoff. Get in here.' : 'The pack has launched.';
       srClock.textContent = note.textContent;
-      finalDays.textContent = isDay ? 'Today. Get in here.' : 'We have liftoff';
+      finalDays.textContent = running ? 'Liftoff! Get in here.' : 'We have liftoff';
       return false;
     }
     const s = Math.floor(ms / 1000);
@@ -410,8 +418,8 @@ const tape = [...launch.tape, ...launch.tape];
     units.hours.textContent = pad2(Math.floor((s % 86400) / 3600));
     units.mins.textContent = pad2(Math.floor((s % 3600) / 60));
     units.secs.textContent = pad2(s % 60);
-    const left = `${days} ${days === 1 ? 'day' : 'days'} to go`;
-    srClock.textContent = `${left} until launch day.`;
+    const left = days > 0 ? `${days} ${days === 1 ? 'day' : 'days'} to go` : sameLocalDay(target, new Date()) ? 'Liftoff today' : 'Liftoff tomorrow';
+    srClock.textContent = `${left} until liftoff.`;
     finalDays.textContent = left;
     return true;
   }

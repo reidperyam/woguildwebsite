@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Link preview for /howl-lab (1200x630). Render with: node brand-assets/og/render.mjs og-howl-lab -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;800&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;background:#000;color:#fff;font-family:'Martian Mono',monospace;overflow:hidden}
+.card{position:relative;width:1200px;height:630px;border:12px solid #fff}
+.top{position:absolute;left:56px;top:48px;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.top b{color:#FF2E89}
+.make{position:absolute;left:56px;top:100px;font-size:50px;line-height:1;font-weight:800;text-transform:uppercase;letter-spacing:-.04em}
+h1{position:absolute;left:46px;top:156px;font-size:164px;line-height:.86;font-weight:800;text-transform:uppercase;letter-spacing:-.07em;color:#FF2E89}
+.sub{position:absolute;left:56px;top:318px;font-size:24px;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+.url{position:absolute;right:56px;top:322px;font-size:22px;font-weight:800;color:#FDEB91}
+.scope{position:absolute;left:56px;right:56px;top:376px;height:186px;border:4px solid #fff}
+.scope svg{display:block;width:100%;height:100%}
+.legend{position:absolute;left:56px;top:574px;display:flex;gap:28px;font-size:14px;text-transform:uppercase;letter-spacing:.12em}
+.sw{display:inline-block;width:28px;height:6px;margin-right:10px;vertical-align:middle}
+</style></head><body><div class="card">
+<p class="top">&lt;WO&gt; Werewolf Orgasmahowl <b>///</b> Fun <b>///</b> Howl Lab</p>
+<p class="make">Make your own</p>
+<h1>HAROOOO!</h1>
+<p class="sub">Twist the dials. Name it. Share it.</p>
+<p class="url">woguild.org/howl-lab</p>
+<div class="scope"><svg viewBox="0 0 1080 188" preserveAspectRatio="none" id="scope"></svg></div>
+<p class="legend"><span><i class="sw" style="background:#FF2E89"></i>Pitch contour</span><span><i class="sw" style="background:#FDEB91"></i>Waveform</span><span><i class="sw" style="background:rgba(253,235,145,.35)"></i>Wolves</span></p>
+</div>
+<script>
+// The Howl Lab's scope, drawn once: the ha-ROOOO pitch contour (a low "ha", the rolled R sliding up,
+// a long rising, vibrato OOOO), the waveform under it, and the wolf pack's band.
+const W = 1080, H = 188, svg = document.getElementById('scope');
+const NS = 'http://www.w3.org/2000/svg';
+const el = (name, attrs) => { const e = document.createElementNS(NS, name); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+for (let i = 1; i < 4; i++) el('line', { x1: 0, x2: W, y1: (H * i) / 4, y2: (H * i) / 4, stroke: 'rgba(255,255,255,.15)', 'stroke-width': 1 });
+el('rect', { x: 250, y: H - 30, width: 760, height: 30, fill: 'rgba(253,235,145,.14)' });
+const t0 = 40, tA = 120, tR = 200, tO = 290, tEnd = 1000;
+for (const [label, x] of [['H', t0], ['A', tA], ['R', tR], ['OOOO', tO]]) {
+  el('rect', { x, y: 0, width: 2, height: H - 30, fill: 'rgba(255,255,255,.7)' });
+  const t = el('text', { x: x + 8, y: 22, fill: 'rgba(255,255,255,.8)', 'font-family': 'Martian Mono', 'font-weight': 800, 'font-size': 16 }); t.textContent = label;
+}
+const wolves = el('text', { x: 258, y: H - 10, fill: 'rgba(253,235,145,.9)', 'font-family': 'Martian Mono', 'font-weight': 800, 'font-size': 14 }); wolves.textContent = 'WOLVES';
+// Waveform: a carrier under the cry's loudness envelope.
+let wave = '';
+for (let x = t0; x <= tEnd; x += 2) {
+  const p = (x - t0) / (tEnd - t0);
+  const env = x < tR ? 0.25 + 0.1 * Math.sin(p * 30) : Math.min(1, 0.35 + (x - tR) / 260) * (x > 860 ? Math.max(0, (tEnd - x) / 140) : 1);
+  const y = 96 + Math.sin(x * 0.55) * Math.sin(x * 0.047) * 62 * env;
+  wave += (wave ? 'L' : 'M') + x + ' ' + y.toFixed(1);
+}
+el('path', { d: wave, fill: 'none', stroke: '#FDEB91', 'stroke-width': 2, opacity: 0.85 });
+// Pitch contour.
+let pitch = '';
+for (let x = t0; x <= tEnd - 30; x += 3) {
+  let y;
+  if (x < tR) y = 132 - (x - t0) * 0.03;
+  else if (x < tO) y = 127 - ((x - tR) / (tO - tR)) ** 1.4 * 62;
+  else y = 65 - (x - tO) * 0.035 + Math.sin((x - tO) / 13) * Math.min(1, (x - tO) / 120) * 7;
+  pitch += (pitch ? 'L' : 'M') + x + ' ' + y.toFixed(1);
+}
+el('path', { d: pitch, fill: 'none', stroke: '#FF2E89', 'stroke-width': 6, 'stroke-linecap': 'square', 'stroke-linejoin': 'miter' });
+</script>
+</body></html>

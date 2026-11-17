@@ -19,9 +19,9 @@ import { launch } from '../data/launch';
       </div>
     </section>
 
-    <a class="launch-strip" href={launch.path} data-launch-strip data-year={launch.date.year} data-month={launch.date.month} data-day={launch.date.day}>
+    <a class="launch-strip" href={launch.path} data-launch-strip data-start={launch.start}>
       <span class="ls-tag">Blast off</span>
-      <span class="ls-text"><strong>{launch.dateLabel}</strong> {launch.event}</span>
+      <span class="ls-text"><strong>{launch.dateLabel} · {launch.time}</strong> {launch.event}</span>
       <span class="ls-count" data-ls-count>Get launch ready</span>
       <span class="ls-go" aria-hidden="true">→</span>
     </a>
@@ -206,15 +206,16 @@ import { launch } from '../data/launch';
 <script>
   import { howl } from '../scripts/howl';
 
-  // The launch strip's countdown, in days, to midnight on launch day in the viewer's own time.
+  // The launch strip's countdown, in whole days to liftoff (8 PM ET), matching the Launch page's countdown.
   const strip = document.querySelector<HTMLElement>('[data-launch-strip]');
   const stripCount = strip?.querySelector<HTMLElement>('[data-ls-count]');
   if (strip && stripCount) {
-    const target = new Date(Number(strip.dataset.year), Number(strip.dataset.month) - 1, Number(strip.dataset.day));
-    // Whole days left, matching the Launch page's countdown. Under a day left means launch is tomorrow.
-    const ms = target.getTime() - Date.now();
+    const target = new Date(strip.dataset.start!);
+    const now = new Date();
+    const ms = target.getTime() - now.getTime();
     const days = Math.floor(ms / 86400000);
-    stripCount.textContent = ms <= -86400000 ? 'We have liftoff' : ms <= 0 ? 'Today!' : days === 0 ? 'Tomorrow' : `${days} ${days === 1 ? 'day' : 'days'} to go`;
+    const today = target.toDateString() === now.toDateString();
+    stripCount.textContent = ms <= 0 ? 'We have liftoff' : days > 0 ? `${days} ${days === 1 ? 'day' : 'days'} to go` : today ? 'Today!' : 'Tomorrow';
   }
 
   const cry = document.querySelector<HTMLButtonElement>('[data-cry]');

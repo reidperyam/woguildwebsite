@@ -41,7 +41,12 @@ const motes = Array.from({ length: 22 }, (_, i) => ({
 const candles = Array.from({ length: 12 }, (_, i) => ({ h: 64 + ((i * 29) % 46) }));
 ---
 
-<BaseLayout title="Lore" description="The most holy and glorious life of Saint Hornatius Orgasmahowl: his deeds, his three temptations and his mysteries, with the Beatitudes of the Battleground.">
+<BaseLayout
+  title="Lore"
+  description="The most holy and glorious life of Saint Hornatius Orgasmahowl: his deeds, his three temptations and his mysteries, with the Beatitudes of the Battleground."
+  image="/og-lore.png"
+  imageAlt="Here beginneth the most holy and glorious life of Saint Hornatius Orgasmahowl, beside a gilded holy card of the haloed orc saint. Haroooo in Excelsis. Feast Day, March 23. woguild.org/lore"
+>
   <Fragment slot="head">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap" />
   </Fragment>

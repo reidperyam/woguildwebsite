@@ -6,7 +6,12 @@ import { HOWL_CONTROLS, HOWL_PRESETS, DEFAULT_HOWL, WOLF_RECORDING } from '../sc
 const groups = [...new Set(HOWL_CONTROLS.map((c) => c.group))];
 ---
 
-<BaseLayout title="Howl Lab" description="Make your own custom HAROOOO! Twist the dials, name your battle cry and share it with the guild.">
+<BaseLayout
+  title="Howl Lab"
+  description="Make your own custom HAROOOO! Twist the dials, name your battle cry and share it with the guild."
+  image="/og-howl-lab.png"
+  imageAlt="Make your own HAROOOO! The Howl Lab's pitch contour and waveform. Twist the dials, name it, share it. woguild.org/howl-lab"
+>
   <div class="wrap page lab">
     <section class="received" data-received hidden aria-live="polite">
       <p class="label">Incoming battle cry</p>

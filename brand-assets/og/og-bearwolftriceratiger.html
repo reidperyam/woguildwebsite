@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Link preview for /bearwolftriceratiger (1200x630), in the Storm sub-theme (see BRAND.md).
+     Render with: node brand-assets/og/render.mjs og-bearwolftriceratiger -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bitter:ital,wght@0,400;0,700;1,400&family=Metal+Mania&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;background:#000;overflow:hidden;font-family:'Anton',sans-serif}
+.sky{position:absolute;inset:0;background:linear-gradient(180deg,#2c2e36 0%,#16171c 42%,#000 78%)}
+.sigil{position:absolute;left:40px;top:120px;width:640px;height:560px;color:#ffd60a;opacity:.13}
+.beware{position:absolute;left:62px;top:34px;display:flex;align-items:center;gap:14px;padding:6px 18px;background:#ffd60a;color:#000;font-size:26px;letter-spacing:.3em;text-transform:uppercase}
+.beware svg{width:26px;height:24px}
+.the{position:absolute;left:64px;top:96px;font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#f1ead2}
+.title{position:absolute;left:0;top:128px;width:740px;height:420px;font-family:'Metal Mania',serif;font-size:112px;line-height:1;text-transform:uppercase}
+.title span{position:absolute;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:5px 5px 0 #000,0 0 26px rgba(255,214,10,.45)}
+.y{color:#ffd60a}.w{color:#fffbe0}
+.tag{position:absolute;left:62px;top:536px;font-size:34px;letter-spacing:.01em;text-transform:uppercase;color:#ffd60a}
+.shadow,.frame{position:absolute;width:416px;height:384px;clip-path:polygon(18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,18px 100%,0 calc(100% - 18px),0 18px)}
+.shadow{right:50px;top:66px;background:#2c2e36}
+.frame{right:62px;top:54px;padding:8px;background:#ffd60a}
+.frame img{display:block;width:400px;height:368px}
+.plate{position:absolute;right:62px;top:458px;width:416px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:#f1ead2}
+.plate b{font-weight:400;color:#8d8a80}
+.url{position:absolute;right:62px;top:540px;font-size:26px;letter-spacing:.04em;color:#ffd60a}
+.bolt{position:absolute;color:#ffd60a}
+.hazard{position:absolute;left:0;right:0;bottom:0;height:30px;background:repeating-linear-gradient(-45deg,#ffd60a 0 16px,#000 16px 32px)}
+</style></head><body>
+<div class="sky"></div>
+<svg class="sigil" viewBox="0 0 400 350" id="sigil"></svg>
+<p class="beware"><svg viewBox="0 0 48 44"><path fill="currentColor" d="M24 2 46 42H2Z"/><path fill="#ffd60a" d="M21.5 15h5l-1 14h-3Zm2.5 17a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg>Beware<svg viewBox="0 0 48 44"><path fill="currentColor" d="M24 2 46 42H2Z"/><path fill="#ffd60a" d="M21.5 15h5l-1 14h-3Zm2.5 17a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg></p>
+<p class="the">The saga of the</p>
+<p class="title"><span class="y" style="left:58px;top:0">Bear</span><span class="w" style="left:278px;top:96px">Wolf</span><span class="y" style="left:46px;top:192px">Tricera</span><span class="w" style="left:300px;top:288px">Tiger</span></p>
+<svg class="bolt" style="left:600px;top:40px;width:56px;height:56px" viewBox="0 0 24 24"><path fill="currentColor" d="M14 1 3.5 14H11l-2 9 11.5-14H13l1-8Z"/></svg>
+<svg class="bolt" style="left:640px;top:330px;width:40px;height:40px" viewBox="0 0 24 24"><path fill="currentColor" d="M14 1 3.5 14H11l-2 9 11.5-14H13l1-8Z"/></svg>
+<p class="tag">Four beasts. Three horns. One roar.</p>
+<div class="shadow"></div>
+<div class="frame"><img src="../../src/assets/beast/bearwolftriceratiger.jpg" alt=""></div>
+<p class="plate"><span>Specimen I</span><b>Born of the Blizzard · 2010</b></p>
+<p class="url">woguild.org/bearwolftriceratiger</p>
+<div class="hazard"></div>
+<script>
+// The Beast's sigil (src/components/BeastIcons.astro), faint behind the title.
+const frillEdge = [[134,116],[152,92],[178,76],[208,70],[238,76],[262,94],[276,120],[280,146]];
+const frillSpikes = frillEdge.map(([x, y]) => {
+  const dx = x - 205, dy = y - 140, len = Math.hypot(dx, dy), nx = dx / len, ny = dy / len, tx = -ny * 8, ty = nx * 8, r = (v) => v.toFixed(1);
+  return `M${r(x + tx)} ${r(y + ty)} L${r(x + nx * 20)} ${r(y + ny * 20)} L${r(x - tx)} ${r(y - ty)}Z`;
+}).join(' ');
+document.getElementById('sigil').innerHTML = `
+  <path d="M344 236 C372 250 386 228 378 206 C373 190 380 180 392 176" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" />
+  <g fill="currentColor">
+    <path d="M335 260 C350 280 356 300 360 320 L374 336 L344 336 L342 322 C336 306 326 292 318 282Z M374 336 L386 342 L360 338Z" />
+    <path d="M140 178 C160 152 220 142 262 160 C302 175 335 190 345 225 C352 250 345 275 330 282 L300 290 C270 290 240 285 215 280 C190 275 165 255 152 236 C142 222 136 200 140 178Z" />
+    <path d="M300 270 C320 280 326 300 322 318 L332 336 L298 336 L300 318 C296 305 285 292 278 285Z M298 336 L286 342 L308 338Z M332 336 L344 342 L322 338Z" />
+    <path d="M205 268 C200 290 195 305 188 318 L176 332 L226 334 L222 318 C226 300 232 285 238 275Z M176 332 L162 340 L186 336Z M194 334 L186 344 L202 336Z M212 334 L210 345 L220 335Z M226 334 L238 341 L222 330Z" />
+    <g transform="rotate(16 150 156)"><path d="M128 152 C130 100 170 64 214 66 C258 70 286 106 282 152 C250 166 180 168 128 152Z" /><path d="${frillSpikes}" /></g>
+    <path d="M132 134 Q98 92 68 40 Q118 80 160 116Z" />
+    <path d="M118 148 Q82 112 32 72 Q98 94 148 128Z" />
+    <path d="M164 140 C142 128 112 132 92 146 L64 162 L70 180 L82 168 C100 168 124 170 150 172Z" />
+    <path d="M94 150 L78 122 L108 146Z" />
+    <path d="M96 167 L100 181 L105 168Z M114 169 L117 181 L122 170Z" />
+    <path d="M152 186 C128 188 104 190 84 188 L82 198 C104 204 130 204 158 200Z" />
+    <path d="M102 190 L106 179 L111 190Z" />
+    <path d="M180 206 C148 206 112 202 86 196 L78 212 C106 222 146 234 180 244Z" />
+    <path d="M88 190 C68 180 50 190 50 206 C52 220 68 226 86 216Z" />
+    <path d="M54 192 C40 190 28 198 24 212 C32 205 42 203 52 201Z M52 202 C38 204 30 214 30 228 C36 219 44 214 54 210Z M56 211 C46 218 42 230 44 242 C48 232 54 225 62 219Z M66 218 C60 228 60 240 64 250 C66 240 70 232 76 224Z" />
+  </g>`;
+</script>
+</body></html>

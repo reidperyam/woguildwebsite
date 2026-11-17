@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Cover image for the Discord launch event (Step 8 in DISCORD.md). Laid out at 800x400 (Discord asks for at least that),
+     but the event card crops it to about 800x320, so everything that matters sits in the middle band (y 40 to 360)
+     and only stars and the moon run past it. It bakes in the date and time: redraw it if those change.
+     Render with: node brand-assets/discord/render.mjs (1600x800, 2x for sharp displays) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;800&display=block">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:800px;height:400px;background:#000;color:#fff;font-family:'Martian Mono',monospace;overflow:hidden}
+.cover{position:relative;width:800px;height:400px}
+#stars{position:absolute;inset:0}
+#stars rect{fill:#fff}
+.moon{position:absolute;left:622px;top:-104px;width:260px;height:260px;border-radius:50%;background:#FDEB91}
+.label{position:absolute;left:40px;top:58px;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.label b{color:#FF2E89}
+h1{position:absolute;left:34px;top:88px;font-size:96px;line-height:.9;font-weight:800;text-transform:uppercase;letter-spacing:-.07em;white-space:nowrap}
+h1 span{color:#FF2E89}
+.sub{position:absolute;left:40px;top:196px;font-size:24px;font-weight:800;text-transform:uppercase;letter-spacing:-.02em}
+.url{position:absolute;left:40px;top:236px;font-size:15px;font-weight:800;color:#FF2E89}
+.tape{position:absolute;left:0;right:0;top:284px;height:56px;background:#FF2E89;color:#000;border-top:4px solid #fff;border-bottom:4px solid #fff;display:flex;align-items:center;gap:16px;padding:0 40px;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;white-space:nowrap}
+.tape i{font-style:normal}
+.rocket{position:absolute;left:640px;top:46px;width:112px;height:233px;transform:rotate(32deg);transform-origin:50% 50%}
+.hull path,.hull rect{fill:#000;stroke:#fff;stroke-width:4;stroke-linejoin:miter;stroke-linecap:square}
+.hull text{fill:#FF2E89;font:800 17px 'Martian Mono';letter-spacing:-.06em}
+.exhaust path{fill:none;stroke:#FF2E89;stroke-width:8;stroke-linecap:square}
+</style></head><body><div class="cover">
+<svg id="stars" viewBox="0 0 800 400"></svg>
+<div class="moon"></div>
+<p class="label" data-text>&lt;WO&gt; Werewolf Orgasmahowl <b>///</b> Launch day</p>
+<h1 data-text>Blast <span>off</span></h1>
+<p class="sub" data-text>The first &lt;WO&gt; guild run</p>
+<p class="url" data-text>woguild.org/launch</p>
+<svg class="rocket" viewBox="0 0 120 250"><g class="exhaust"><path d="M46 206 V232"/><path d="M60 206 V246"/><path d="M74 206 V232"/></g>
+<g class="hull"><path d="M30 150 L8 178 V204 L30 186 Z"/><path d="M90 150 L112 178 V204 L90 186 Z"/><path d="M38 186 H82 L88 200 H32 Z"/><path d="M30 186 V72 L60 10 L90 72 V186 Z"/><path d="M30 72 H90"/><rect x="40" y="94" width="40" height="40"/><text x="60" y="121" text-anchor="middle">WO</text></g></svg>
+<div class="tape" data-text>Tue, March 23 <i>///</i> 8 PM ET <i>///</i> Level 39 battlegrounds</div>
+</div>
+<script>
+// Square stars from a fixed seed, so every render matches. They stay clear of the text, the moon and the rocket.
+document.fonts.ready.then(() => {
+  let seed = 23;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const keepOut = [...document.querySelectorAll('[data-text], .rocket')].map((el) => el.getBoundingClientRect());
+  const inMoon = (x, y) => Math.hypot(x - 752, y - 26) < 142;
+  const blocked = (x, y) => inMoon(x, y) || keepOut.some((r) => x > r.left - 10 && x < r.right + 10 && y > r.top - 10 && y < r.bottom + 10);
+  const svg = document.getElementById('stars');
+  let placed = 0;
+  for (let tries = 0; placed < 90 && tries < 4000; tries++) {
+    const x = rnd() * 800, y = rnd() * 400;
+    if (blocked(x, y)) continue;
+    const s = rnd() < 0.15 ? 4 : rnd() < 0.5 ? 3 : 2;
+    svg.insertAdjacentHTML('beforeend', `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${s}" height="${s}"/>`);
+    placed++;
+  }
+});
+</script>
+</body></html>
