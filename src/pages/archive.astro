@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/vault.css';
+import { discordHref } from '../data/guild';
+import { exhibits, callForFootage } from '../data/archive';
+
+const leader = ['5', '4', '3', '2', '1', 'WO'];
+const filedCount = `${exhibits.length} ${exhibits.length === 1 ? 'exhibit' : 'exhibits'} filed`;
+// Responsive sizes for each exhibit, never wider than the original.
+const widthsFor = (w: number) => [480, 960].filter((x) => x < w).concat(w);
+---
+
+<BaseLayout
+  title="The Archive"
+  description="Real footage from the past of Werewolf Orgasmahowl, the Horde low-level PvP guild founded in 2009: banners, screenshots and records from the pack's history."
+  image="/og-archive.png"
+  imageAlt="The Archive: real footage from the pack's past. A strip of film holds the old Bearwolftriceratiger guild banner, nine Horde characters under the words 39 Horde PVP. Werewolf Orgasmahowl, est. 2009. woguild.org/archive"
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Stardos+Stencil:wght@400;700&display=swap" />
+  </Fragment>
+
+  <div class="vault">
+    <section class="booth" aria-labelledby="archive-title">
+      <div class="beam" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="sprockets" aria-hidden="true"></div>
+      <div class="wrap booth-inner">
+        <div class="booth-copy">
+          <p class="slate"><span>Werewolf Orgasmahowl</span><span>Est. 2009</span></p>
+          <h1 id="archive-title" class="vault-title"><span class="vt-the">The</span> Archive</h1>
+          <p class="vault-sub">Real footage from the pack’s past</p>
+          <ul class="tally">
+            <li>Founded 2009</li>
+            <li>Renamed 2010</li>
+            <li>{filedCount}</li>
+          </ul>
+          <a class="v-btn" href="#exhibits">Roll the footage</a>
+        </div>
+        <div class="leader" aria-hidden="true">
+          <div class="leader-sweep"></div>
+          <svg class="leader-marks" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="96" />
+            <circle cx="100" cy="100" r="78" />
+            <path d="M100 0v200M0 100h200" />
+          </svg>
+          <span class="leader-nums">{leader.map((n, i) => <span style={`--i:${i}`}>{n}</span>)}</span>
+        </div>
+      </div>
+      <div class="sprockets sprockets-bottom" aria-hidden="true"></div>
+    </section>
+
+    <div class="wrap vault-body">
+      <section id="exhibits" class="shelf" aria-labelledby="exhibits-title">
+        <h2 id="exhibits-title" class="v-h2">On the shelf</h2>
+        <div class="shelf-grid">
+          {exhibits.map((e) => (
+            <article class="exhibit" id={e.id} aria-labelledby={`${e.id}-title`}>
+              <header class="exhibit-head">
+                <p class="exhibit-no">Exhibit {e.no}</p>
+                <h3 id={`${e.id}-title`} class="exhibit-title">{e.title}</h3>
+                <p class="exhibit-kicker">{e.kicker}</p>
+              </header>
+              <figure class="film">
+                <p class="film-edge" aria-hidden="true">WO ▸ Archive ▸ {e.era} ▸ {e.no}</p>
+                <a class="film-link" href={e.image.src} target="_blank" rel="noopener">
+                  <Image class="film-img" src={e.image} alt={e.alt} widths={widthsFor(e.image.width)} sizes="(min-width: 1000px) 640px, 100vw" />
+                  <span class="film-open" aria-hidden="true">Open full size ↗</span>
+                  <span class="sr-only">(opens full size in a new window)</span>
+                </a>
+              </figure>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="call" aria-labelledby="call-title">
+        <h2 id="call-title" class="call-title">{callForFootage.title}</h2>
+        <p>{callForFootage.text}</p>
+        <div class="call-actions">
+          <a class="v-btn v-btn-ink" href={discordHref}>Bring it to the Discord</a>
+        </div>
+        <p class="legends">The legends live next door: <a href="/lore">Saint Hornatius Orgasmahowl</a> and <a href="/bearwolftriceratiger">the Bearwolftriceratiger</a>.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

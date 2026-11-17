@@ -5,7 +5,7 @@ Website for Werewolf Orgasmahowl, a Horde guild in World of Warcraft Forever (No
 ## Design
 - Design system: https://claude.ai/artifact/2uHaE8ULB6FRAdLYESV1oA. Use it for every Claude Design artifact made from this repo, in place of any account default.
 - Brand rules for code: [BRAND.md](BRAND.md). Follow it for every page and component.
-- Page copy: [CONTENT.md](CONTENT.md). Guild facts live in `src/data/guild.ts` and Lore copy in `src/data/lore.ts`; keep CONTENT.md in step with them.
+- Page copy: [CONTENT.md](CONTENT.md). Guild facts live in `src/data/guild.ts`, Lore copy in `src/data/lore.ts` and the Archive's exhibits in `src/data/archive.ts`; keep CONTENT.md in step with them.
 
 ## Stack
 - Astro 7, static output, deployed on Vercel (project `woguildwebsite`; every push to `main` deploys). Vercel Speed Insights is in `BaseLayout.astro`. No UI framework; plain `.astro` components and `src/styles/global.css`.

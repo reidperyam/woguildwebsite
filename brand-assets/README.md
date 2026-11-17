@@ -40,6 +40,7 @@ Setting up the rest of the server (roles, channels, the welcome questions): [../
 | `og/og-lore.html` | `/lore`, in the Cathedral sub-theme |
 | `og/og-bearwolftriceratiger.html` | `/bearwolftriceratiger`, in the Storm sub-theme |
 | `og/og-howl-lab.html` | `/howl-lab` |
+| `og/og-archive.html` | `/archive`, in the Vault sub-theme |
 
 To redraw after editing a source: `node brand-assets/og/render.mjs` (all) or `node brand-assets/og/render.mjs og-launch` (one). It uses headless Chrome (set `CHROME` if it isn't in the default Windows spot) and needs a network connection for Google Fonts. Discord caches previews, so a changed image can take a while to show on links already posted.
 

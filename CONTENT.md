@@ -1,6 +1,6 @@
 # Site content: v1
 
-The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.md). The copy itself lives in code: guild facts in `src/data/guild.ts` and the Lore catalogue in `src/data/lore.ts`. Keep this outline in step when either changes.
+The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.md). The copy itself lives in code: guild facts in `src/data/guild.ts`, the Lore catalogue in `src/data/lore.ts` and the Archive in `src/data/archive.ts`. Keep this outline in step when either changes.
 
 ## Known facts
 
@@ -21,7 +21,7 @@ The plan for what the site says. Layout and style rules are in [BRAND.md](BRAND.
 
 ## Pages
 
-Nav: HOME · RECRUITMENT · LAUNCH (signal yellow, with a blinking pink square) · LORE (dropdown: Saint Hornatius Orgasmahowl, Bearwolftriceratiger) · FUN (dropdown: Howl Lab) · [APPLY]. A custom 404 page reads HAROOOO!
+Nav: HOME · RECRUITMENT · LAUNCH (signal yellow, with a blinking pink square) · LORE (dropdown: Saint Hornatius Orgasmahowl, Bearwolftriceratiger, The Archive) · FUN (dropdown: Howl Lab) · [APPLY]. A custom 404 page reads HAROOOO!
 
 ### Home
 
@@ -119,6 +119,23 @@ Around the Tellings, the page also has:
 - **Closing band:** HAROOOARRR!, "Join the pack. Grab three.", **Join the Discord**, **Roar it**, **Sound the drums**, **Share the roar**.
 - **The storm:** ambient storm sound with a bottom-left **Stir the storm** / **Calm the storm** toggle.
 
+### Lore: The Archive (`/archive`)
+
+Styled as "The Vault", a film archive and reading room (see BRAND.md, Archive sub-theme). Real footage from the guild's past, filed as the guild provides it: the one Lore page that isn't mythology. All copy and exhibits are in `src/data/archive.ts`; images are in `src/assets/archive/`, named by exhibit number.
+
+1. **Hero:** a slate (Werewolf Orgasmahowl | Est. 2009), THE ARCHIVE, "Real footage from the pack’s past", a tally (Founded 2009 · Renamed 2010 · the number of exhibits filed), **Roll the footage**, and a film leader counting down to WO (hidden on phones).
+2. **On the shelf:** a grid (two across on wider screens) of each exhibit's number, title and kicker, then the exhibit in a film frame. Clicking an exhibit opens it full size in a new window.
+3. **Submissions:** "Got footage from the old days?" Screenshots, banners, videos, old forum posts: bring them to the Discord. **Bring it to the Discord**, and links to the two legends.
+
+| Exhibit | Title | Era | What it shows |
+|---|---|---|---|
+| 001 | The Bearwolftriceratiger Banner ("Nine of the pack") | 2010 | The guild banner reading <Bearwolftriceratiger> · 39 Horde PVP - Undermine, with nine characters: Overrated, Noobsombrero, Norfire, Litedarker, Sockdolager, Silane, Icecreemman, Chøøs, Mmwellspent |
+| 002 | The Pack in Pink ("In the original tabard") | 2009 | The pack gathered in two rows before a stone ruin, in the original tabard. Norfire's nameplate reads <Werewolf Orgasmahowl> |
+| 003 | Horde Wins ("Premade vs. premade in Warsong Gulch. We won.") | 2009 | The end-of-match scoreboard: Horde Wins, 10 vs. 10, 27 minutes |
+| 004 | The Premade Rolls Out ("Single file, in the original pink") | 2009 | A tauren in the original tabard leading a single-file line of the pack up a road in the rain |
+| 005 | Horde Wins Again ("Another premade in Warsong Gulch. Another win.") | 2009 | A second scoreboard: Horde Wins, 10 vs. 10, 25 minutes; "Badonkadonk captured the Alliance flag!" |
+| 006 | One Minute to Go ("In the Warsong Gulch flag room, before the gates open") | 2009 | Tauren in the original tabard waiting in the Horde flag room; nameplates Dawg, Banditkeith, Therewolf <Werewolf Orgasmahowl>; Therewolf is a Level 39 Tauren Shaman |
+
 ## Link previews
 
 Every page has its own 1200×630 preview image in `public/`, drawn from HTML sources in `brand-assets/og/` (see its README entry). Pages without one, like the 404, fall back to the home image.
@@ -131,9 +148,11 @@ Every page has its own 1200×630 preview image in `public/`, drawn from HTML sou
 | Lore | `og-lore.png` | The Cathedral: "Here beginneth… Saint Hornatius Orgasmahowl", the halo, HAROOOO IN EXCELSIS, the Warsong Gulch relic in a gilt frame |
 | Bearwolftriceratiger | `og-bearwolftriceratiger.png` | The Storm: BEWARE, the stacked BEAR / WOLF / TRICERA / TIGER, the painting in its specimen frame |
 | Howl Lab | `og-howl-lab.png` | MAKE YOUR OWN HAROOOO! over the pitch-contour scope |
+| Archive | `og-archive.png` | The Vault: THE ARCHIVE in stencil, the WO film leader, and Exhibit 001 (the Bearwolftriceratiger banner) on a strip of film |
 
 ## Open questions for the guild
 
 - Where the pack meets for the launch run on March 23, 2027 (8 PM ET)
 - Which battlegrounds we focus on in the Level 39 bracket, if the site should say so
 - Higher-resolution originals of the relic images, if they still exist
+- More footage for the Archive
