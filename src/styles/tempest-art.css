@@ -17,7 +17,7 @@
 .art-svg { width: 100%; height: auto; overflow: visible; }
 
 /* Fig. I: the frozen name */
-.frozen-word { font-family: var(--f-sign); font-size: 34px; letter-spacing: 0.04em; fill: #c9a646; }
+.frozen-word { font-family: var(--f-sign); font-size: 34px; letter-spacing: 0.04em; fill: #f5ea84; }
 .frozen-snow { animation: snow-drift 3s linear infinite; }
 @keyframes snow-drift { from { transform: translate(0, -20px); } to { transform: translate(-24px, 0); } }
 .frozen-break { transform-box: view-box; transform-origin: 340px 110px; animation: name-break 5s ease-in-out infinite; }

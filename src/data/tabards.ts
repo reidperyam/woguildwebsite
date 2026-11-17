@@ -1,7 +1,8 @@
 // The guild's in-game tabards, as the guild provided them (250 × 250, transparent).
 // Show them as they are: never recolored, filtered or cropped. See BRAND.md.
 // `current` is the tabard the guild uses today: use it wherever the site stands for the guild now.
-// `original` and `beast` are history (the 2009 and 2010 tabards).
+// `original` and `beast` are history (the 2009 and 2010 tabards). `original` is the guild's in-game image of it,
+// centered on the same 250 × 250 transparent canvas; unlike the other two, it has no bronze frame.
 import current from '../assets/tabards/werewolf-orgasmahowl-2026-gray.png';
 import original from '../assets/tabards/werewolf-orgasmahowl-2009.png';
 import beast from '../assets/tabards/bearwolftriceratiger-2010.png';
@@ -10,17 +11,17 @@ export const tabards = {
   current: {
     image: current,
     name: 'Werewolf Orgasmahowl',
-    alt: 'The Werewolf Orgasmahowl guild tabard: a silver-gray banner edged in black with a black chevron, hanging in a round bronze frame.',
+    alt: 'The Werewolf Orgasmahowl guild tabard: a silver-gray banner edged in black with a black chevron pointing down, hanging in a round bronze frame.',
   },
   original: {
     image: original,
     name: 'Werewolf Orgasmahowl (2009)',
-    alt: 'The original 2009 Werewolf Orgasmahowl guild tabard: a burgundy banner edged in teal with a gold chevron, hanging in a round bronze frame.',
+    alt: 'The original 2009 Werewolf Orgasmahowl guild tabard: a hot pink banner edged in teal with a pale yellow chevron pointing up, hung with fringed brown trim at both top corners.',
   },
   beast: {
     image: beast,
     name: 'Bearwolftriceratiger',
-    alt: 'The Bearwolftriceratiger guild tabard: a yellow-green banner edged in black with a black chevron, hanging in a round bronze frame.',
+    alt: 'The Bearwolftriceratiger guild tabard: a yellow-green banner edged in black with a black chevron pointing up, hanging in a round bronze frame.',
   },
 };
 
@@ -42,15 +43,16 @@ export const bannerHistory: {
     tabard: tabards.original,
     when: '2009',
     title: 'Founded as Werewolf Orgasmahowl',
-    text: 'Burgundy, teal and gold. The original pack.',
+    text: 'Hot pink, teal and yellow. The original pack.',
     meaning: {
       colors: [
-        { name: 'Burgundy', hex: '#7a2848', text: 'The blood of the Alliance zerg, spilled at the Lumber Mill. It never washed out, so the pack wore it.' },
-        { name: 'Teal', hex: '#1f5761', text: 'Moonlight on the walls of Shadowfang Keep, where the Saint first stood with the Worgen.' },
-        { name: 'Gold', hex: '#b8923c', text: 'The halo of Saint Hornatius Orgasmahowl, worn over the heart of every packmate who carries his cry.' },
+        { name: 'Hot pink', hex: '#dd208d', text: 'Chosen so the Alliance could see the pack coming from across Arathi Basin. The pack never once tried to sneak up on anyone.' },
+        { name: 'Teal', hex: '#1d648e', text: 'Moonlight on the walls of Shadowfang Keep, where the Saint first stood with the Worgen.' },
+        { name: 'Yellow', hex: '#f5ea84', text: 'The halo of Saint Hornatius Orgasmahowl, worn over the heart of every packmate who carries his cry.' },
       ],
-      chevronHex: '#b8923c',
-      chevron: 'Two wolf ears pinned back for the charge.',
+      chevronHex: '#f5ea84',
+      chevronUp: true,
+      chevron: 'A wolf’s snout raised to the moon, mid-howl.',
     },
   },
   {
@@ -66,7 +68,7 @@ export const bannerHistory: {
       ],
       chevronHex: '#000000',
       chevronUp: true,
-      chevron: 'A horn raised to the lightning. The Beast flipped the old chevron over the night it rose, and nobody dared flip it back.',
+      chevron: 'A horn raised to the lightning. The Beast kept the first banner’s chevron pointing up, and burned it black.',
     },
   },
   {
@@ -80,7 +82,7 @@ export const bannerHistory: {
         { name: 'Black', hex: '#000000', text: 'The bleakness of the reckoning that destroyed the original Werewolf Orgasmahowl, remembered and repurposed, just as the guild.' },
       ],
       chevronHex: '#000000',
-      chevron: 'A V for victory, pointing down like the first banner.',
+      chevron: 'A V for victory: the first of the pack’s chevrons to point down, turned over for the return.',
     },
   },
 ];
