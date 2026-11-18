@@ -1,6 +1,6 @@
 ---
 // The war dance: a scene that rises from the bottom of the screen while the war drums play.
-// Six pack warriors stomp around the Beast on the beat, and the Beast rears up on every bar.
+// Seven pack warriors stomp on the beat, and the Beast in the page's background rears up on every bar.
 // Driven by classes beast.ts puts on <html>: dancing (the whole piece), drum-fill (the last bar),
 // drum-hit (the final unison hit). Styles in src/styles/tempest-dance.css.
 
@@ -9,6 +9,7 @@ const dancers = [
   { x: 9, h: 160, flip: false, off: false, spear: true },
   { x: 22, h: 132, flip: false, off: true, spear: false },
   { x: 34, h: 180, flip: false, off: false, spear: true },
+  { x: 50, h: 200, flip: false, off: true, spear: true },
   { x: 66, h: 180, flip: true, off: true, spear: true },
   { x: 78, h: 132, flip: true, off: false, spear: false },
   { x: 91, h: 160, flip: true, off: true, spear: true },
@@ -17,7 +18,6 @@ const dancers = [
 
 <div class="war-dance" aria-hidden="true">
   <div class="dance-glow"></div>
-  <svg class="dance-beast"><use href="#bw-sigil" /></svg>
 
   {dancers.map((d) => (
     <div class:list={['dancer', { flip: d.flip, off: d.off }]} style={`left:${d.x}%;--h:${d.h}px`}>

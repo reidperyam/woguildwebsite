@@ -19,17 +19,17 @@ html.dancing .dance-glow { animation: glow-pulse var(--beat) ease-out infinite; 
 @keyframes glow-pulse { 0% { opacity: 1; } 100% { opacity: 0.8; } }
 .dance-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: var(--s-black); }
 
-/* The Beast rears up in the middle of the ring on every bar. */
-.dance-beast {
-  position: absolute; left: 50%; bottom: 10px; width: min(40vw, 330px); height: min(35vw, 289px);
-  translate: -50% 0; color: var(--s-black); --sigil-cut: transparent;
-  transform-origin: 70% 100%; filter: drop-shadow(0 0 2px var(--s-yellow-lo));
-}
-html.dancing .dance-beast { animation: beast-rear calc(var(--beat) * 4) ease-in-out infinite; }
+/* The Beast in the page's background rears up on every bar. The <use> moves, not the <svg>,
+   so the dance never fights the reel's entrance animation on the sigil. */
+.hero-sigil, .final-sigil { overflow: visible; }
+.hero-sigil use, .final-sigil use { transform-origin: 70% 100%; }
+html.dancing :is(.hero-sigil, .final-sigil) use { animation: beast-rear calc(var(--beat) * 4) ease-in-out infinite; }
+/* Without the reel the hero sigil is a faint watermark, so it steps forward to dance. */
+html.dancing:not(.reel-on) .hero-sigil { opacity: 0.35; }
 @keyframes beast-rear {
   0%, 100% { transform: rotate(0) translateY(0); }
-  12% { transform: rotate(-7deg) translateY(-12px); }
-  30% { transform: rotate(-3deg) translateY(-4px); }
+  12% { transform: rotate(7deg) translateY(-12px); }
+  30% { transform: rotate(3deg) translateY(-4px); }
   50% { transform: rotate(0) translateY(0); }
 }
 
@@ -70,19 +70,20 @@ html.dancing.drum-fill .dance-glow { animation-duration: calc(var(--beat) / 2); 
 html.dancing.drum-hit .dancer-body { animation: dancer-leap 0.9s cubic-bezier(.2, .8, .3, 1) forwards; }
 html.dancing.drum-hit .pose-a { animation: none; opacity: 1; }
 html.dancing.drum-hit .pose-b { animation: none; opacity: 0; }
-html.dancing.drum-hit .dance-beast { animation: beast-roar 0.9s cubic-bezier(.2, .8, .3, 1) forwards; }
+html.dancing.drum-hit :is(.hero-sigil, .final-sigil) use { animation: beast-roar 0.9s cubic-bezier(.2, .8, .3, 1) forwards; }
 @keyframes dancer-leap { 0% { transform: translateY(0); } 35% { transform: translateY(-38%) scale(1.05); } 100% { transform: translateY(0); } }
-@keyframes beast-roar { 0% { transform: none; } 30% { transform: rotate(-10deg) translateY(-20px) scale(1.08); } 100% { transform: rotate(-4deg) translateY(-6px) scale(1.04); } }
+/* Lands back at rest: the sigil stays on screen after the dance leaves. */
+@keyframes beast-roar { 0% { transform: none; } 30% { transform: rotate(10deg) translateY(-20px) scale(1.08); } 100% { transform: none; } }
 
 @media (max-width: 700px) {
   .war-dance { height: min(40vh, 300px); }
   .dancer { --h: 92px !important; }
-  .dancer:nth-child(4), .dancer:nth-child(7) { display: none; }
+  .dancer:nth-child(3), .dancer:nth-child(7) { display: none; }
 }
 
 /* Reduced motion: the scene still appears with the drums, but holds still. */
 @media (prefers-reduced-motion: reduce) {
   .war-dance { transition: opacity 0.3s ease; translate: 0 0; }
-  .war-dance * { animation: none !important; }
+  .war-dance *, :is(.hero-sigil, .final-sigil) use { animation: none !important; }
   .pose-b { opacity: 0; }
 }
