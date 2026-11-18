@@ -34,7 +34,8 @@ const pageUrl = new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site).
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={pageUrl} />}
+    <meta name="robots" content={noindex ? 'noindex' : 'max-image-preview:large'} />
+    {!noindex && <link rel="canonical" href={pageUrl} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={guild.name} />
     <meta property="og:title" content={fullTitle} />
