@@ -4,15 +4,18 @@
 // src/styles/tempest-sightings.css. Data in src/data/beast.ts.
 import { Image } from 'astro:assets';
 import { sightings } from '../data/beast';
+import { cueAttrs, sightingCue, type Cue } from '../data/beast-reel';
 
+interface Props { cue?: Cue }
+const { cue } = Astro.props;
 const stampClass = (v: string) => v.toLowerCase().replace(/[^a-z]+/g, '-');
 ---
 
-<div class="sightings">
+<div class="sightings" {...cueAttrs(cue)}>
   <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Evidence: sightings of the Beast</p>
   <ol class="board">
     {sightings.map((s, i) => (
-      <li class="sighting">
+      <li class="sighting" {...cueAttrs(sightingCue(i))}>
         <button type="button" class="sighting-card" data-sighting={i} aria-haspopup="dialog" aria-label={`Sighting ${s.numeral}: ${s.title}. Read the witness statement.`}>
           <span class="sighting-tape" aria-hidden="true"></span>
           <span class="sighting-no">Sighting {s.numeral}</span>

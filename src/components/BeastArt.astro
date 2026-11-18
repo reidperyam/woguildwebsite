@@ -5,10 +5,11 @@ import { Image } from 'astro:assets';
 import BeastCrop from './BeastCrop.astro';
 import { details } from '../data/beast';
 import { tabards } from '../data/tabards';
+import { artCues, cueAttrs, type Cue } from '../data/beast-reel';
 
 export type ArtName = 'frozen-name' | 'four-echoes' | 'banner' | 'saint-on-ice';
-interface Props { name: ArtName }
-const { name } = Astro.props;
+interface Props { name: ArtName; cue?: Cue }
+const { name, cue } = Astro.props;
 
 // Snow for the Blizzard, placed the same way every time.
 const snow = Array.from({ length: 34 }, (_, i) => ({
@@ -19,7 +20,7 @@ const crack = '330,46 316,78 338,104 320,134 342,174';
 ---
 
 {name === 'frozen-name' && (
-  <figure class="art art-wide">
+  <figure class="art art-wide" {...cueAttrs(cue)}>
     <svg class="art-svg frozen" viewBox="0 0 640 280" role="img" aria-labelledby="art-frozen">
       <title id="art-frozen">The hot pink Werewolf Orgasmahowl banner with its yellow chevron, frozen solid in a blizzard, the name cracked in two and breaking away.</title>
       <defs>
@@ -55,36 +56,36 @@ const crack = '330,46 316,78 338,104 320,134 342,174';
 )}
 
 {name === 'four-echoes' && (
-  <figure class="art">
+  <figure class="art art-four" {...cueAttrs(cue)}>
     <div class="echoes">
-      {details.four.map((d) => (
-        <div class="echo">
+      {details.four.map((d, i) => (
+        <div class:list={['echo', artCues.echoes[i].look]} {...cueAttrs(artCues.echoes[i])}>
           <BeastCrop image={d.image} crop={d.crop} label={d.label} />
           <span class="echo-name"><svg aria-hidden="true"><use href={`#bw-${d.id}`} /></svg>{d.name}</span>
           <span class="echo-part">{d.part}</span>
         </div>
       ))}
     </div>
-    <figcaption><span class="plaque">Details</span>Where each of the four echoes lives on in the Beast, as the witnesses saw it.</figcaption>
+    <figcaption {...cueAttrs(artCues.echoCaption)}><span class="plaque">Details</span>Where each of the four echoes lives on in the Beast, as the witnesses saw it.</figcaption>
   </figure>
 )}
 
 {name === 'banner' && (
-  <figure class="art art-banner">
-    <div class="tabard-relic">
+  <figure class="art art-banner" {...cueAttrs(cue)}>
+    <div class="tabard-relic" {...cueAttrs(artCues.tabard)}>
       <span class="tabard-glow" aria-hidden="true"></span>
       <Image src={tabards.beast.image} alt={tabards.beast.alt} width={250} />
     </div>
     <div class="swatches">
-      <div class="swatch"><span class="chip-black"></span><span><b>Black</b> for the storm that took the old name</span></div>
-      <div class="swatch"><span class="chip-yellow"></span><span><b>Bright yellow</b> for the lightning, and the Wolf’s eye</span></div>
+      <div class="swatch swatch-black" {...cueAttrs(artCues.swatches[0])}><span class="chip-black"></span><span><b>Black</b> for the storm that took the old name</span></div>
+      <div class="swatch swatch-yellow" {...cueAttrs(artCues.swatches[1])}><span class="chip-yellow"></span><span><b>Bright yellow</b> for the lightning, and the Wolf’s eye</span></div>
     </div>
-    <figcaption><span class="plaque">Fig. II</span>The tabard the storm left behind.</figcaption>
+    <figcaption {...cueAttrs(artCues.tabardCaption)}><span class="plaque">Fig. II</span>The tabard the storm left behind.</figcaption>
   </figure>
 )}
 
 {name === 'saint-on-ice' && (
-  <figure class="art art-wide">
+  <figure class="art art-wide" {...cueAttrs(cue)}>
     <svg class="art-svg saint-scene" viewBox="0 0 640 300" role="img" aria-labelledby="art-saint">
       <title id="art-saint">A lone orc stands on the ice with his arms raised, a halo behind him and lightning above, while the horned Beast kneels before him.</title>
       <polyline class="saint-bolt" points="232,0 212,44 236,50 206,96 224,100 202,112" fill="none" stroke="var(--s-flash)" stroke-width="4" stroke-linejoin="bevel" />

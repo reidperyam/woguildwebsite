@@ -94,6 +94,8 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 
 Styled as "The Storm", a primal black-and-bright-yellow thunderstorm (see BRAND.md, Beast sub-theme). The one real fact is the 2010 rename. Everything else is new mythology written in 2026, set down by Roadieoh, High Tauren Librarian, who also catalogued the Saint. The full text is in `src/data/beast.ts`, and the painting is `src/assets/beast/bearwolftriceratiger.jpg`. Every other picture of the Beast is a sighting, in `src/assets/beast/sightings/`, and appears on the page once.
 
+The page runs as the Storm Reel, full-screen scenes that build beat by beat (see BRAND.md). Its controls read Next, Back and The saga (the chapter list), plus the WO button that brings back the site menu.
+
 The myth: Blizzard is a storm. In the Year of the Blizzard (2010), a storm that judges names froze "Werewolf Orgasmahowl" and threw it into the Storm Sea. The pack's HAROOOO froze in the cold and shattered into four beasts (Bear, Wolf, Triceratops, Tiger), and lightning fused them into the Bearwolftriceratiger, whose first word was HAROOOARRR!
 
 | Telling | Title | Key line |

@@ -5,11 +5,12 @@
 // SVG laid over the picture in its own pixels, so they scale with it. Data in src/data/beast.ts.
 import { Image } from 'astro:assets';
 import { hornTally } from '../data/beast';
+import { cueAttrs, factCues } from '../data/beast-reel';
 
 const { image, alt, caption, marks, legend } = hornTally;
 ---
 
-<figure class="tally">
+<figure class="tally" {...cueAttrs(factCues.tally)}>
   <div class="tally-pic">
     <Image src={image} alt={alt} width={image.width} />
     <svg viewBox={`0 0 ${image.width} ${image.height}`} aria-hidden="true">
@@ -26,6 +27,6 @@ const { image, alt, caption, marks, legend } = hornTally;
   </div>
   <figcaption class="tally-caption">{caption}</figcaption>
 </figure>
-<ol class="tally-legend" aria-label="Where each horn came from">
+<ol class="tally-legend" aria-label="Where each horn came from" {...cueAttrs(factCues.legend)}>
   {legend.map((l) => <li><span class="tally-n">{l.n}</span>{l.label}</li>)}
 </ol>
