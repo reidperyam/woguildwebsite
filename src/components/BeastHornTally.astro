@@ -1,0 +1,31 @@
+---
+// The horn count inside the "Did you know?" factoid (Telling VI): a sighting with every horn
+// tagged by number, and a legend saying where each horn came from (a sibling of the figure, so the
+// factoid can set it under its text on wide screens). The marks are drawn in an
+// SVG laid over the picture in its own pixels, so they scale with it. Data in src/data/beast.ts.
+import { Image } from 'astro:assets';
+import { hornTally } from '../data/beast';
+
+const { image, alt, caption, marks, legend } = hornTally;
+---
+
+<figure class="tally">
+  <div class="tally-pic">
+    <Image src={image} alt={alt} width={image.width} />
+    <svg viewBox={`0 0 ${image.width} ${image.height}`} aria-hidden="true">
+      {marks.map((m) => (
+        <g>
+          <line class="tally-lead-under" x1={m.at[0]} y1={m.at[1]} x2={m.tip[0]} y2={m.tip[1]} />
+          <line class="tally-lead" x1={m.at[0]} y1={m.at[1]} x2={m.tip[0]} y2={m.tip[1]} />
+          <circle class="tally-dot" cx={m.tip[0]} cy={m.tip[1]} r="1.6" />
+          <circle class="tally-tag" cx={m.at[0]} cy={m.at[1]} r="6" />
+          <text x={m.at[0]} y={m.at[1]} dy="2.6">{m.n}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+  <figcaption class="tally-caption">{caption}</figcaption>
+</figure>
+<ol class="tally-legend" aria-label="Where each horn came from">
+  {legend.map((l) => <li><span class="tally-n">{l.n}</span>{l.label}</li>)}
+</ol>

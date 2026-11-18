@@ -1,18 +1,22 @@
 ---
-// A detail cropped from the Bearwolftriceratiger painting, like a museum close-up.
-// The crop is in the painting's own pixels (400 × 368); the browser zooms with background-size.
+// A detail cropped from a picture of the Beast, like a museum close-up.
+// The crop is in the image's own pixels; the browser zooms with background-size.
+import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
-import { relic } from '../data/beast';
+import type { Crop } from '../data/beast';
 
 interface Props {
-  crop: { x: number; y: number; w: number; h: number };
+  image: ImageMetadata;
+  crop: Crop;
   label: string;
   class?: string;
 }
-const { crop, label, class: cls } = Astro.props;
-const W = relic.image.width;
-const H = relic.image.height;
-const img = await getImage({ src: relic.image, width: W, format: 'webp', quality: 90 });
+const { image, crop, label, class: cls } = Astro.props;
+const W = image.width;
+const H = image.height;
+// Enough pixels for the crop at about 480px wide (a 240px detail on a 2x screen), never upscaled.
+const width = Math.min(W, Math.ceil((W / crop.w) * 480));
+const img = await getImage({ src: image, width, format: 'webp', quality: 90 });
 const pos = (at: number, size: number, full: number) => (size >= full ? 0 : (at / (full - size)) * 100);
 const style = [
   `aspect-ratio:${crop.w}/${crop.h}`,

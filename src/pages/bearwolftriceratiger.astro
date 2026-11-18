@@ -5,10 +5,13 @@ import BeastIcons from '../components/BeastIcons.astro';
 import BeastArt from '../components/BeastArt.astro';
 import BeastCrop from '../components/BeastCrop.astro';
 import BeastDance from '../components/BeastDance.astro';
+import BeastHornTally from '../components/BeastHornTally.astro';
+import BeastSightings from '../components/BeastSightings.astro';
 import '../styles/tempest.css';
 import '../styles/tempest-whimsy.css';
 import '../styles/tempest-art.css';
 import '../styles/tempest-dance.css';
+import '../styles/tempest-sightings.css';
 import { discordHref } from '../data/guild';
 import { keeper, born, roarText, relic, intro, tellings, epithets, fieldCard, four, laws, oath, details } from '../data/beast';
 
@@ -125,12 +128,13 @@ const titleParts = ['Bear', 'wolf', 'tricera', 'tiger'];
                 </figure>
               );
               if ('art' in b) return <BeastArt name={b.art} />;
+              if ('sightings' in b) return <BeastSightings />;
               if ('deed' in b) return (
                 <div class:list={['deed', { 'has-detail': b.detail }]}>
                   <div class="deed-text"><h3>{b.deed}</h3><p>{b.p}</p></div>
                   {b.detail && (
                     <figure class="deed-detail">
-                      <BeastCrop crop={b.detail.crop} label={b.detail.label} />
+                      <BeastCrop image={b.detail.image} crop={b.detail.crop} label={b.detail.label} />
                       <figcaption>{b.detail.caption}</figcaption>
                     </figure>
                   )}
@@ -143,6 +147,15 @@ const titleParts = ['Bear', 'wolf', 'tricera', 'tiger'];
                     : l}</p>)}
                   {b.cite && <cite>{b.cite}</cite>}
                 </blockquote>
+              );
+              if ('fact' in b) return (
+                <aside class:list={['fact', { 'has-tally': b.tally }]} aria-label="Did you know?">
+                  <div class="fact-text">
+                    <p class="fact-label"><span class="fact-burst">Did you <span>know?!</span></span></p>
+                    <p>{b.fact}</p>
+                  </div>
+                  {b.tally && <BeastHornTally />}
+                </aside>
               );
               if ('note' in b) return <p class="historian"><span class="historian-label">Historian’s note</span>{b.note}</p>;
               return <p>{b.p}</p>;
@@ -158,8 +171,8 @@ const titleParts = ['Bear', 'wolf', 'tricera', 'tiger'];
           <h2 id="field-title" class="telling-title">Know Your Beast</h2>
           <div class="field-grid">
           <figure class="field-photo">
-            <BeastCrop crop={details.head.crop} label={details.head.label} />
-            <figcaption>{details.head.caption}</figcaption>
+            <BeastCrop image={details.field.image} crop={details.field.crop} label={details.field.label} />
+            <figcaption>{details.field.caption}</figcaption>
           </figure>
           <dl class="field-rows">
             {fieldCard.map((r) => <div><dt>{r.label}</dt><dd>{r.value}</dd></div>)}

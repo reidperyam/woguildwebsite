@@ -255,6 +255,37 @@ petBtn?.addEventListener('click', (e) => {
   petBtn.classList.add('petted');
 });
 
+// ---------- The Sightings: witness statements ----------
+
+const statement = document.querySelector<HTMLDialogElement>('[data-statement-dialog]');
+const statementPages = [...document.querySelectorAll<HTMLElement>('[data-statement]')];
+const statementAt = document.querySelector<HTMLElement>('[data-statement-at]');
+let sightingAt = 0;
+
+function showSighting(i: number) {
+  if (!statement) return;
+  sightingAt = (i + statementPages.length) % statementPages.length;
+  statementPages.forEach((p, j) => { p.hidden = j !== sightingAt; });
+  statement.setAttribute('aria-labelledby', `statement-title-${sightingAt}`);
+  if (statementAt) statementAt.textContent = String(sightingAt + 1);
+  statement.scrollTop = 0;
+}
+
+document.querySelectorAll<HTMLButtonElement>('[data-sighting]').forEach((card) => card.addEventListener('click', () => {
+  if (!statement) return;
+  showSighting(Number(card.dataset.sighting));
+  statement.showModal();
+  thunder(0.25);
+}));
+document.querySelector('[data-statement-prev]')?.addEventListener('click', () => showSighting(sightingAt - 1));
+document.querySelector('[data-statement-next]')?.addEventListener('click', () => showSighting(sightingAt + 1));
+document.querySelector('[data-statement-close]')?.addEventListener('click', () => statement?.close());
+statement?.addEventListener('click', (e) => { if (e.target === statement) statement.close(); });
+statement?.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') showSighting(sightingAt - 1);
+  else if (e.key === 'ArrowRight') showSighting(sightingAt + 1);
+});
+
 // ---------- Awaken the Four ----------
 
 const totems = [...document.querySelectorAll<HTMLButtonElement>('[data-beast]')];

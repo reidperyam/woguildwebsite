@@ -1,0 +1,127 @@
+/* The Sightings (Telling VI): an evidence board of witness drawings pinned up under hazard tape,
+   and the witness statement dialog. Scoped under .tempest like tempest.css. */
+
+/* The board is wider than the saga's text column. */
+.tale:has(.sightings) { max-width: none; }
+.tale:has(.sightings) > p { max-width: 64ch; }
+
+.sightings { margin: var(--space-3) 0; border: 6px solid var(--s-yellow); background: var(--s-coal); }
+.board {
+  list-style: none; margin: 0; padding: clamp(24px, 4vw, 40px) clamp(16px, 3vw, 32px);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3vw, 32px) clamp(16px, 2.4vw, 28px);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 214, 10, 0.04), transparent 40%),
+    repeating-linear-gradient(-45deg, transparent 0 22px, rgba(255, 255, 255, 0.015) 22px 24px);
+}
+.sighting { display: flex; }
+/* Sighting I is pinned up large, with the other four in a block beside it. */
+.sighting:first-child { grid-column: span 2; grid-row: span 2; }
+
+/* ---------- The cards ---------- */
+.sighting-card {
+  all: unset; box-sizing: border-box; cursor: pointer; position: relative; flex: 1;
+  display: flex; flex-direction: column; gap: 6px; padding: 12px 12px 16px;
+  background: var(--s-bone); color: var(--s-black);
+  box-shadow: 6px 6px 0 var(--s-cloud);
+  transform: rotate(var(--tilt, -1.5deg));
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.sighting:nth-child(2) .sighting-card { --tilt: 1.8deg; }
+.sighting:nth-child(3) .sighting-card { --tilt: -2.2deg; }
+.sighting:nth-child(4) .sighting-card { --tilt: 1.2deg; }
+.sighting:nth-child(5) .sighting-card { --tilt: -1deg; }
+.sighting-card:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 10px 10px 0 var(--s-yellow-lo); }
+.sighting-card:focus-visible { outline: 4px solid var(--s-yellow); outline-offset: 6px; transform: rotate(0deg); }
+
+/* A strip of hazard tape holding each card to the board. */
+.sighting-tape {
+  position: absolute; top: -12px; left: 50%; width: 96px; height: 24px; translate: -50% 0; rotate: -4deg;
+  background: var(--hazard); opacity: 0.92; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+.sighting:nth-child(even) .sighting-tape { rotate: 5deg; left: 40%; }
+
+.sighting-no { font-family: var(--f-sign); font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--s-black); }
+.sighting-pic { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border: 3px solid var(--s-black); background: var(--s-storm); }
+.sighting-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sighting:first-child .sighting-pic { flex: 1; aspect-ratio: auto; min-height: 260px; }
+.sighting:first-child .sighting-pic img { position: absolute; inset: 0; }
+.sighting-title { margin-top: 4px; font-family: var(--f-sign); font-size: clamp(17px, 1.7vw, 20px); line-height: 1.1; text-transform: uppercase; }
+.sighting:first-child .sighting-title { font-size: clamp(22px, 2.6vw, 30px); }
+.sighting-meta { font-size: 13px; line-height: 1.4; font-style: italic; color: #4a4840; }
+.sighting-teaser { font-size: 14px; line-height: 1.45; }
+.sighting:not(:first-child) .sighting-teaser { display: none; }
+
+/* ---------- Verdict stamps ---------- */
+.stamp {
+  align-self: flex-start; display: inline-block; padding: 3px 10px;
+  font-family: var(--f-sign); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; line-height: 1.3;
+  border: 3px solid currentColor; rotate: -6deg;
+}
+.sighting-card .stamp { position: absolute; right: 8px; bottom: 10px; max-width: calc(100% - 16px); font-size: 11px; letter-spacing: 0.12em; white-space: nowrap; background: var(--s-bone); box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45); }
+.stamp-credible { color: var(--s-black); }
+.stamp-blurry { color: var(--s-black); border-style: dashed; }
+.stamp-most-accurate { color: var(--s-black); background: var(--s-yellow) !important; border-color: var(--s-black); box-shadow: 3px 3px 0 var(--s-black); }
+.statement .stamp { color: var(--s-yellow); border-color: var(--s-yellow); background: transparent; }
+.statement .stamp-most-accurate { color: var(--s-black); background: var(--s-yellow) !important; box-shadow: 3px 3px 0 var(--s-yellow-lo); }
+
+.board-hint { padding: 0 clamp(16px, 3vw, 32px) clamp(18px, 3vw, 28px); font-size: 15px; font-style: italic; color: var(--s-ash); }
+
+/* ---------- The witness statement ---------- */
+.statement {
+  width: min(940px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); padding: 0; overflow: auto;
+  border: 6px solid var(--s-yellow); background: var(--s-coal); color: var(--s-bone); font-family: var(--f-tale);
+}
+.statement::backdrop { background: rgba(0, 0, 0, 0.88); }
+.statement[open] { animation: statement-in 0.28s cubic-bezier(.2, .8, .3, 1); }
+@keyframes statement-in { from { opacity: 0; transform: translateY(18px) rotate(-1deg); } }
+.statement-close {
+  all: unset; box-sizing: border-box; cursor: pointer; position: absolute; top: 18px; right: 10px;
+  display: grid; place-items: center; width: 48px; height: 48px; color: var(--s-black);
+}
+.statement-close svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: square; }
+.statement-close:hover { color: var(--s-cloud); }
+.statement-close:focus-visible { outline: 4px solid var(--s-black); outline-offset: -6px; }
+.statement .placard-head { padding-right: 64px; }
+
+.statement-body { padding: clamp(20px, 3vw, 36px); }
+.statement-page { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: start; }
+.statement-page[hidden] { display: none; }
+.statement-pic { margin: 0; display: grid; place-items: center; }
+.statement-pic img {
+  display: block; width: auto; max-width: 100%; height: auto; max-height: min(64dvh, 620px);
+  border: 4px solid var(--s-yellow); box-shadow: 8px 8px 0 var(--s-cloud);
+}
+.statement-text { display: flex; flex-direction: column; gap: var(--space-2); font-size: 17px; line-height: 1.7; }
+.statement-title { font-family: var(--f-sign); font-weight: 400; font-size: clamp(28px, 3.6vw, 40px); line-height: 1; text-transform: uppercase; color: var(--s-yellow); }
+.statement-facts { margin: 0; border-top: 4px solid var(--s-yellow); }
+.statement-facts div { display: flex; justify-content: space-between; gap: var(--space-2); padding: 8px 0; border-bottom: 2px solid var(--s-cloud); }
+.statement-facts dt { font-family: var(--f-sign); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--s-yellow); }
+.statement-facts dd { margin: 0; text-align: right; font-weight: 700; font-size: 15px; }
+
+.statement-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: 0 clamp(20px, 3vw, 36px) clamp(20px, 3vw, 32px); }
+.statement-count { font-family: var(--f-sign); font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--s-ash); }
+
+@media (max-width: 900px) {
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sighting:first-child { grid-row: auto; }
+  .sighting:first-child .sighting-pic { flex: none; aspect-ratio: 4 / 3; min-height: 0; }
+}
+@media (max-width: 700px) {
+  .statement-page { grid-template-columns: minmax(0, 1fr); }
+  .statement-pic img { max-height: 46dvh; }
+}
+@media (max-width: 560px) {
+  /* Two small cards to a row on phones: picture, number and title only. */
+  .board { gap: 22px 14px; padding: 26px 14px 20px; }
+  .sighting-card { padding: 8px 8px 10px; gap: 4px; }
+  .sighting-no { font-size: 11px; letter-spacing: 0.16em; }
+  .sighting-title { font-size: 15px; }
+  .sighting:not(:first-child) .sighting-meta { display: none; }
+  .sighting-tape { width: 70px; height: 20px; top: -10px; }
+  .sighting-card .stamp { font-size: 9px; padding: 2px 6px; border-width: 2px; right: 5px; bottom: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sighting-card { transition: none; }
+  .statement[open] { animation: none; }
+}

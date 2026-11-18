@@ -92,7 +92,7 @@ Around the relics, the page also has new Cathedral copy, all in `src/data/lore.t
 
 ### Lore: The Saga of the Bearwolftriceratiger
 
-Styled as "The Storm", a primal black-and-bright-yellow thunderstorm (see BRAND.md, Beast sub-theme). The one real fact is the 2010 rename. Everything else is new mythology written in 2026, set down by Roadieoh, High Tauren Librarian, who also catalogued the Saint. The full text is in `src/data/beast.ts`, and the painting is `src/assets/beast/bearwolftriceratiger.jpg`.
+Styled as "The Storm", a primal black-and-bright-yellow thunderstorm (see BRAND.md, Beast sub-theme). The one real fact is the 2010 rename. Everything else is new mythology written in 2026, set down by Roadieoh, High Tauren Librarian, who also catalogued the Saint. The full text is in `src/data/beast.ts`, and the painting is `src/assets/beast/bearwolftriceratiger.jpg`. Every other picture of the Beast is a sighting, in `src/assets/beast/sightings/`, and appears on the page once.
 
 The myth: Blizzard is a storm. In the Year of the Blizzard (2010), a storm that judges names froze "Werewolf Orgasmahowl" and threw it into the Storm Sea. The pack's HAROOOO froze in the cold and shattered into four beasts (Bear, Wolf, Triceratops, Tiger), and lightning fused them into the Bearwolftriceratiger, whose first word was HAROOOARRR!
 
@@ -101,17 +101,26 @@ The myth: Blizzard is a storm. In the Year of the Blizzard (2010), a storm that 
 | I | The Blizzard | "That name is too wild to be spoken." A Historian's note gives the real 2010 rename. |
 | II | The Four Echoes | The growl became the Bear, the howl the Wolf, the bellow the Triceratops, the roar the Tiger |
 | III | The Rising | The painting (Specimen I, The Beast Rising from the Storm Sea). "HAROOOARRR!" (click it to hear the roar; it shakes while the Beast roars) |
-| IV | The Colors | Black for the storm; bright yellow for the lightning and the Tiger's eye |
+| IV | The Colors | Black for the storm; bright yellow for the lightning and the Wolf's eye |
 | V | The Deeds | The Night at the Stables · The Flag That Was Never Dropped · The Charge of the Three Horns |
-| VI | The Beast and the Saint | A lone orc on the ice, and the Beast knelt. Links to the Saint's page |
+| VI | The Sightings | The Storm Sea doesn't keep time, so the Beast has been seen for five hundred years, and no two witnesses agree (it grows a head for every flag it carries home). The evidence board, then a "Did you know?" factoid on why every sighting shows more than three horns (three of its own, then a new horn for every base captured in Arathi Basin and every flag returned or captured in Warsong Gulch, kept until dawn; "Some days it has over a hundred."), with a sighting marked up horn by horn: 6, 7 and 9 "Its own three", 1 "The Lumber Mill, captured in Arathi Basin", 2 "The Blacksmith, captured in Arathi Basin", 3 "The Farm, captured in Arathi Basin", 4 "A flag returned in Warsong Gulch", 5 "A flag captured in Warsong Gulch", 8 "Still growing. The night is young."; caption "Marked up by the Librarian. Nine horns by mid-afternoon: a quiet day.", then "bring the drawing to the Librarian" |
+| VII | The Beast and the Saint | A lone orc on the ice, and the Beast knelt. Links to the Saint's page |
 
 Around the Tellings, the page also has:
 - **The war dance:** while the war drums play, a scene rises from the bottom of the screen: six pack warriors dance in a ring around the Beast as it rears up, ending in a leap and a roar on the final hit.
 - **Hero:** BEWARE, "The saga of the BEAR WOLF TRICERA TIGER", "Four beasts. Three horns. One roar.", vitals (Born in the Year of the Blizzard (2010) · Guardian of the Pack · Black & Lightning), **Sound the war drums**, and the hint "Psst: click anywhere in the storm to call down lightning."
-- **Hazard tape:** nine names of the Beast, scrolling.
-- **Inline art:** Fig. I "The name, frozen solid and snapped from the banner.", drawn as the hot pink Werewolf Orgasmahowl tabard (Telling I); four painting details, "Where each of the four echoes lives on in the Beast." (the claw, the jaws, the horns, the hide; Telling II); Fig. II "The tabard the storm left behind.", the real Bearwolftriceratiger tabard, with swatches "Black for the storm that took the old name" and "Bright yellow for the lightning, and the Tiger's eye" (Telling IV); Fig. III "On the night of the Blizzard, the Beast kneels." (Telling VI). Each deed has a detail beside it: "The armored chest", "Whose legs?", "One, two, three". The field card has an ID photo, "Specimen I, detail". The Beast's silhouette sigil sits behind the hero title and above the closing cry.
+- **Hazard tape:** ten names of the Beast, scrolling.
+- **Inline art:** Fig. I "The name, frozen solid and snapped from the banner.", drawn as the hot pink Werewolf Orgasmahowl tabard (Telling I); four details (the Bear's claw, the Wolf's eye from Sighting IV, the Triceratops's horns and the Tiger's jaws from a painting of seven leopard heads), "Where each of the four echoes lives on in the Beast, as the witnesses saw it." (Telling II); Fig. II "The tabard the storm left behind.", the real Bearwolftriceratiger tabard, with swatches "Black for the storm that took the old name" and "Bright yellow for the lightning, and the Wolf's eye" (Telling IV); Fig. III "On the night of the Blizzard, the Beast kneels." (Telling VII). Each deed has a detail from another sighting beside it: "Facing all five" (the red, many-headed beast), "Who carried whom?" (a pile of horned heads carrying a rider), "One, two, three" (a pen drawing of a maned head under a crown of horns). The field card's ID photo is the red beast stepping out of the sea, "Field photograph". The Beast's silhouette sigil sits behind the hero title and above the closing cry.
 - **Warning placard:** "Read before approaching the Beast", the proem, signed "Set down by Roadieoh, High Tauren Librarian".
-- **Know Your Beast:** a field card (horns, beasts inside, stripes, habitat, diet, temperament, danger: EXTREME).
+- **The Sightings (Telling VI):** an evidence board, "Evidence: sightings of the Beast". Click a card for the witness statement. Oldest first:
+  | No. | Title | Witness · When | Heads counted | Verdict |
+  |---|---|---|---|---|
+  | I | The Nuremberg Woodcut | An engraver in Nuremberg · 1498 | Seven, all crowned | Credible |
+  | II | The Gilded Page | A painter of illuminated books · Some years later | Seven, crowns counted separately | Credible |
+  | III | The Charge | A painter caught in the spray · Mid-charge | At least four, all roaring | Blurry |
+  | IV | The Scarlet Seven | A painter with only red paint · One red evening | Seven, every one of them open | Credible |
+  | V | The Pamphlet | Whoever nailed it to the inn door · Last week | Seven, all with manes | Most accurate |
+- **Know Your Beast:** a field card (horns: "Three, plus one for every base and flag (100+ on a good day)", heads: "Anywhere from one to seven (witnesses disagree)", beasts inside, stripes, habitat, diet, temperament, danger: EXTREME).
 - **Awaken the Four:** "The four echoes still sleep inside the Beast. Wake all four, and the storm may grant a fusion." When all four are awake: "Fusion! The Beast is whole. HAROOOARRR!" Then **Let them sleep**.
 - **The Laws of the Pack:** the recruitment expectations, plus "Never hold two."
 - **The Oath of the Charge:** four lines, one per beast, ending in a giant clickable HAROOOARRR! and "So roars the pack."

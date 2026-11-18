@@ -1,0 +1,63 @@
+---
+// The Sightings (Telling VI): an evidence board of the Beast as other people have drawn it.
+// Each card opens the witness statement in a dialog; beast.ts drives it. Styles in
+// src/styles/tempest-sightings.css. Data in src/data/beast.ts.
+import { Image } from 'astro:assets';
+import { sightings } from '../data/beast';
+
+const stampClass = (v: string) => v.toLowerCase().replace(/[^a-z]+/g, '-');
+---
+
+<div class="sightings">
+  <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Evidence: sightings of the Beast</p>
+  <ol class="board">
+    {sightings.map((s, i) => (
+      <li class="sighting">
+        <button type="button" class="sighting-card" data-sighting={i} aria-haspopup="dialog" aria-label={`Sighting ${s.numeral}: ${s.title}. Read the witness statement.`}>
+          <span class="sighting-tape" aria-hidden="true"></span>
+          <span class="sighting-no">Sighting {s.numeral}</span>
+          <span class="sighting-pic">
+            <Image src={s.image} alt="" width={Math.min(s.image.width, i === 0 ? 640 : 420)} style={s.focus ? `object-position:${s.focus}` : undefined} />
+            <span class:list={['stamp', `stamp-${stampClass(s.verdict)}`]}>{s.verdict}</span>
+          </span>
+          <span class="sighting-title">{s.title}</span>
+          <span class="sighting-meta">{s.witness}, {s.when.charAt(0).toLowerCase() + s.when.slice(1)}</span>
+          <span class="sighting-teaser">{s.teaser}</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+  <p class="board-hint">Click a sighting to read the witness statement.</p>
+
+  <dialog class="statement" data-statement-dialog aria-labelledby="statement-title-0">
+    <p class="placard-head"><svg aria-hidden="true"><use href="#bw-warn" /></svg>Witness statement</p>
+    <button type="button" class="statement-close" data-statement-close aria-label="Close the statement">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 19 19 M19 5 5 19" /></svg>
+    </button>
+    <div class="statement-body">
+      {sightings.map((s, i) => (
+        <article class="statement-page" data-statement={i} hidden>
+          <figure class="statement-pic">
+            <Image src={s.full ?? s.image} alt={s.alt} width={Math.min((s.full ?? s.image).width, 760)} loading="lazy" />
+          </figure>
+          <div class="statement-text">
+            <p class="plaque">Sighting {s.numeral}</p>
+            <h3 id={`statement-title-${i}`} class="statement-title">{s.title}</h3>
+            <dl class="statement-facts">
+              <div><dt>Witness</dt><dd>{s.witness}</dd></div>
+              <div><dt>When</dt><dd>{s.when}</dd></div>
+              <div><dt>Heads counted</dt><dd>{s.heads}</dd></div>
+            </dl>
+            <p>{s.statement}</p>
+            <span class:list={['stamp', `stamp-${stampClass(s.verdict)}`]}>{s.verdict}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="statement-nav">
+      <button type="button" class="beast-btn ghost small" data-statement-prev>Previous</button>
+      <span class="statement-count" aria-live="polite"><span data-statement-at>1</span> of {sightings.length}</span>
+      <button type="button" class="beast-btn ghost small" data-statement-next>Next</button>
+    </div>
+  </dialog>
+</div>

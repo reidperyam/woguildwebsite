@@ -1,5 +1,5 @@
 ---
-// Inline art for the Bearwolftriceratiger saga: details cropped from the painting, and black-and-
+// Inline art for the Bearwolftriceratiger saga: details cropped from the sightings, and black-and-
 // yellow illustrations drawn in its likeness. Each Telling places one with an { art } block.
 import { Image } from 'astro:assets';
 import BeastCrop from './BeastCrop.astro';
@@ -59,13 +59,13 @@ const crack = '330,46 316,78 338,104 320,134 342,174';
     <div class="echoes">
       {details.four.map((d) => (
         <div class="echo">
-          <BeastCrop crop={d.crop} label={d.label} />
+          <BeastCrop image={d.image} crop={d.crop} label={d.label} />
           <span class="echo-name"><svg aria-hidden="true"><use href={`#bw-${d.id}`} /></svg>{d.name}</span>
           <span class="echo-part">{d.part}</span>
         </div>
       ))}
     </div>
-    <figcaption><span class="plaque">Details</span>Where each of the four echoes lives on in the Beast.</figcaption>
+    <figcaption><span class="plaque">Details</span>Where each of the four echoes lives on in the Beast, as the witnesses saw it.</figcaption>
   </figure>
 )}
 
@@ -77,7 +77,7 @@ const crack = '330,46 316,78 338,104 320,134 342,174';
     </div>
     <div class="swatches">
       <div class="swatch"><span class="chip-black"></span><span><b>Black</b> for the storm that took the old name</span></div>
-      <div class="swatch"><span class="chip-yellow"></span><span><b>Bright yellow</b> for the lightning, and the Tiger’s eye</span></div>
+      <div class="swatch"><span class="chip-yellow"></span><span><b>Bright yellow</b> for the lightning, and the Wolf’s eye</span></div>
     </div>
     <figcaption><span class="plaque">Fig. II</span>The tabard the storm left behind.</figcaption>
   </figure>

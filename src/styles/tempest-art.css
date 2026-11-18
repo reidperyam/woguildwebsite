@@ -76,11 +76,14 @@
   .echoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .art-banner { grid-template-columns: minmax(0, 1fr); justify-items: start; }
   .art-banner .tabard-relic { max-width: 240px; }
-  .deed.has-detail, .deed:nth-of-type(even).has-detail { grid-template-columns: minmax(0, 1fr); }
-  .deed-detail { max-width: 220px; }
-  .deed:nth-of-type(even).has-detail .deed-detail { order: 0; }
-  .field-grid { grid-template-columns: minmax(0, 1fr); }
-  .field-photo { max-width: 200px; }
+  .echoes { gap: var(--space-2); }
+  /* Details stay beside their deed, small, instead of stacking under it. */
+  .deed.has-detail { grid-template-columns: minmax(0, 1fr) 110px; gap: var(--space-2); }
+  .deed:nth-of-type(even).has-detail { grid-template-columns: 110px minmax(0, 1fr); }
+  .deed-detail figcaption { font-size: 13px; }
+  .field-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  .field-photo { max-width: 150px; }
+  .field-photo figcaption { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
