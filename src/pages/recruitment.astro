@@ -1,14 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RecruitCard from '../components/RecruitCard.astro';
+import FaqList from '../components/FaqList.astro';
 import { Image } from 'astro:assets';
 import { guild } from '../data/guild';
+import { launch } from '../data/launch';
 import { tabards } from '../data/tabards';
 ---
 
 <BaseLayout
-  title="Recruitment"
-  description={`${guild.name} is recruiting every class and spec for ${guild.recruiting.bracket} battlegrounds. ${guild.faction}, ${guild.game}, ${guild.region}.`}
+  title={`${guild.recruiting.bracket} ${guild.gameShort} PvP Recruitment`}
+  description={`Join a ${guild.faction} ${guild.recruiting.bracket} PvP guild in ${guild.gameShort}, ${guild.region}. Every class and spec welcome. Join the Discord, post in #applications, no trial.`}
   image="/og-recruitment.png"
   imageAlt={`Recruiting for ${guild.recruiting.bracket} battlegrounds: every class, every spec, ${guild.faction}, NA. Join the Discord, apply, no trial. woguild.org/recruitment`}
 >
@@ -41,6 +43,23 @@ import { tabards } from '../data/tabards';
       </div>
     </section>
 
+    {guild.recruiting.open && (
+      <section aria-labelledby="about-title">
+        <div class="section-head">
+          <h2 id="about-title">Who we are</h2>
+          <span class="label">Founded {guild.founded}</span>
+        </div>
+        <div class="prose">
+          {guild.recruiting.about.map((p) => <p>{p}</p>)}
+          <p>Our first guild run is {launch.dateLabel} at {launch.time}.</p>
+        </div>
+        <div class="btn-row section-actions">
+          <a class="btn btn-secondary" href={launch.path}>Get launch ready</a>
+          <a class="btn btn-secondary" href="/archive">See our history</a>
+        </div>
+      </section>
+    )}
+
     <section id="apply" aria-labelledby="apply-title">
       <div class="section-head">
         <h2 id="apply-title">How to apply</h2>
@@ -55,11 +74,19 @@ import { tabards } from '../data/tabards';
           </li>
         ))}
       </ol>
-      <div class="btn-row apply-row">
+      <div class="btn-row section-actions">
         {guild.discordUrl
           ? <a class="btn btn-primary" href={guild.discordUrl}>Apply on Discord</a>
           : <span class="chip chip-off">[DISCORD INVITE] coming soon</span>}
       </div>
+    </section>
+
+    <section aria-labelledby="questions-title">
+      <div class="section-head">
+        <h2 id="questions-title">Before you apply</h2>
+        <span class="label">Common questions</span>
+      </div>
+      <FaqList items={guild.faq.filter((item) => item.recruit)} />
     </section>
   </div>
 </BaseLayout>
@@ -82,7 +109,7 @@ import { tabards } from '../data/tabards';
   .steps { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); }
   .steps li { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4) var(--space-3); }
   .num { font-size: clamp(48px, 6vw, 72px); font-weight: var(--fw-heavy); line-height: 1; color: var(--accent); letter-spacing: -0.04em; }
-  .apply-row { margin-top: var(--space-4); }
+  .section-actions { margin-top: var(--space-4); }
 
   @media (max-width: 960px) {
     .split { grid-template-columns: minmax(0, 1fr); }

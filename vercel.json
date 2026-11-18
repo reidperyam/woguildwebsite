@@ -1,4 +1,5 @@
 {
+  "trailingSlash": false,
   "redirects": [
     { "source": "/discord", "destination": "https://discord.gg/5BcZaaEhcG", "permanent": false }
   ]

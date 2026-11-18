@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { guild } from '../data/guild';
 ---
 
-<BaseLayout title="Page not found" description="This page went to grab THREE and never came back.">
+<BaseLayout title="Page not found" description="This page went to grab THREE and never came back." noindex>
   <div class="wrap page lost">
     <p class="label">404 · Page not found</p>
     <h1 class="display accent">{guild.battleCry}</h1>

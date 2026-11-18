@@ -4,6 +4,8 @@
 export const guild = {
   name: 'Werewolf Orgasmahowl',
   game: 'World of Warcraft Forever',
+  gameShort: 'WoW Forever', // what players type into search; used in page titles and descriptions
+  founded: '2009',
   region: 'North America',
   faction: 'Horde',
   focus: 'Low-level Battlegrounds',
@@ -14,7 +16,7 @@ export const guild = {
   discordUrl: 'https://discord.gg/5BcZaaEhcG', // never expires; also in vercel.json for the /discord short link
 
   about: [
-    '<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever.',
+    '<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever (WoW Forever).',
     'The guild was originally founded in 2009.',
   ],
 
@@ -22,6 +24,10 @@ export const guild = {
     open: true,
     bracket: 'Level 39',
     summary: 'We are recruiting for Level 39 battlegrounds. Every class. Every spec. If you want to run 39s with us, we want to hear from you.',
+    about: [
+      '<WO> is a Horde PvP guild in World of Warcraft Forever (WoW Forever), North America. We do low-level battlegrounds and nothing else: no raids, and no realm to pick.',
+      'Fully geared twink or still climbing to 39, you can apply. Bring any class and any spec.',
+    ],
     rows: [
       { label: 'Bracket', value: 'Level 39' },
       { label: 'Classes', value: 'All' },
@@ -38,7 +44,7 @@ export const guild = {
     { title: 'Apply in the Discord', text: 'Post in #applications with your character name and a little about yourself. That’s it. No trial, no hoops.' },
   ],
 
-  // Home page FAQ. A link is optional and shows after the answer.
+  // Home page FAQ. A link is optional and shows after the answer. `recruit` also shows the question on Recruitment.
   faq: [
     {
       q: 'What is Werewolf Orgasmahowl?',
@@ -47,18 +53,22 @@ export const guild = {
     {
       q: 'Does <WO> Raid?',
       a: 'No. We do low-level PvP in battlegrounds, and nothing else. There is no raid schedule and there never will be.',
+      recruit: true,
     },
     {
       q: 'Which bracket does <WO> play?',
       a: 'We are recruiting for Level 39 battlegrounds at this time.',
+      recruit: true,
     },
     {
       q: 'What class or spec should I bring?',
       a: 'Anything. We take every class and every spec.',
+      recruit: true,
     },
     {
       q: 'Which realm are you on?',
       a: 'None. World of Warcraft Forever has no realms. You just need a Horde character in North America.',
+      recruit: true,
     },
     {
       q: 'What is a Bearwolftriceratiger?',
@@ -68,14 +78,17 @@ export const guild = {
     {
       q: 'Do I need a fully geared twink?',
       a: 'How much people want to invest into their character is up to them. While the guild will make accommodations to help, the expectation is that each player funds and gears their own character.',
+      recruit: true,
     },
     {
       q: 'When do you queue?',
       a: 'Whenever people are available. We are not running premades (yet), so the model is grouping with a few friends to carry the rest of the pickup group, just as Saint Hornatius Orgasmahowl always did!',
+      recruit: true,
     },
     {
       q: 'Do I need to be on voice chat?',
       a: 'Voice chat and Discord are optional, but fun ways for us to play together.',
+      recruit: true,
     },
     {
       q: 'What kind of player fits in here?',
@@ -96,8 +109,10 @@ export const guild = {
       a: 'It is our battle cry, first cried by Saint Hornatius Orgasmahowl himself. You can make your own in the Howl Lab.',
       link: { href: '/howl-lab', label: 'Open the Howl Lab' },
     },
-  ] as { q: string; a: string; link?: { href: string; label: string } }[],
+  ] as { q: string; a: string; link?: { href: string; label: string }; recruit?: boolean }[],
 };
 
 export const discordHref = guild.discordUrl || '/recruitment#apply';
 export const factsLine = [guild.region, guild.faction, guild.focus].join(' · ');
+// The home page's title in search results.
+export const homeTitle = `${guild.name}: ${guild.recruiting.bracket} ${guild.faction} PvP Guild in ${guild.gameShort}`;

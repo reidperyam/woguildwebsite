@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
-import { guild } from '../data/guild';
+import { guild, homeTitle } from '../data/guild';
 // Vercel Speed Insights: real-visitor performance metrics. Only reports on Vercel deployments.
 import SpeedInsights from '@vercel/speed-insights/astro';
 
@@ -22,7 +22,8 @@ const imageAlt = Astro.props.image
   : `${guild.name}: a ${guild.faction} guild in ${guild.game}, ${guild.region}. Now recruiting for ${guild.recruiting.bracket} battlegrounds, all classes and specs. woguild.org`;
 // Previews need absolute URLs; `site` in astro.config.mjs supplies the origin.
 const imageUrl = image && new URL(image, Astro.site).href;
-const fullTitle = title ? `${title} · ${guild.name}` : guild.name;
+const fullTitle = title ? `${title} · ${guild.name}` : homeTitle;
+const pageUrl = new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site).href;
 ---
 
 <!doctype html>
@@ -33,12 +34,12 @@ const fullTitle = title ? `${title} · ${guild.name}` : guild.name;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={pageUrl} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={guild.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site).href} />
+    <meta property="og:url" content={pageUrl} />
     {imageUrl && (
       <>
         <meta property="og:image" content={imageUrl} />

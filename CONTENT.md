@@ -27,7 +27,7 @@ Nav: HOME · RECRUITMENT · LAUNCH (signal yellow, with a blinking pink square) 
 
 1. **Hero:** stacked wordmark <WEREWOLF / ORGASMAHOWL> (pink < and white >), then the line `WORLD OF WARCRAFT FOREVER · NORTH AMERICA · HORDE · LOW-LEVEL BATTLEGROUNDS`, the tagline "A PvP guild for enjoyers of lower-level PvP in World of Warcraft Forever", and the buttons **JOIN THE DISCORD** (primary) and **SEE RECRUITMENT** (secondary).
 2. **Launch strip:** a pink-bordered link to `/launch`: BLAST OFF, "Tuesday, March 23, 2027 · 8 PM ET", "The first <WO> guild run", and a live day count to liftoff ("127 days to go").
-3. **About:** "<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever." and "The guild was originally founded in 2009.", next to a facts box (game, region, faction, focus, recruiting status).
+3. **About:** "<WO> is a collective of like-minded PvPers focused on lower-level battlegrounds in World of Warcraft Forever (WoW Forever)." and "The guild was originally founded in 2009.", next to a facts box (game, region, faction, focus, recruiting status).
 4. **Our history** ("Three tabards, one pack"): three cells, each with a tabard. 2009 · Founded as Werewolf Orgasmahowl (the original hot pink tabard, with a teal edge and a yellow chevron pointing up: "Hot pink, teal and yellow. The original pack.") · 2010 · Renamed Bearwolftriceratiger ("Blizzard's naming rules forced a new name, and the guild became the Beast, in black and bright yellow.", with READ THE SAGA) · Now · Werewolf Orgasmahowl again (the current tabard, silver-gray with a black edge and a black chevron: "The original name is back, now in World of Warcraft Forever, just with a <WO> guild name."). Hovering, focusing or tapping a cell inverts it and shows READING THE BANNER: what each of the tabard's colors and its chevron stand for in the guild mythos (for example, the 2009 hot pink lets the Alliance see the pack coming, its yellow is the Saint's halo, the 2010 yellow is the lightning that fused the four beasts, today's silver is the full moon). A HOVER TO READ THE BANNER hint (TAP on touch screens) sits on each cell. Copy, including the meanings, in `src/data/tabards.ts`.
 5. **FAQ** (`#faq`, "Before you queue"): thirteen questions as expandable rows, answers in `guild.faq`. What is Werewolf Orgasmahowl? · Does <WO> Raid? (no, never) · Which bracket does <WO> play? (Level 39) · What class or spec? (any) · Which realm? (none: the game has no realms) · What is a Bearwolftriceratiger? (the 2010 rename; links to its saga) · Do I need a fully geared twink? (investment is up to each player, who funds and gears their own character; the guild will help where it can) · When do you queue? (whenever people are available; no premades yet, just a few friends carrying the pickup group) · Do I need to be on voice chat? (optional, but fun) · What kind of player fits in here? (the recruitment expectations) · How do I join? (join the Discord, answer the welcome questions, post in #applications, no trial; links to How to apply) · Who is Saint Hornatius Orgasmahowl? (links to the Lore) · What does HAROOOO mean? (links to the Howl Lab).
 6. **Saint teaser:** the Warsong Gulch relic image, "THE LIFE OF SAINT HORNATIUS ORGASMAHOWL", one line, and a link: READ THE LORE.
@@ -39,7 +39,9 @@ Nav: HOME · RECRUITMENT · LAUNCH (signal yellow, with a blinking pink square) 
 2. **RecruitCard:** rows BRACKET · LEVEL 39, CLASSES · ALL, SPECS · ALL, with the footer "Focus · Low-level Battlegrounds".
 3. **What we expect:** Play to win, not to farm kills. Supportive teamwork. Play to have fun.
 4. **What you get:** Objective-driven teammates. Friends in queue. Fun++.
-5. **How to apply** ("Two steps"): 1. **Join the Discord** ("Use the invite and answer the quick welcome questions: your class, your spec and how close you are to 39."). 2. **Apply in the Discord** ("Post in #applications with your character name and a little about yourself. That’s it. No trial, no hoops."). Then the **APPLY ON DISCORD** button.
+5. **Who we are** ("Founded 2009", shown while recruiting is open): "<WO> is a Horde PvP guild in World of Warcraft Forever (WoW Forever), North America. We do low-level battlegrounds and nothing else: no raids, and no realm to pick." "Fully geared twink or still climbing to 39, you can apply. Bring any class and any spec." "Our first guild run is Tuesday, March 23, 2027 at 8 PM ET." Buttons: **GET LAUNCH READY** and **SEE OUR HISTORY**.
+6. **How to apply** ("Two steps"): 1. **Join the Discord** ("Use the invite and answer the quick welcome questions: your class, your spec and how close you are to 39."). 2. **Apply in the Discord** ("Post in #applications with your character name and a little about yourself. That’s it. No trial, no hoops."). Then the **APPLY ON DISCORD** button.
+7. **Before you apply** ("Common questions"): the home page FAQ items marked `recruit` in `guild.faq`: raiding, bracket, class or spec, realm, twink gear, when we queue and voice chat.
 
 ### Howl Lab (Fun menu)
 
@@ -146,6 +148,20 @@ Styled as "The Vault", a film archive and reading room (see BRAND.md, Archive su
 | 004 | The Premade Rolls Out ("Single file, in the original pink") | 2009 | A tauren in the original tabard leading a single-file line of the pack up a road in the rain |
 | 005 | Horde Wins Again ("Another premade in Warsong Gulch. Another win.") | 2009 | A second scoreboard: Horde Wins, 10 vs. 10, 25 minutes; "Badonkadonk captured the Alliance flag!" |
 | 006 | One Minute to Go ("In the Warsong Gulch flag room, before the gates open") | 2009 | Tauren in the original tabard waiting in the Horde flag room; nameplates Dawg, Banditkeith, Therewolf <Werewolf Orgasmahowl>; Therewolf is a Level 39 Tauren Shaman |
+
+## Search
+
+Each page's `title` and `description` in its `BaseLayout` call are what search results show, so they use the words players search for ("Level 39", "PvP guild", "WoW Forever"). Keep titles to about 60 characters with the guild name and descriptions to about 155. The home title is `homeTitle` in `src/data/guild.ts`.
+
+| Page | Title |
+|---|---|
+| Home | Werewolf Orgasmahowl: Level 39 Horde PvP Guild in WoW Forever |
+| Recruitment | Level 39 WoW Forever PvP Recruitment · Werewolf Orgasmahowl |
+| Launch | Level 39 PvP Guild Launch: March 23 · Werewolf Orgasmahowl |
+| Lore | Lore: The Life of Saint Hornatius · Werewolf Orgasmahowl |
+| Bearwolftriceratiger | The Bearwolftriceratiger · Werewolf Orgasmahowl |
+| Archive | The Archive: Guild History · Werewolf Orgasmahowl |
+| Howl Lab | Howl Lab: Make Your Own HAROOOO · Werewolf Orgasmahowl |
 
 ## Link previews
 
