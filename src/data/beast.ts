@@ -184,12 +184,12 @@ export const tellings: Telling[] = [
     id: 'blizzard',
     title: 'The Blizzard',
     blocks: [
-      { p: 'In the Year of the Blizzard, a great storm rolled in from the far country of the Name-Keepers. It was the coldest storm the pack had ever seen, and it had only one purpose: to judge names.' },
-      { p: 'The storm came upon the banner of Werewolf Orgasmahowl, flapping proudly over the battlegrounds, and it stopped. It read the name once. It read it again, slower. Then it froze the name solid, snapped it off the banner and flung it into the Storm Sea.' },
+      { p: 'In the Year of the Storm, a Blizzard rolled in from the far country of the Name-Keepers. It was the coldest storm the pack had ever seen, and it had only one purpose: to judge names.' },
+      { p: 'The Blizzard came upon the banner of Werewolf Orgasmahowl, flapping proudly over the battlegrounds, and it stopped. It read the name once. It read it again, slower. Then it froze the name solid, snapped it off the banner and flung it into the Storm Sea.' },
       { art: 'frozen-name' },
       { quote: ['That name is too wild to be spoken.'], cite: 'The Blizzard' },
-      { p: 'And the pack stood on the shore with a bare pole and no name at all.' },
-      { note: 'Historians record that in 2010 the guild was made to change its name to satisfy Blizzard’s naming rules. The storm-singers prefer this version.' },
+      { p: 'And the pack stood with no name at all.' },
+      { note: 'Historians record that in 2010 the guild was made to change its name to satisfy Blizzard’s naming rules.' },
     ],
   },
   {
@@ -235,7 +235,7 @@ export const tellings: Telling[] = [
     id: 'deeds',
     title: 'The Deeds',
     blocks: [
-      { p: 'The storm-singers keep many reports of the Beast in battle. These three are told most often.' },
+      { p: 'Many reports of the Beast in battle have reached the Library. These three are told most often.' },
       { deed: 'The Night at the Stables', p: 'Five of the Alliance came to take the Stables, and the Beast was alone. The Bear took one, the Wolf took one, the Triceratops took one, the Tiger took one, and the fifth looked at the three horns and walked back to the Blacksmith on his own.', detail: { image: redHeads, crop: { x: 40, y: 70, w: 210, h: 235 }, label: 'Detail of a sighting: a red beast with heads snarling in every direction.', caption: 'Facing all five' } },
       { deed: 'The Flag That Was Never Dropped', p: 'The Tiger in the Beast carried the flag across the whole of the Gulch while the Bear in the Beast carried the Tiger. Nobody is sure whose legs were doing the running. The flag was captured all the same.', detail: { image: riderWine, crop: { x: 10, y: 130, w: 236, h: 170 }, label: 'Detail of a sighting: a pile of horned, spotted heads carrying someone in purple on their backs.', caption: 'Who carried whom?' } },
       { deed: 'The Charge of the Three Horns', p: 'Asked why it would not settle for two bases, the Beast lowered its head and showed its horns. One for the Lumber Mill. One for the Stables. One for the Blacksmith. Then it went and took all three.', detail: { image: riderSketch, crop: { x: 275, y: 105, w: 180, h: 180 }, label: 'Detail of a sighting, in pen: a roaring, maned head under a tall crown of horns.', caption: 'One, two, three' } },
@@ -247,7 +247,7 @@ export const tellings: Telling[] = [
     title: 'The Sightings',
     blocks: [
       { p: 'The Storm Sea does not keep time the way we do. When the Beast rose from it in the Year of the Blizzard, it rose everywhere and everywhen at once, and for five hundred years people have looked up from their work and seen it. The brave ones drew what they saw.' },
-      { p: 'No two witnesses agree. One counts seven heads and another counts one. One swears it was spotted, another that it was red. The storm-singers say the answer is simple: the Beast grows a new head for every flag it carries home, and nobody ever sees it on the same night twice. I have pinned up every sighting I could find.' },
+      { p: 'No two witnesses agree. One counts seven heads and another counts one. One swears it was spotted, another that it was red. The answer is simple: the Beast grows a new head for every flag it carries home, and nobody ever sees it on the same night twice. I have pinned up every sighting I could find.' },
       { sightings: true },
       { fact: 'The Beast has only three horns of its own, one for each base the Triceratops was taught to grab. The rest it earns. Every base the pack captures in Arathi Basin grows it a new horn, and so does every flag returned or captured in Warsong Gulch, and none of them fall off until dawn. That is why no witness has ever drawn it with just three: nobody has ever seen the Beast on a quiet night. Some days it has over a hundred.', tally: true },
       { p: 'If you see the Beast yourself, do not approach it. Draw it from a safe distance and bring the drawing to the Librarian.' },
@@ -259,7 +259,7 @@ export const tellings: Telling[] = [
     title: 'The Beast and the Saint',
     blocks: [
       { p: 'Some say the Bearwolftriceratiger is the mount of Saint Hornatius Orgasmahowl himself. Others say it is the Saint’s own HAROOOO, given claws and set loose on the world.' },
-      { p: 'The oldest storm-singers tell it another way. On the night of the Blizzard, they say, a lone orc was seen far out on the ice with his arms raised to the lightning. And when the Beast rose from the sea, the very first thing it did was kneel.' },
+      { p: 'The oldest wolves in the pack tell it another way. On the night of the Blizzard, they say, a lone orc was seen far out on the ice with his arms raised to the lightning. And when the Beast rose from the sea, the very first thing it did was kneel.' },
       { art: 'saint-on-ice' },
       { p: 'Whatever the truth, nobody disputes that the Beast always grabs three. Somebody taught it that.' },
     ],
@@ -299,7 +299,7 @@ export const four = [
 
 export const laws = [
   { law: 'Play to win, not to farm kills.', gloss: 'The Beast does not stop to chew. It takes the base.' },
-  { law: 'Back up your packmates.', gloss: 'Four beasts became one body. No limb fights alone.' },
+  { law: 'Support the Pack.', gloss: 'Four beasts became one body. No limb fights alone.' },
   { law: 'Play to have fun.', gloss: 'The Beast roars because it is having a wonderful time.' },
   { law: 'Never hold two.', gloss: 'There are three horns for a reason.' },
 ];
