@@ -216,7 +216,7 @@ export const tellings: Telling[] = [
       { relic: true },
       { p: 'What came out of the waves was one beast. It wore a crown of three horns. It had the claws of the Bear, the eye of the Wolf, the frill of the Triceratops and the jaws of the Tiger. It raised its head into the storm and roared, and the roar was the old HAROOOO come back again, only much, much bigger.' },
       { quote: ['HAROOOARRR!'], cite: 'The Bearwolftriceratiger, its first word', roar: true },
-      { p: 'The pack on the shore did not need to be told. They had their name back. It was simply longer now.' },
+      { p: 'The pack on the shore knew at once: they would be named for the stunning Beast from the sea!' },
     ],
   },
   {
