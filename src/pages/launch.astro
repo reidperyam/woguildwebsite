@@ -44,7 +44,7 @@ const tape = [...launch.tape, ...launch.tape];
       <div class="pad" aria-hidden="true">
         <p class="callout" data-callout></p>
         <div class="flight"><Rocket class="hero-rocket" /></div>
-        <div class="smoke">{Array.from({ length: 7 }, (_, i) => <span style={`--i:${i}`}></span>)}</div>
+        <div class="smoke">{Array.from({ length: 7 }, (_, i) => <span style={`--i:${i};--row:${i % 3}`}></span>)}</div>
         <div class="gantry"></div>
         <p class="pad-label label">39 Battlegrounds · {launch.shortDate}</p>
       </div>
@@ -230,15 +230,17 @@ const tape = [...launch.tape, ...launch.tape];
   .gantry { width: 100%; height: var(--rule-heavy); background: var(--ink); }
   .pad-label { margin-top: var(--space-1); align-self: flex-start; }
   .smoke { position: absolute; left: 0; right: 0; bottom: calc(var(--rule-heavy) + 30px); height: 0; z-index: 3; pointer-events: none; }
+  /* Smoke: solid square puffs in white and two grays (white at lower strength), billowing out and up, then fading. */
   .smoke span {
     position: absolute; left: calc(50% - 28px); bottom: 0; width: 56px; height: 56px;
-    background: var(--ground); border: var(--rule) solid var(--ink); opacity: 0;
+    background: var(--ink); opacity: 0;
+    --peak: calc(1 - var(--row) * 0.28);
   }
   :global(html.liftoff) .smoke span { animation: smoke 2.6s cubic-bezier(.2, .7, .3, 1) forwards; animation-delay: calc(var(--i) * 40ms); }
   @keyframes smoke {
-    0% { opacity: 1; transform: translate(0, 0) scale(0.4) rotate(0); }
-    60% { opacity: 1; }
-    100% { opacity: 0; transform: translate(calc((var(--i) - 3) * 70px), calc(-20px - (var(--i) % 3) * 36px)) scale(2) rotate(calc((var(--i) - 3) * 25deg)); }
+    0% { opacity: var(--peak); transform: translate(0, 0) scale(0.3) rotate(0deg); }
+    45% { opacity: var(--peak); }
+    100% { opacity: 0; transform: translate(calc((var(--i) - 3) * 64px), calc(-30px - var(--row) * 48px)) scale(2.4) rotate(calc((var(--i) - 3) * 20deg)); }
   }
   .callout {
     position: absolute; top: 0; left: 0; right: 0; z-index: 4; text-align: center;
