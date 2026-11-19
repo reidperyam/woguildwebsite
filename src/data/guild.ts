@@ -35,7 +35,7 @@ export const guild = {
     ],
   },
 
-  expectations: ['Play to win, not to farm kills', 'Supportive teamwork', 'Play to have fun'],
+  expectations: ['Play to win, not to farm kills', 'Supportive teamwork'],
   perks: ['Objective-driven teammates', 'Friends in queue', 'Fun++'],
 
   // Matches the Discord setup in DISCORD.md: the welcome questions, then a post in #applications.

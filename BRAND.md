@@ -128,14 +128,15 @@ Monospace runs wide (about 0.62em per letter). Check that ORGASMAHOWL fits at ph
 
 ## Launch page: Blast off
 
-The Launch page (`/launch`) stays in the main brutalist brand, turned all the way up: no sub-theme, no new fonts or colors. Black, white, pink and signal yellow, square edges, 4px rules, bordered cells.
+The Launch page (`/launch`) stays in the main brutalist brand, turned all the way up: no sub-theme, no new fonts or colors (the one exception is the rainbow HAROOOO!, below). Black, white, pink and signal yellow, square edges, 4px rules, bordered cells.
 
 - **Type:** BLAST OFF is the biggest type on the site (sized so the nine letters fit the column). The countdown's day cell is pink; the rest are bordered cells.
 - **The rocket** (`src/components/Rocket.astro`): square-stroked, black hull with a white outline, the WO monogram in pink in the porthole, and three pink exhaust lines that only show while it ignites. Smoke is bordered black squares.
 - **Signal yellow** is used for the tape, the callouts and the nav's LAUNCH link (with a blinking pink square). The rule of "at most twice per screen" still holds.
-- **The solo** (`src/scripts/launch-audio.ts`): a heavy metal guitar solo in E minor at 150 bpm, on the same synthesized band as the Cathedral hymn (`src/scripts/metal.ts`). It only plays from the Ignite button, and the Saint's HAROOOO cries over its last chord.
+- **The solo** (`src/scripts/launch-audio.ts`): a heavy metal guitar solo in E minor at 150 bpm, on the same synthesized band as the Cathedral hymn (`src/scripts/metal.ts`). It only plays from the Ignite button, and the Saint's HAROOOO (with the big HAROOOO! on screen) comes in 3 seconds after its last chord, so the two don't overlap.
+- **The rainbow HAROOOO!:** the on-screen cry is the one place off the palette: a saturated rainbow gradient racing through the letters, on a solid black copy with a fat black outline, while the word shakes. Each spot cycles about 1.3 times a second. Keep it under 3 a second (WCAG 2.3.1), however loud it gets.
 - **Flashing:** one pink flash on the last chord, nothing else. The nav dot and Ignite button blink at most twice a second.
-- **Reduced motion:** the tape stops, the rocket doesn't shake or fly (it fades out and back), and the HAROOOO! fades instead of slamming. The solo and the countdown still work.
+- **Reduced motion:** the tape stops, the rocket doesn't shake or fly (it fades out and back), and the HAROOOO! fades in as a still rainbow instead of slamming and racing. The solo and the countdown still work.
 - **Saved state:** the checklist and the pace level live in the viewer's own browser, and the page works without them.
 
 ## Lore sub-theme: The Cathedral

@@ -54,7 +54,7 @@ export const launch = {
   shouts: [
     {
       where: 'In-game chat',
-      text: `<WO> Werewolf Orgasmahowl blasts off March 23, ${time}! Our first guild run: ${guild.recruiting.bracket} battlegrounds, ${guild.faction}, every class and spec. Level up and join the pack: woguild.org/launch ${guild.battleCry}`,
+      text: `<WO> Level 39s battlegrounds guild, is recruiting every class and every spec. More info about our history, culture and patron Saint, Hornatius Orgasmahowl, on our website: woguild.org Join today! ${guild.battleCry}`,
     },
     {
       where: 'Discord',
