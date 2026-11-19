@@ -5,12 +5,12 @@
 // To file a new exhibit: put the image in src/assets/archive/ (named by its number), import it below,
 // and add an entry to `exhibits`. `era` is the guild era it comes from, printed on the film's edge.
 import type { ImageMetadata } from 'astro';
-import banner001 from '../assets/archive/001-bearwolftriceratiger-banner.jpg';
+import minuteToGo001 from '../assets/archive/001-one-minute-to-go.jpg';
 import pink002 from '../assets/archive/002-the-pack-in-pink.jpg';
 import hordeWins003 from '../assets/archive/003-horde-wins.jpg';
 import rollsOut004 from '../assets/archive/004-the-premade-rolls-out.jpg';
 import hordeWins005 from '../assets/archive/005-horde-wins-again.jpg';
-import minuteToGo006 from '../assets/archive/006-one-minute-to-go.jpg';
+import banner006 from '../assets/archive/006-bearwolftriceratiger-banner.jpg';
 
 export interface Exhibit {
   no: string;
@@ -25,12 +25,12 @@ export interface Exhibit {
 export const exhibits: Exhibit[] = [
   {
     no: '001',
-    id: 'bearwolftriceratiger-banner',
-    title: 'The Bearwolftriceratiger Banner',
-    kicker: 'Nine of the pack',
-    era: '2010',
-    image: banner001,
-    alt: 'A wide guild banner on a white background. Across the top it reads <Bearwolftriceratiger> on the left and 39 Horde PVP - Undermine on the right, both in red. Below stand nine Horde characters in armor and robes, holding swords, axes, shields, staves and a gun, each labeled with a name: Overrated, Noobsombrero, Norfire, Litedarker, Sockdolager, Silane, Icecreemman, Chøøs and Mmwellspent.',
+    id: 'one-minute-to-go',
+    title: 'One Minute to Go',
+    kicker: 'In the Warsong Gulch flag room, before the gates open',
+    era: '2009',
+    image: minuteToGo001,
+    alt: 'Inside the Horde flag room in Warsong Gulch, under red banners, tauren in purple robes and the original hot pink guild tabard wait with a bat-winged pet. Their nameplates read Dawg, Banditkeith and Therewolf, each with <Werewolf Orgasmahowl> beneath. A Game Start bar shows 56 seconds, a tooltip reads Therewolf, Werewolf Orgasmahowl, Level 39 Tauren Shaman, and the chat log reads The battle for Warsong Gulch begins in 1 minute.',
   },
   {
     no: '002',
@@ -70,12 +70,12 @@ export const exhibits: Exhibit[] = [
   },
   {
     no: '006',
-    id: 'one-minute-to-go',
-    title: 'One Minute to Go',
-    kicker: 'In the Warsong Gulch flag room, before the gates open',
-    era: '2009',
-    image: minuteToGo006,
-    alt: 'Inside the Horde flag room in Warsong Gulch, under red banners, tauren in purple robes and the original hot pink guild tabard wait with a bat-winged pet. Their nameplates read Dawg, Banditkeith and Therewolf, each with <Werewolf Orgasmahowl> beneath. A Game Start bar shows 56 seconds, a tooltip reads Therewolf, Werewolf Orgasmahowl, Level 39 Tauren Shaman, and the chat log reads The battle for Warsong Gulch begins in 1 minute.',
+    id: 'bearwolftriceratiger-banner',
+    title: 'The Bearwolftriceratiger Banner',
+    kicker: 'Nine of the pack',
+    era: '2010',
+    image: banner006,
+    alt: 'A wide guild banner on a white background. Across the top it reads <Bearwolftriceratiger> on the left and 39 Horde PVP - Undermine on the right, both in red. Below stand nine Horde characters in armor and robes, holding swords, axes, shields, staves and a gun, each labeled with a name: Overrated, Noobsombrero, Norfire, Litedarker, Sockdolager, Silane, Icecreemman, Chøøs and Mmwellspent.',
   },
 ];
 

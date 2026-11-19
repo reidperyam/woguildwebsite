@@ -142,12 +142,12 @@ Styled as "The Vault", a film archive and reading room (see BRAND.md, Archive su
 
 | Exhibit | Title | Era | What it shows |
 |---|---|---|---|
-| 001 | The Bearwolftriceratiger Banner ("Nine of the pack") | 2010 | The guild banner reading <Bearwolftriceratiger> · 39 Horde PVP - Undermine, with nine characters: Overrated, Noobsombrero, Norfire, Litedarker, Sockdolager, Silane, Icecreemman, Chøøs, Mmwellspent |
+| 001 | One Minute to Go ("In the Warsong Gulch flag room, before the gates open") | 2009 | Tauren in the original tabard waiting in the Horde flag room; nameplates Dawg, Banditkeith, Therewolf <Werewolf Orgasmahowl>; Therewolf is a Level 39 Tauren Shaman |
 | 002 | The Pack in Pink ("In the original tabard") | 2009 | The pack gathered in two rows before a stone ruin, in the original tabard. Norfire's nameplate reads <Werewolf Orgasmahowl> |
 | 003 | Horde Wins ("Premade vs. premade in Warsong Gulch. We won.") | 2009 | The end-of-match scoreboard: Horde Wins, 10 vs. 10, 27 minutes |
 | 004 | The Premade Rolls Out ("Single file, in the original pink") | 2009 | A tauren in the original tabard leading a single-file line of the pack up a road in the rain |
 | 005 | Horde Wins Again ("Another premade in Warsong Gulch. Another win.") | 2009 | A second scoreboard: Horde Wins, 10 vs. 10, 25 minutes; "Badonkadonk captured the Alliance flag!" |
-| 006 | One Minute to Go ("In the Warsong Gulch flag room, before the gates open") | 2009 | Tauren in the original tabard waiting in the Horde flag room; nameplates Dawg, Banditkeith, Therewolf <Werewolf Orgasmahowl>; Therewolf is a Level 39 Tauren Shaman |
+| 006 | The Bearwolftriceratiger Banner ("Nine of the pack") | 2010 | The guild banner reading <Bearwolftriceratiger> · 39 Horde PVP - Undermine, with nine characters: Overrated, Noobsombrero, Norfire, Litedarker, Sockdolager, Silane, Icecreemman, Chøøs, Mmwellspent |
 
 ## Search
 
@@ -175,7 +175,7 @@ Every page has its own 1200×630 preview image in `public/`, drawn from HTML sou
 | Lore | `og-lore.png` | The Cathedral: "Here beginneth… Saint Hornatius Orgasmahowl", the halo, HAROOOO IN EXCELSIS, the Warsong Gulch relic in a gilt frame |
 | Bearwolftriceratiger | `og-bearwolftriceratiger.png` | The Storm: BEWARE, the stacked BEAR / WOLF / TRICERA / TIGER, the painting in its specimen frame |
 | Howl Lab | `og-howl-lab.png` | MAKE YOUR OWN HAROOOO! over the pitch-contour scope |
-| Archive | `og-archive.png` | The Vault: THE ARCHIVE in stencil, the WO film leader, and Exhibit 001 (the Bearwolftriceratiger banner) on a strip of film |
+| Archive | `og-archive.png` | The Vault: THE ARCHIVE in stencil, the WO film leader, and Exhibit 006 (the Bearwolftriceratiger banner) on a strip of film |
 
 ## Open questions for the guild
 
