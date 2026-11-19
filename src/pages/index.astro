@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FaqList from '../components/FaqList.astro';
+import CerealBadge from '../components/CerealBadge.astro';
 import { guild, discordHref, factsLine } from '../data/guild';
 import { teaserRelic } from '../data/lore';
 import { bannerHistory } from '../data/tabards';
@@ -30,8 +31,13 @@ const structuredData = JSON.stringify({
   <script slot="head" type="application/ld+json" set:html={structuredData} />
   <div class="wrap page">
     <section class="hero" aria-labelledby="hero-title">
-      <p class="label">{guild.game} · {factsLine}</p>
-      <h1 id="hero-title" class="display"><span class="accent" aria-hidden="true">&lt;</span>Werewolf<br /><span class="accent">Orgasma&shy;howl</span><span aria-hidden="true">&gt;</span></h1>
+      <div class="hero-head">
+        <p class="label">{guild.game} · {factsLine}</p>
+        <div class="name">
+          <h1 id="hero-title" class="display"><span class="accent" aria-hidden="true">&lt;</span>Werewolf<br /><span class="accent">Orgasma&shy;howl</span><span aria-hidden="true">&gt;</span></h1>
+          <CerealBadge />
+        </div>
+      </div>
       <p class="tagline">{guild.tagline}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href={discordHref}>Join the Discord</a>
@@ -82,7 +88,7 @@ const structuredData = JSON.stringify({
                 <span class="label hint" aria-hidden="true"><span class="hint-hover">Hover</span><span class="hint-tap">Tap</span> to read the banner</span>
               </div>
               <div class="face back">
-                <span class="label">{b.when} · Reading the banner</span>
+                <span class="label">{b.when} · The tabard</span>
                 <ul class="meaning">
                   {b.meaning.colors.map((c) => (
                     <li><span class="swatch" style={`--c:${c.hex}`} aria-hidden="true"></span><p><b>{c.name}.</b> {c.text}</p></li>
@@ -129,8 +135,24 @@ const structuredData = JSON.stringify({
 </BaseLayout>
 
 <style>
+  /* The tilted badge's square box pokes past the screen edge (its visible shapes don't): never scroll sideways for it. */
+  .page { overflow-x: clip; }
   .hero { display: flex; flex-direction: column; gap: var(--space-4); }
   .tagline { font-size: clamp(18px, 2vw, 22px); max-width: 40ch; }
+
+  /* The cereal box badge. Narrow screens: beside the label, above the name (no room at the name's corner).
+     800px and up: centered on the name's top-right corner. The size leaves room for it beside the name's longer line
+     (ORGASMAHOWL>, 7.92 times the display size), the label wraps clear of it, and the top margin keeps it below the nav. */
+  .hero-head { --cereal-size: clamp(180px, 24vw, 220px); display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-4) var(--space-2); }
+  .name { display: contents; }
+  .hero-head h1 { grid-column: 1 / -1; grid-row: 2; }
+  .hero-head :global(.cereal) { grid-column: 2; grid-row: 1; }
+  @media (min-width: 800px) {
+    .hero-head { --cereal-size: min(322px, calc(27.5vw - 40px)); display: flex; flex-direction: column; align-items: stretch; gap: var(--space-4); margin-top: max(0px, calc(var(--cereal-size) * 0.62 - 152px)); }
+    .hero-head .label { max-width: calc(7.92 * var(--display-size) - var(--cereal-size) / 2 - var(--space-3)); }
+    .name { display: block; position: relative; width: fit-content; }
+    .name :global(.cereal) { position: absolute; left: 100%; top: 0; translate: -50% -50%; }
+  }
 
   /* The launch strip: a loud link to /launch between the hero and About. */
   .launch-strip { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--space-3); padding: var(--space-3); border: var(--rule) solid var(--accent); color: var(--ink); text-decoration: none; }

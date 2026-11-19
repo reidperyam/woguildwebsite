@@ -52,7 +52,7 @@ export const bannerHistory: {
       ],
       chevronHex: '#f5ea84',
       chevronUp: true,
-      chevron: 'A wolf’s snout raised to the moon, mid-howl.',
+      chevron: 'A point toward the heavens, where the beloved Saint Hornatius Orgasmahowl resides.',
     },
   },
   {

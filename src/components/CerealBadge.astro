@@ -1,0 +1,128 @@
+---
+// The home hero's cereal box badge: NEW! Now in World of Warcraft Forever, with more HAROOOO!
+// Back to front: a blue ten-point star whose points flare out and back, a yellow burst turning clockwise,
+// a black burst turning the other way, and the pink burst rocking on top. Clicking the ribbon plays the
+// official HAROOOO and the badge buzzes for as long as it lasts. Its size comes from --cereal-size, set by the page.
+
+// Points of an n-point star, centered in a 200 x 200 box (outer radius ro, inner radius ri, first point at rot degrees).
+function star(n: number, ro: number, ri: number, rot = -90) {
+  return Array.from({ length: 2 * n }, (_, i) => {
+    const r = i % 2 ? ri : ro;
+    const a = ((rot + (i * 180) / n) * Math.PI) / 180;
+    return `${(100 + r * Math.cos(a)).toFixed(1)},${(100 + r * Math.sin(a)).toFixed(1)}`;
+  }).join(' ');
+}
+// The same, as a clip-path polygon in percentages, so CSS can animate between two of them.
+const clip = (n: number, ro: number, ri: number, rot: number) =>
+  `polygon(${star(n, ro * 2, ri * 2, rot).split(' ').map((p) => p.split(',').map((v) => `${(Number(v) / 2).toFixed(2)}%`).join(' ')).join(', ')})`;
+
+const flareOut = clip(10, 50, 24, -72);
+const flareIn = clip(10, 36, 24, -72);
+---
+
+<div class="cereal" data-cereal style={`--flare-out: ${flareOut}; --flare-in: ${flareIn}`}>
+  <div class="buzz">
+    <div class="pop">
+      <div class="layer flare" aria-hidden="true"></div>
+      <svg class="layer burst-back" viewBox="0 0 200 200" aria-hidden="true"><polygon points={star(24, 100, 84)} /></svg>
+      <svg class="layer burst-mid" viewBox="0 0 200 200" aria-hidden="true"><polygon points={star(18, 100, 78)} /></svg>
+      <div class="layer front">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <polygon class="rim" points={star(14, 100, 82)} />
+          <polygon class="face" points={star(14, 92, 75)} />
+        </svg>
+        <p class="words"><span class="new">New!</span><span class="now">Now in World<br />of Warcraft</span><span class="forever">Forever</span></p>
+      </div>
+      <button type="button" class="ribbon" data-cereal-cry>With more HAROOOO!<span class="sr-only"> Play the cry</span></button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cereal {
+    /* The 2009 tabard's teal edge (src/data/tabards.ts): the badge's one color outside the four. */
+    --tabard-teal: #1d648e;
+    position: relative;
+    width: var(--cereal-size, 200px);
+    aspect-ratio: 1;
+    rotate: 20deg;
+    container-type: inline-size;
+  }
+  .buzz, .pop { position: absolute; inset: 0; }
+  .layer { position: absolute; }
+  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  .flare { inset: 0; background: var(--tabard-teal); clip-path: var(--flare-out); }
+  .burst-back { inset: 8.9%; width: auto; height: auto; fill: var(--signal); }
+  .burst-mid { inset: 15.3%; width: auto; height: auto; fill: var(--ground); }
+  .front { inset: 19.45%; }
+  .front svg { position: absolute; inset: 0; }
+  .rim { fill: var(--ink); }
+  .face { fill: var(--accent); }
+
+  /* The words fill the pink face: short NEW! at the top, the two widest lines across the middle, FOREVER below,
+     lifted so the ribbon never covers them. Sizes are in cqi, hundredths of the badge's width. */
+  .words {
+    position: absolute; inset: 0; padding-bottom: 6.4cqi;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1cqi;
+    color: var(--on-accent); text-align: center; text-transform: uppercase; font-weight: var(--fw-heavy); line-height: 1;
+  }
+  .new { font-size: max(20px, 11cqi); letter-spacing: -0.04em; }
+  .now { font-size: max(9px, 5cqi); line-height: 1.15; }
+  .forever { font-size: max(14px, 7.3cqi); letter-spacing: -0.03em; }
+
+  .ribbon {
+    position: absolute; left: 10%; right: 10%; bottom: 18%;
+    padding: 6px 0; border: 3px solid var(--ground); outline: 3px solid var(--ink); border-radius: 0;
+    background: var(--signal); color: var(--on-signal); cursor: pointer;
+    font: var(--fw-heavy) max(10px, 3.9cqi)/1.2 var(--font-mono); text-transform: uppercase; white-space: nowrap;
+    transform: rotate(-6deg);
+  }
+  /* Taller hit area than the ribbon itself, so it's easy to tap. */
+  .ribbon::after { content: ''; position: absolute; inset: -10px -3px; }
+  .ribbon:hover { background: var(--ink); }
+  .ribbon:focus-visible { outline-color: var(--focus-ring); outline-offset: 0; }
+
+  /* Motion. Everything holds still for reduced motion; the cry still plays. */
+  @keyframes spin { to { rotate: 360deg; } }
+  @keyframes spin-back { to { rotate: -360deg; } }
+  @keyframes rock { 0%, 100% { rotate: -8deg; } 50% { rotate: 8deg; } }
+  @keyframes flare { 0%, 100% { clip-path: var(--flare-in); } 50% { clip-path: var(--flare-out); } }
+  @keyframes pop { 0% { transform: scale(0) rotate(-200deg); } 70% { transform: scale(1.12) rotate(8deg); } 100% { transform: scale(1) rotate(0deg); } }
+  @keyframes boing { 0%, 84%, 100% { transform: scale(1); } 88% { transform: scale(1.12); } 92% { transform: scale(0.95); } 96% { transform: scale(1.04); } }
+  @keyframes buzz {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-4px, 2px) rotate(-3deg); }
+    50% { transform: translate(3px, -3px) rotate(2deg); }
+    75% { transform: translate(-2px, -2px) rotate(-2deg); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flare { animation: flare 2.4s ease-in-out infinite; }
+    .burst-back { animation: spin 14s linear infinite; }
+    .burst-mid { animation: spin-back 10s linear infinite; }
+    .front { animation: rock 1.6s ease-in-out infinite; }
+    .pop { animation: pop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both, boing 3.2s ease-in-out 1s infinite; }
+    .cereal.howling .buzz { animation: buzz 0.06s linear infinite; }
+  }
+</style>
+
+<script>
+  import { howl } from '../scripts/howl';
+
+  // The ribbon plays the official cry; the badge starts buzzing half a second in, on the ROOOO,
+  // and stops 3 seconds before the cry ends, as it fades out.
+  const BUZZ_STARTS_AFTER_MS = 500;
+  const BUZZ_STOPS_EARLY_MS = 3000;
+  const badge = document.querySelector<HTMLElement>('[data-cereal]');
+  const cry = badge?.querySelector<HTMLButtonElement>('[data-cereal-cry]');
+  let howling = false;
+  cry?.addEventListener('click', () => {
+    if (howling || !badge) return;
+    const ms = howl();
+    if (!ms) return;
+    howling = true;
+    window.setTimeout(() => badge.classList.add('howling'), BUZZ_STARTS_AFTER_MS);
+    window.setTimeout(() => badge.classList.remove('howling'), Math.max(BUZZ_STARTS_AFTER_MS, ms - BUZZ_STOPS_EARLY_MS));
+    window.setTimeout(() => { howling = false; }, ms);
+  });
+</script>
